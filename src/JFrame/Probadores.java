@@ -5,6 +5,12 @@
  */
 package JFrame;
 
+import Base.Empleado;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author less_
@@ -16,10 +22,11 @@ public class Probadores extends javax.swing.JFrame {
      */
      public static String id_programador;
      public static String nombre;
-     
-    public Probadores() {
+     Empleado emp=new Empleado();
+    public Probadores() throws SQLException{
         initComponents();
-      
+       emp.MostrarProbadores(jTableResultado,1);
+       btnRegresar.setVisible(false);
     }
 
     /**
@@ -41,7 +48,7 @@ public class Probadores extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -55,20 +62,20 @@ public class Probadores extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(270, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(301, 301, 301)
                 .addComponent(jLabel5)
-                .addGap(237, 237, 237))
+                .addContainerGap(346, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(22, 22, 22)
                 .addComponent(jLabel5)
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 80));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 80));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -76,13 +83,10 @@ public class Probadores extends javax.swing.JFrame {
         jTableResultado.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jTableResultado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "leslie"},
-                {"2", "Maria"},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2"
+
             }
         ));
         jTableResultado.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -94,7 +98,7 @@ public class Probadores extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(59, 134, 139));
-        jLabel4.setText("Nombre del programador");
+        jLabel4.setText("Nombre del probador");
 
         txtBusqueda.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtBusqueda.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
@@ -114,10 +118,10 @@ public class Probadores extends javax.swing.JFrame {
         btnRegresar.setLayout(btnRegresarLayout);
         btnRegresarLayout.setHorizontalGroup(
             btnRegresarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnRegresarLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnRegresarLayout.createSequentialGroup()
+                .addContainerGap(39, Short.MAX_VALUE)
                 .addComponent(jLabel7)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
         btnRegresarLayout.setVerticalGroup(
             btnRegresarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,64 +135,69 @@ public class Probadores extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(65, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addGap(30, 30, 30))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel4)
+                        .addGap(27, 27, 27)
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+                .addGap(88, 88, 88)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                    .addComponent(jLabel4)
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(31, 31, 31))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 640, 310));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 780, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 int  filaSeleccionada=-1;
     private void jTableResultadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableResultadoMouseClicked
         filaSeleccionada = jTableResultado.getSelectedRow();
-
+       
+      
         if (filaSeleccionada != -1) {
             int rec = this.jTableResultado.getSelectedRow();
 
             id_programador=jTableResultado.getValueAt(rec, 0).toString();
             nombre=jTableResultado.getValueAt(rec, 1).toString();
-
+            btnRegresar.enable(true);
         }
+        
+            if (jTableResultado.getSelectedRow()>=0){
+         JOptionPane.showMessageDialog(this,"Esta seleccionada esta fila","Información",JOptionPane.INFORMATION_MESSAGE);
+         btnRegresar.setVisible(true);
+         }else{
+         JOptionPane.showMessageDialog(this,"No esta selecionada esta fila","Información",JOptionPane.INFORMATION_MESSAGE);
 
+         }
     }//GEN-LAST:event_jTableResultadoMouseClicked
 
     private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
-        //Asignacion.txtProbador.setText(nombre);
-        //Asignacion.id_tes=id_programador;
+         Asignacion.txtProbador.setText(nombre);
+        Asignacion.id_tes=id_programador;
        // JOptionPane.showMessageDialog(this, programador.id_p);
-        //Asignacion.getWindows();
-        Asignacion call = new Asignacion();
-        call.txtProbador.setText(nombre);
-        call.id_p = id_programador;        
-        call.setVisible(true);
+        Asignacion.getWindows();
         this.dispose();
+       
+
     }//GEN-LAST:event_btnRegresarMouseClicked
 
     /**
@@ -221,7 +230,11 @@ int  filaSeleccionada=-1;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Probadores().setVisible(true);
+                try {
+                    new Probadores().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Probadores.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

@@ -5,6 +5,10 @@
  */
 package JFrame;
 
+import Base.Empleado;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,10 +18,11 @@ import javax.swing.JOptionPane;
 public class Programadores extends javax.swing.JFrame {
      public static String id_programador;
      public static String nombre;
-    
-    public Programadores() {
+     Empleado emp= new Empleado();
+    public Programadores() throws SQLException{
         initComponents();
-    
+        emp.MostrarProgramadores(jTableResultado,1);
+        btnRegresar.setVisible(false);
     }
 
     /**
@@ -86,9 +91,9 @@ public class Programadores extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(214, 214, 214)
+                .addGap(345, 345, 345)
                 .addComponent(jLabel5)
-                .addContainerGap(236, Short.MAX_VALUE))
+                .addContainerGap(365, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,7 +103,7 @@ public class Programadores extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 80));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 80));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -106,13 +111,10 @@ public class Programadores extends javax.swing.JFrame {
         jTableResultado.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jTableResultado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "leslie"},
-                {"2", "Maria"},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2"
+
             }
         ));
         jTableResultado.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -128,6 +130,11 @@ public class Programadores extends javax.swing.JFrame {
 
         txtBusqueda.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtBusqueda.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyPressed(evt);
+            }
+        });
 
         btnRegresar.setBackground(new java.awt.Color(59, 134, 139));
         btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -144,17 +151,17 @@ public class Programadores extends javax.swing.JFrame {
         btnRegresar.setLayout(btnRegresarLayout);
         btnRegresarLayout.setHorizontalGroup(
             btnRegresarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnRegresarLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnRegresarLayout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addComponent(jLabel7)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
         btnRegresarLayout.setVerticalGroup(
             btnRegresarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnRegresarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(btnRegresarLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel7)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -164,34 +171,34 @@ public class Programadores extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
+                        .addGap(119, 119, 119)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(49, Short.MAX_VALUE))
+                        .addGap(50, 50, 50)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 752, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(88, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addGap(54, 54, 54))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+                .addGap(49, 49, 49)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(38, 38, 38))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 640, 310));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 890, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -207,6 +214,13 @@ int filaSeleccionada=-1;
             id_programador=jTableResultado.getValueAt(rec, 0).toString();
             nombre=jTableResultado.getValueAt(rec, 1).toString();
         }  
+             if (jTableResultado.getSelectedRow()>=0){
+         JOptionPane.showMessageDialog(this,"Esta seleccionada esta fila","Información",JOptionPane.INFORMATION_MESSAGE);
+         btnRegresar.setVisible(true);
+         }else{
+         JOptionPane.showMessageDialog(this,"No esta selecionada esta fila","Información",JOptionPane.INFORMATION_MESSAGE);
+
+         }
         
     }//GEN-LAST:event_jTableResultadoMouseClicked
 
@@ -217,18 +231,16 @@ int filaSeleccionada=-1;
 
     private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
 
-        //Asignacion.txtProgramador.setText(nombre);
-        //Asignacion.id_p = id_programador+"";
-        //JOptionPane.showMessageDialog(this, Asignacion.id_p);
-        //Asignacion.getWindows();
-        Asignacion call = new Asignacion();
-        call.txtProgramador.setText(nombre);
-        call.id_p = id_programador;
-        JOptionPane.showMessageDialog(this, call.id_p);
-        call.setVisible(true);
+        Asignacion.txtProgramador.setText(nombre);
+        Asignacion.id_p = id_programador+"";
+       this.dispose();
+        Asignacion.getWindows();
         this.dispose();
-
     }//GEN-LAST:event_btnRegresarMouseClicked
+
+    private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
+    
+    }//GEN-LAST:event_txtBusquedaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -260,7 +272,11 @@ int filaSeleccionada=-1;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Programadores().setVisible(true);
+                try {
+                    new Programadores().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Programadores.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

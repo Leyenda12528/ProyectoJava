@@ -6,6 +6,7 @@
 package Base;
 
 import java.sql.*;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 /**
  *
@@ -13,7 +14,7 @@ import org.apache.log4j.Logger;
  */
 public class Conexion {
 
-    private String url = "localhost/bd";
+    private String url = "localhost:3306/jproyecto";
     private String usuario = "root";
     private String clave = "";
 
@@ -53,6 +54,7 @@ public class Conexion {
     public static void Cerrar() throws SQLException {
         if (cnx != null) {
             cnx.close();
+            JOptionPane.showMessageDialog(null, "cerar");
         }
     }
 
