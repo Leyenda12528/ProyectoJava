@@ -125,9 +125,21 @@ public class Empleado {
     public void IngresarEmpleado() throws SQLException{
     }
     
-    private void ConseguirEmpleados() throws SQLException{
+    public String ConseguirEmpleadoLogin(String correo, String Contra){
         //Code
-        
+        try {
+            String sql ="select id_empleado, nombre from empleados where correo = '"+correo+"' and password = '"+Contra+"'";
+            ResultSet dato = con.Buscar(sql);
+            if (dato.next()) {
+                String mjs = dato.getInt(1) + "-" + dato.getString(2);
+                return mjs;
+            }
+            else return "";
+        } catch (SQLException ex) {
+           Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "ERROR AL BUSCAR");
+        }
+        return "";
     }
     public void MostrarEmpleados(){}
     
