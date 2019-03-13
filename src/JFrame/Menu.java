@@ -5,6 +5,8 @@
  */
 package JFrame;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author less_
@@ -16,6 +18,11 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+    }
+    public Menu(String cadena) {
+        initComponents();
+        //JOptionPane.showMessageDialog(null, ""+cadena);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -40,9 +47,14 @@ public class Menu extends javax.swing.JFrame {
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 102, 255));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(89, 199, 198));
@@ -139,6 +151,12 @@ public class Menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        Login login = new Login();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

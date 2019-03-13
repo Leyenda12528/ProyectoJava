@@ -125,8 +125,33 @@ public class Empleado {
     public void IngresarEmpleado() throws SQLException{
     }
     
-    private void ConseguirEmpleados() throws SQLException{
+    public String ConseguirEmpleadoLogin(String correo, String Contra){
         //Code
+        try {
+            String sql ="select id_empleado, nombre_emp, id_cargo from empleados where correo = '"+correo+"' and password = '"+Contra+"'";
+            
+            String sql1 = "SELECT  empleados.id_empleado, CONCAT(empleados.nombre_emp,' ',empleados.apellidos)"
+                    + " ,empleados.id_cargo , cargo.nombre_cargo, departamentos.nombre_depto "
+                    + "FROM            empleados INNER JOIN"
+                    + "                departamentos ON empleados.id_depto = departamentos.id_depto INNER JOIN"
+                    + "                cargo ON empleados.id_cargo = cargo.id_cargo"
+                    + " WHERE        (empleados.correo = '" + correo + "') AND (empleados.password_emp = '" + Contra + "')";
+            
+            ResultSet dato = con.Buscar(sql1);
+            if (dato.next()) {
+                String mjs = "";
+                if (dato.getString(3).equals("0")) //Administrador
+                    mjs += dato.getInt(1) + "-" + dato.getString(2) + "-" + dato.getString(4); 
+                else  //Cualquier otro empleado XDD
+                    mjs += dato.getInt(1) + "-" + dato.getString(2) + "-" + dato.getString(4) + "-" + dato.getString(5);
+                return mjs;
+            }
+            else return "";            
+        } catch (SQLException ex) {
+           Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "ERROR AL BUSCAR");
+        }
+        return "";
         
     }
     public void MostrarEmpleados(){}
