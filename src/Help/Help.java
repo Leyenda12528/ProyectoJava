@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class Help {
     public boolean validarCorreo(String text){
-        String correo = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
+        String correo = "^[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
         if (Pattern.compile(correo).matcher(text).matches()) return true;        
         else return false;
     }
