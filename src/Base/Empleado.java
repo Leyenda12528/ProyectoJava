@@ -18,7 +18,8 @@ import javax.swing.table.DefaultTableModel;
 public class Empleado {
     private Conexion con = new Conexion();
     private ResultSet empleados;
-    
+    ResultSet resultado=null;
+    DefaultTableModel modelo1=null;
     private int id_empleado;
     private String emp_nombre;
     private String emp_apellidos;
@@ -169,7 +170,7 @@ public class Empleado {
           modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre","Cargo","Departamento"});
         try {
             String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4";
+            "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=1";
             ResultSet datos= con.Buscar(sql);
             while (datos.next()) {
                 modelo.addRow(new Object[]{
@@ -193,7 +194,7 @@ public class Empleado {
           modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre","Cargo","Departamento"});
         try {
             String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=2 and emp.id_cargo=2";
+            "INNER JOIN  cargo c ON c.id_cargo=2 and emp.id_cargo=2 where id_estado_emp=1";
             ResultSet datos= con.Buscar(sql);
             while (datos.next()) {
                modelo.addRow(new Object[]{
@@ -210,7 +211,20 @@ public class Empleado {
             JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR"+ex);
         }
     }
+     Conexion con3=new Conexion();
+    public ResultSet iniciarValoresProgramadores(JTable resultado) throws SQLException{
+        Object[][] data =null;
+        String [] columns= {
+        "ID","Nombres","Apellidos"
+        };
+        modelo1=new DefaultTableModel(data,columns);
+        resultado.setModel(modelo1);
+        
+        String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
+            "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=1";
+            ResultSet datos= con3.Buscar(sql);
+            return datos;
+    }
     
     
-   
 }

@@ -63,6 +63,7 @@ public class Conexion {
         consulta.execute(sentencia);
 
     }
+   
 
     public static void Eliminar(String sentencia) throws SQLException {
         PreparedStatement consulta = cnx.prepareStatement(sentencia);

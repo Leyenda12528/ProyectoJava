@@ -5,11 +5,14 @@
  */
 package JFrame;
 
+import Base.Conexion_c;
 import Base.Empleado;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,15 +23,52 @@ public class Probadores extends javax.swing.JFrame {
     /**
      * Creates new form Probadores
      */
+      ResultSet programadores;
      public static String id_programador;
      public static String nombre;
-     Empleado emp=new Empleado();
+    static int bandera=0;
+     DefaultTableModel modelo1=null;
+      //static int bandera=0;
+      ResultSet resultado=null;
+      Conexion_c con3=new Conexion_c();
+      int depto=1;
     public Probadores() throws SQLException{
         initComponents();
-       emp.MostrarProbadores(jTableResultado,1);
+    
        btnRegresar.setVisible(false);
+       iniciarValores();
     }
+ public void iniciarValores() throws SQLException
+    {
+       
+       
 
+            Object[][] data =null;
+        String [] columns= {
+        "Codigo", "Nombre","Cargo","Departamento"
+        };
+        modelo1=new DefaultTableModel(data,columns);
+        this.jTableResultado.setModel(modelo1);
+        String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
+            "INNER JOIN  cargo c ON c.id_cargo=2 and emp.id_cargo=2 where id_estado_emp=1";
+        con3.setRs(sql);
+        
+        generarListado();
+    }
+    
+      void generarListado() throws SQLException
+    {
+        resultado =con3.getRs();
+        while(resultado.next())
+        {
+            Object [] newRow= {
+                resultado.getString(1),resultado.getString(2),resultado.getString(3),resultado.getString(4)
+               };
+            modelo1.addRow(newRow);
+        }
+        
+        resultado.close();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,6 +118,11 @@ public class Probadores extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 80));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel2KeyPressed(evt);
+            }
+        });
 
         jTableResultado.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
         jTableResultado.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -199,6 +244,24 @@ int  filaSeleccionada=-1;
        
 
     }//GEN-LAST:event_btnRegresarMouseClicked
+
+    private void jPanel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel2KeyPressed
+         while(modelo1.getRowCount()!=0) modelo1.removeRow(0);
+
+        con3.setRs("Select id_empleado,CONCAT(nombre_emp,' ',apellidos) Nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"
+                +depto+"' and emp.id_depto='"
+                +depto+"'\n" +
+            "INNER JOIN  cargo c ON c.id_cargo=2 and emp.id_cargo=2 where id_estado_emp=1 and concat (nombre_emp,'',apellidos)"
+            +"like '%"+this.txtBusqueda.getText()+"%'");
+
+        try {
+
+            generarListado();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Programadores.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_jPanel2KeyPressed
 
     /**
      * @param args the command line arguments
