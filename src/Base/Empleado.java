@@ -142,9 +142,9 @@ public class Empleado {
             if (dato.next()) {
                 String mjs = "";
                 if (dato.getString(3).equals("0")) //Administrador
-                    mjs += dato.getInt(1) + "-" + dato.getString(2) + "-" + dato.getString(4); 
+                    mjs += dato.getInt(1) + "-" + dato.getString(2) + "-" + dato.getInt(3) + "-" + dato.getString(4); 
                 else  //Cualquier otro empleado XDD
-                    mjs += dato.getInt(1) + "-" + dato.getString(2) + "-" + dato.getString(4) + "-" + dato.getString(5);
+                    mjs += dato.getInt(1) + "-" + dato.getString(2) + "-" + dato.getInt(3) + "-" + dato.getString(4) + "-" + dato.getString(5);
                 return mjs;
             }
             else return "";            

@@ -5,6 +5,7 @@
  */
 package JFrame;
 
+import java.awt.Component;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,8 +22,9 @@ public class Menu extends javax.swing.JFrame {
     }
     public Menu(String cadena) {
         initComponents();
-        //JOptionPane.showMessageDialog(null, ""+cadena);
+        //JOptionPane.showMessageDialog(null, ""+cadena);        
         this.setLocationRelativeTo(null);
+        inicio(cadena);
     }
 
     /**
@@ -44,8 +46,8 @@ public class Menu extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 102, 255));
@@ -136,15 +138,14 @@ public class Menu extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 660, 380));
 
-        jMenu1.setText("File");
-
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
-        jMenu1.add(jCheckBoxMenuItem1);
-
+        jMenu1.setText("Gestión  de Empleados");
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
+
+        jMenuItem1.setText("jMenuItem1");
+        jMenu2.add(jMenuItem1);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -194,7 +195,6 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -204,7 +204,22 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
+
+    private void inicio(String line) {
+        String[] rowfields = line.split("-");
+        Component compo = null;
+        if (("0").equals(rowfields[2])) 
+            compo = jMenu1;
+        
+        
+        for (Component component : jMenuBar1.getComponents()) {
+            if (component != compo) {
+                component.setVisible(false);
+            }
+        }
+    }
 }
