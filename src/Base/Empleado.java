@@ -132,7 +132,7 @@ public class Empleado {
             String sql ="select id_empleado, nombre_emp, id_cargo from empleados where correo = '"+correo+"' and password = '"+Contra+"'";
             
             String sql1 = "SELECT  empleados.id_empleado, CONCAT(empleados.nombre_emp,' ',empleados.apellidos)"
-                    + " ,empleados.id_cargo , cargo.nombre_cargo, departamentos.nombre_depto "
+                    + " ,empleados.id_cargo , cargo.nombre_cargo, empleados.id_depto, departamentos.nombre_depto "
                     + "FROM            empleados INNER JOIN"
                     + "                departamentos ON empleados.id_depto = departamentos.id_depto INNER JOIN"
                     + "                cargo ON empleados.id_cargo = cargo.id_cargo"
@@ -144,7 +144,7 @@ public class Empleado {
                 if (dato.getString(3).equals("0")) //Administrador
                     mjs += dato.getInt(1) + "-" + dato.getString(2) + "-" + dato.getInt(3) + "-" + dato.getString(4); 
                 else  //Cualquier otro empleado XDD
-                    mjs += dato.getInt(1) + "-" + dato.getString(2) + "-" + dato.getInt(3) + "-" + dato.getString(4) + "-" + dato.getString(5);
+                    mjs += dato.getInt(1) + "-" + dato.getString(2) + "-" + dato.getInt(3) + "-" + dato.getString(4) + "-" + dato.getInt(5)+ "-" + dato.getString(6);
                 return mjs;
             }
             else return "";            

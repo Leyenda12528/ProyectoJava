@@ -10,6 +10,8 @@ import Help.Help;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -319,6 +321,8 @@ public class Login extends javax.swing.JFrame {
              emp = new Empleado();
              String pass = new String(txtContraseña.getPassword());
              String mjs = emp.ConseguirEmpleadoLogin(jTxtCorreo.getText(), pass);
+//             JOptionPane.showMessageDialog(null, "- "+pass+" - "+jTxtCorreo.getText());
+//             JOptionPane.showMessageDialog(null, ""+mjs);
              if (mjs.equals("")) {
                  lblErrorLogin.setText("USUARIO/CONTRASEÑA INCORRECTO");
                  lblErrorLogin.setVisible(true);
@@ -327,7 +331,9 @@ public class Login extends javax.swing.JFrame {
                  new Menu(mjs).setVisible(true);
                  this.dispose();
              }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "ERROR INICIO SESION");
         }
     }//GEN-LAST:event_pnlLoginMouseClicked
 

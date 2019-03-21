@@ -12,13 +12,29 @@ import java.sql.*;
  */
 public class Departamento {
     private Conexion con = new Conexion();
-    private ResultSet departamentos;
+    private ResultSet departamentos;    
+    private ResultSet resultado=null;
+    private String sql="";
     
     public Departamento() throws SQLException{
     }
     
     public void IngresarDepartamento() throws SQLException{
        
+    }
+    
+    public String ConseguirIdDepartamento(String departamento) throws SQLException{
+        //Code
+        try {
+            sql="Select id_depto from departamentos where  nombre_depto='"+departamento+"'";
+            resultado=Conexion.Buscar(sql);
+            if (resultado.next()) {
+                return String.valueOf(resultado.getInt(1));
+            }
+            else return "";
+        } catch (Exception e) {
+            return null;
+        }
     }
     
     private void ConseguirDepartamento() throws SQLException{
@@ -29,7 +45,5 @@ public class Departamento {
     private void UpdateDepartamento() throws SQLException{
         //Code
     }
-    
-    private void ByeDepartamento() throws SQLException{
-    }
+        
 }
