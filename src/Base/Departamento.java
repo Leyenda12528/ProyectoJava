@@ -23,16 +23,16 @@ public class Departamento {
        
     }
     
-    public String ConseguirIdDepartamento(String departamento) throws SQLException{
+    public String ConseguirIdDepartamento(String departamento) {
         //Code
         try {
-            sql="Select id_depto from departamentos where  nombre_depto='"+departamento+"'";
-            resultado=Conexion.Buscar(sql);
-            if (resultado.next()) {
+            sql = "Select id_depto from departamentos where  nombre_depto='" + departamento + "'";
+            resultado = Conexion.Buscar(sql);
+            if (resultado.next()) 
                 return String.valueOf(resultado.getInt(1));
-            }
-            else return "";
-        } catch (Exception e) {
+             else 
+                return "";
+        } catch (SQLException e) {
             return null;
         }
     }

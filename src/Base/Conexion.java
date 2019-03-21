@@ -54,7 +54,6 @@ public class Conexion {
     public static void Cerrar() throws SQLException {
         if (cnx != null) {
             cnx.close();
-            JOptionPane.showMessageDialog(null, "cerar");
         }
     }
 
