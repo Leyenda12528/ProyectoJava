@@ -7,7 +7,9 @@ package Base;
 
 import Beans.CasoBean;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -124,9 +126,24 @@ public class Casos {
     public void IngresarCaso() throws SQLException {
     }
 
-    private void ConseguirCaso() throws SQLException {
-
-        //Code
+    private void ConseguirCaso() {
+        try {
+            sqlC = "SELECT        id_caso, nombre_caso, descrip_req, descrip_rechazo, descripcion_jefedes, id_estado, porcentaje_avance, fecha_limite, fecha_produccion\n"
+                    + "FROM            dbo.caso\n"
+                    + "WHERE        (id_estado = 1) AND (id_caso LIKE '%DEP1%')";
+            casos = Conexion.Buscar(sqlC);
+            CasoBean casoB;
+            ArrayList<CasoBean> lista = new ArrayList<>();
+            while (casos.next()) {                
+                casoB= new CasoBean();
+                casoB.setId_caso(casos.getString(1));
+                casoB.setNombre_caso(casos.getString(2));
+                lista.add(casoB);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, "ERROR Caso isVacia " + e);
+            //return null;
+        }
     }
     private String isVacia() {
         try {
