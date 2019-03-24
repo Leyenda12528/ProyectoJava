@@ -5,17 +5,21 @@
  */
 package Base;
 
+import Beans.DepartamentoBean;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author jorge
  */
 public class Departamento {
     private Conexion con = new Conexion();
-    private ResultSet departamentos;    
-    private ResultSet resultado=null;
-    private String sql="";
-    
+    private DepartamentoBean deptoB = new DepartamentoBean();
+    private PreparedStatement ps = null;
+    private ResultSet departamentos = null;    
+    private String sql = "";
+
     public Departamento() throws SQLException{
     }
     
@@ -23,27 +27,31 @@ public class Departamento {
        
     }
     
-    public String ConseguirIdDepartamento(String departamento) {
-        //Code
+    public DepartamentoBean getDatos(String Departamento) {
         try {
-            sql = "Select id_depto from departamentos where  nombre_depto='" + departamento + "'";
-            resultado = Conexion.Buscar(sql);
-            if (resultado.next()) 
-                return String.valueOf(resultado.getInt(1));
-             else 
-                return "";
-        } catch (SQLException e) {
+            sql="select id_depto from departamentos where nombre_depto = ?";
+            ps = con.Obtener().prepareStatement(sql);
+            ps.setObject(1, Departamento);
+            departamentos = ps.executeQuery();
+            if (departamentos.next()) {
+                deptoB.setId_depto(departamentos.getInt(1));
+                deptoB.setNombre_depto(Departamento);
+            }
+            return deptoB;
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
     }
-    
-    private void ConseguirDepartamento() throws SQLException{
-        //Code        
-    }
+        
     public void MostrarDepartamento(){}
     
     private void UpdateDepartamento() throws SQLException{
         //Code
     }
+
+    
+
+    
         
 }

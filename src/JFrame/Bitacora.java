@@ -5,17 +5,40 @@
  */
 package JFrame;
 
+import Base.Departamento;
+import Base.Empleado;
+import Beans.DepartamentoBean;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author less_
  */
 public class Bitacora extends javax.swing.JFrame {
-
+    private int valor = 0 ;
+    private DepartamentoBean deptoB = new DepartamentoBean();
+    private Departamento depto;
+    private Empleado empleado;
     /**
      * Creates new form Bitacora
      */
     public Bitacora() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setLayout(null);
+        pnlHead.setLayout(null);
+        pnlBody.setLayout(null);
+        inicio();
+    }
+
+    public  Bitacora(String Departamento) throws SQLException {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        depto = new Departamento();
+        empleado = new Empleado();
+        ListarProgramadores(Departamento);
+        inicio();
     }
 
     /**
@@ -29,10 +52,11 @@ public class Bitacora extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        pnlHead = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        btnMenuCasos = new javax.swing.JLabel();
         txtProgramador = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        pnlBody = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -43,6 +67,8 @@ public class Bitacora extends javax.swing.JFrame {
         txtDescripcion = new javax.swing.JTextArea();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listUser = new javax.swing.JList<>();
 
         jLabel1.setText("jLabel1");
 
@@ -50,39 +76,56 @@ public class Bitacora extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(59, 134, 139));
         jLabel8.setText("Codigo de caso");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(59, 134, 139));
+        pnlHead.setBackground(new java.awt.Color(59, 134, 139));
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Bitacora");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(201, 201, 201)
+        btnMenuCasos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tools/images/icons8-menú-2-filled-50.png"))); // NOI18N
+        btnMenuCasos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMenuCasosMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlHeadLayout = new javax.swing.GroupLayout(pnlHead);
+        pnlHead.setLayout(pnlHeadLayout);
+        pnlHeadLayout.setHorizontalGroup(
+            pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHeadLayout.createSequentialGroup()
+                .addContainerGap(198, Short.MAX_VALUE)
                 .addComponent(jLabel5)
-                .addContainerGap(212, Short.MAX_VALUE))
+                .addGap(137, 137, 137)
+                .addComponent(btnMenuCasos)
+                .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel5)
-                .addContainerGap(22, Short.MAX_VALUE))
+        pnlHeadLayout.setVerticalGroup(
+            pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHeadLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlHeadLayout.createSequentialGroup()
+                .addComponent(btnMenuCasos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, -1));
+        getContentPane().add(pnlHead, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 70));
 
         txtProgramador.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtProgramador.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
         getContentPane().add(txtProgramador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        pnlBody.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(59, 134, 139));
@@ -120,57 +163,85 @@ public class Bitacora extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(0, 51, 102));
         jLabel12.setText("Nombre");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        listUser.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        listUser.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(listUser);
+
+        javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
+        pnlBody.setLayout(pnlBodyLayout);
+        pnlBodyLayout.setHorizontalGroup(
+            pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBodyLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jLabel6))
                         .addGap(36, 36, 36)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
                             .addComponent(jLabel11))))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        pnlBodyLayout.setVerticalGroup(
+            pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBodyLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel11)))
+                            .addComponent(jLabel12))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel11)))
-                    .addComponent(jLabel12))
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 510, 590));
+        getContentPane().add(pnlBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 640, 590));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void btnMenuCasosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuCasosMouseClicked
+        if (valor == 0) {
+            inicio2();
+            valor = 1;
+        }
+        else{ 
+            inicio();
+            valor = 0;
+        }
+    }//GEN-LAST:event_btnMenuCasosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -208,6 +279,7 @@ public class Bitacora extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnMenuCasos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -217,12 +289,42 @@ public class Bitacora extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> listUser;
+    private javax.swing.JPanel pnlBody;
+    private javax.swing.JPanel pnlHead;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextArea txtObservaciones;
     public static javax.swing.JTextField txtProgramador;
     // End of variables declaration//GEN-END:variables
+
+    private void inicio() {
+        listUser.setVisible(false);
+        this.setSize(490,this.getSize().height);
+        pnlHead.setSize(490,pnlHead.getSize().height);
+        pnlBody.setSize(490,pnlBody.getSize().height);
+        btnMenuCasos.setLocation(pnlHead.getSize().width - btnMenuCasos.getSize().width-20, btnMenuCasos.getLocation().y);
+    }
+
+    private void inicio2() {
+        listUser.setVisible(true);
+        this.setSize(656, this.getSize().height);
+        pnlHead.setSize(656, pnlHead.getSize().height);
+        pnlBody.setSize(656, pnlBody.getSize().height);
+        btnMenuCasos.setLocation(pnlHead.getSize().width - btnMenuCasos.getSize().width-20, btnMenuCasos.getLocation().y);
+    }
+
+    private void ListarProgramadores(String Departamento) {
+        try {
+            this.setLayout(null);
+            pnlHead.setLayout(null);
+            pnlBody.setLayout(null);
+            deptoB = depto.getDatos(Departamento);
+            empleado.getProTrabajando(String.valueOf(deptoB.getId_depto()), listUser);
+        } catch (Exception e) {
+            System.out.println(""+e);
+        }
+    }
 }

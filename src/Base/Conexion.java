@@ -62,6 +62,12 @@ public class Conexion {
         consulta.execute(sentencia);
 
     }
+    public static void InsertarP(String sql,PreparedStatement preparedStatement, Object... values) throws SQLException {
+        for (int i = 0; i < values.length; i++) {
+            preparedStatement.setObject(i + 1, values[i]);
+        }
+        preparedStatement.executeUpdate();
+    }
    
 
     public static void Eliminar(String sentencia) throws SQLException {

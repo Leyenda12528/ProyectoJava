@@ -19,6 +19,7 @@ import javax.swing.JTextField;
  * @author less_
  */
 public class Solicitud extends javax.swing.JFrame {
+    static int ban = 0;
     private Casos caso;
     private CasoBean casoB;
     private Color bien = new Color(59,134,139);
@@ -30,6 +31,7 @@ public class Solicitud extends javax.swing.JFrame {
         initComponents();
     }
     public Solicitud(String nombreDepartamento) throws SQLException {
+        ban = 1;
         initComponents();
         caso = new Casos();
         this.setLocationRelativeTo(null);
@@ -284,13 +286,13 @@ public class Solicitud extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+        ban = 0;
         this.dispose();
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMouseClicked
-//        if (txtNombre.getText().trim().length()>0) {
-//            if (txtDescripcion.getText().trim().length() > 0 && txtDescripcion.getText().trim().length() < 10000) {
-                casoB.setNombre_caso(txtNombre.getText().trim());
+        try {
+            casoB.setNombre_caso(txtNombre.getText().trim());
                 casoB.setDescrip_req(txtDescripcion.getText().trim());
                 casoB.setDescrip_rechazo("");
                 casoB.setDescripcion_jefedes("");
@@ -301,14 +303,12 @@ public class Solicitud extends javax.swing.JFrame {
                 caso.IngresarCasoJF(casoB);
                 JOptionPane.showMessageDialog(null, "Caso Solicitado");
                 this.dispose();
-//            }
-//            else 
-//                error(txtDescripcion);
-//        }
-//        else error(txtNombre);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnEnviarMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        ban = 0;
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 

@@ -9,11 +9,13 @@ import Beans.CasoBean;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.ListModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -104,20 +106,23 @@ public class Casos {
     public Casos() throws SQLException {
     }
 
-    public void IngresarCasoJF(CasoBean casoB) {
+    public void IngresarCasoJF(CasoBean casoB) throws ClassNotFoundException {
         try {
-            sqlC = "insert into caso values('"
-                + casoB.getId_caso()
-                + "','" + casoB.getNombre_caso()
-                + "','" + casoB.getDescrip_req()
-                + "','" + casoB.getDescrip_rechazo()
-                + "','" + casoB.getDescripcion_jefedes()
-                + "'," + casoB.getId_estado()
-                + "," + casoB.getPorcentaje()
-                + ",'" + casoB.getFecha_limite()
-                + "','" + casoB.getFecha_produccion() + "')";
-            Conexion.Insertar(sqlC);
-            Conexion.Cerrar();
+//            sqlC = "insert into caso values('"
+//                + casoB.getId_caso()
+//                + "','" + casoB.getNombre_caso()
+//                + "','" + casoB.getDescrip_req()
+//                + "','" + casoB.getDescrip_rechazo()
+//                + "','" + casoB.getDescripcion_jefedes()
+//                + "'," + casoB.getId_estado()
+//                + "," + casoB.getPorcentaje()
+//                + ",'" + casoB.getFecha_limite()
+//                + "','" + casoB.getFecha_produccion() + "')";
+            sqlC = "insert into caso values(?,?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = new Conexion().Obtener().prepareStatement(sqlC);
+            Conexion.InsertarP(sqlC, ps, casoB.getId_caso(),casoB.getNombre_caso(),casoB.getDescrip_req(),casoB.getDescrip_rechazo(),casoB.getDescripcion_jefedes(),casoB.getId_estado(),casoB.getPorcentaje(),casoB.getFecha_limite(),casoB.getFecha_produccion());
+            //Conexion.Insertar(sqlC);
+//            Conexion.Cerrar();
         } catch (SQLException e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, "ERROR Caso Ingreso JF " + e);
         }
@@ -125,29 +130,50 @@ public class Casos {
     
     public void IngresarCaso() throws SQLException {
     }
-
-    private void ConseguirCaso() {
+        
+    public void getSolicitudesJD(String DeptoCaso, JList<String> listUtilidad) {
         try {
-            sqlC = "SELECT        id_caso, nombre_caso, descrip_req, descrip_rechazo, descripcion_jefedes, id_estado, porcentaje_avance, fecha_limite, fecha_produccion\n"
-                    + "FROM            dbo.caso\n"
-                    + "WHERE        (id_estado = 1) AND (id_caso LIKE '%DEP1%')";
+            sqlC = "SELECT        id_caso"
+                    + " FROM            caso"
+                    + " WHERE        (id_estado = 1) AND (id_caso LIKE '%" + DeptoCaso + "%')";
             casos = Conexion.Buscar(sqlC);
-            CasoBean casoB;
-            ArrayList<CasoBean> lista = new ArrayList<>();
-            while (casos.next()) {                
-                casoB= new CasoBean();
-                casoB.setId_caso(casos.getString(1));
-                casoB.setNombre_caso(casos.getString(2));
-                lista.add(casoB);
+            DefaultListModel modelo = new DefaultListModel();
+            while (casos.next()) {
+                modelo.addElement(casos.getString(1));
             }
+            listUtilidad.setModel(modelo);
         } catch (SQLException e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, "ERROR Caso isVacia " + e);
-            //return null;
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    private String isVacia() {
+    
+    public CasoBean getDatosSolicitudJD(String idCaso){
         try {
-            sqlC = "select count(*) from caso";
+            sqlC = "SELECT        nombre_caso, descrip_req, id_estado, porcentaje_avance"
+                    + " FROM            caso"
+                    + " WHERE        id_caso='"+idCaso+"'";
+            casos = Conexion.Buscar(sqlC);
+            
+            if (casos.next()) {
+                casoB.setId_caso(idCaso);
+                casoB.setNombre_caso(casos.getString(1));
+                casoB.setDescrip_req(casos.getString(2));
+                casoB.setId_estado(casos.getInt(3));
+                casoB.setPorcentaje(casos.getInt(4));
+            }
+            return casoB;
+        } catch (SQLException e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }        
+    }
+    
+    private void ConseguirCaso() {
+        
+    }
+    private String isVacia(String code) {
+        try {
+            sqlC = "select count(*) from caso where id_caso like '" + code + "%'";
             casos = Conexion.Buscar(sqlC);
             if (casos.next()) {
                 int cant = casos.getInt(1);
@@ -203,8 +229,8 @@ public class Casos {
             int year= cal.get(Calendar.YEAR);            
             String code = nombreDepartamento.charAt(0)+ "" + nombreDepartamento.charAt(1)+ "" + nombreDepartamento.charAt(2) + "";
             String yer = String.valueOf(year).charAt(2)+ "" + String.valueOf(year).charAt(3) + "";
-            String cant = String.valueOf(Integer.parseInt(isVacia()) + 1);
-            while (cant.length()<3)
+            String cant = String.valueOf(Integer.parseInt(isVacia(code)) + 1);
+            while (cant.length() < 3)
                 cant = "0" + cant;
             String newId = code + yer + cant;
             casoB.setId_caso(newId);
@@ -213,6 +239,12 @@ public class Casos {
             return null;
         }
     }
+
+    
+
+    
+
+    
 
     
     

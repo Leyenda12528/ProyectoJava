@@ -8,6 +8,8 @@ package Base;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +33,7 @@ public class Empleado {
     private String correo;
     private String contraseña;
     private int id_estado;
-
+    
     public int getId_empleado() {
         return id_empleado;
     }
@@ -126,11 +128,26 @@ public class Empleado {
     public void IngresarEmpleado() throws SQLException{
     }
     
-    public String ConseguirEmpleadoLogin(String correo, String Contra){
-        //Code
+    public void getProTrabajando(String idDepto, JList<String> lista) throws ClassNotFoundException{
         try {
-            String sql ="select id_empleado, nombre_emp, id_cargo from empleados where correo = '"+correo+"' and password = '"+Contra+"'";
-            
+            String sql = "SELECT DISTINCT empleados.id_empleado, empleados.nombre_emp"
+                    + " FROM            empleados INNER JOIN"
+                    + "                         empleados_caso ON empleados.id_empleado = empleados_caso.id_empleado"
+                    + " WHERE        (empleados.id_estado_emp = 0) AND (empleados.id_depto = " + idDepto + ") AND (empleados.id_cargo = 3)";
+            empleados = Conexion.Buscar(sql);
+            DefaultListModel modelo = new DefaultListModel();
+            while (empleados.next()) {
+                modelo.addElement(empleados.getInt(1));
+            }
+            lista.setModel(modelo);
+        } catch (SQLException e) {
+            System.out.println(""+e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e.getMessage());
+        }
+    }
+    
+    public String getLogin(String correo, String Contra){
+        try {                        
             String sql1 = "SELECT  empleados.id_empleado, CONCAT(empleados.nombre_emp,' ',empleados.apellidos)"
                     + " ,empleados.id_cargo , cargo.nombre_cargo, empleados.id_depto, departamentos.nombre_depto "
                     + "FROM            empleados INNER JOIN"
@@ -138,7 +155,7 @@ public class Empleado {
                     + "                cargo ON empleados.id_cargo = cargo.id_cargo"
                     + " WHERE        (empleados.correo = '" + correo + "') AND (empleados.password_emp = '" + Contra + "')";
             
-            ResultSet dato = con.Buscar(sql1);
+            ResultSet dato = Conexion.Buscar(sql1);
             if (dato.next()) {
                 String mjs = "";
                 if (dato.getString(3).equals("0")) //Administrador
@@ -149,13 +166,11 @@ public class Empleado {
             }
             else return "";            
         } catch (SQLException ex) {
-           Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "ERROR AL BUSCAR");
+           Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
         return "";
         
-    }
-    public void MostrarEmpleados(){}
+    }    
     
     public void UpdateEmpleado() throws SQLException{
         //Code

@@ -320,7 +320,7 @@ public class Login extends javax.swing.JFrame {
         try {
              emp = new Empleado();
              String pass = new String(txtContraseña.getPassword());
-             String mjs = emp.ConseguirEmpleadoLogin(jTxtCorreo.getText(), pass);
+             String mjs = emp.getLogin(jTxtCorreo.getText(), pass);
 //             JOptionPane.showMessageDialog(null, "- "+pass+" - "+jTxtCorreo.getText());
 //             JOptionPane.showMessageDialog(null, ""+mjs);
              if (mjs.equals("")) {
