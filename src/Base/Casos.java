@@ -5,6 +5,7 @@
  */
 package Base;
 
+import Beans.BitacoraBean;
 import Beans.CasoBean;
 import java.sql.*;
 import java.util.ArrayList;
@@ -239,6 +240,13 @@ public class Casos {
             return null;
         }
     }
+
+//    void getBitacoraVacia(BitacoraBean bitaB, ArrayList<BitacoraBean> listbitaB) {
+//        try {
+//            sqlC="select id_caso, nombre_caso, porcentaje_avance from caso where";
+//        } catch (Exception e) {
+//        }
+//    }
 
     
 

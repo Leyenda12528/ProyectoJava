@@ -5,40 +5,52 @@
  */
 package JFrame;
 
+import Base.Bitacora;
 import Base.Departamento;
 import Base.Empleado;
+import Beans.BitacoraBean;
 import Beans.DepartamentoBean;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author less_
  */
-public class Bitacora extends javax.swing.JFrame {
+public class BitacoraC extends javax.swing.JFrame {
+    static int ban = 0;
     private int valor = 0 ;
+    private ArrayList<BitacoraBean> listBitaB = new ArrayList();
     private DepartamentoBean deptoB = new DepartamentoBean();
+    private BitacoraBean bitaB = new BitacoraBean();
     private Departamento depto;
     private Empleado empleado;
+    private Bitacora bita;
+    private String Cargo;
     /**
      * Creates new form Bitacora
      */
-    public Bitacora() {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        this.setLayout(null);
-        pnlHead.setLayout(null);
-        pnlBody.setLayout(null);
-        inicio();
+    public BitacoraC() {
+        initComponents();        
     }
 
-    public  Bitacora(String Departamento) throws SQLException {
+    public BitacoraC(String Departamento, String idCargo) throws SQLException {
+        ban = 1;
         initComponents();
-        this.setLocationRelativeTo(null);
-        depto = new Departamento();
-        empleado = new Empleado();
-        ListarProgramadores(Departamento);
-        inicio();
+        Inicio(idCargo);
+        if (idCargo.equals("1")) {//// JEFE DESARROLLO
+            depto = new Departamento();
+            empleado = new Empleado();
+            bita = new Bitacora();
+            ListarProgramadores(Departamento);
+            VerlistaProCaso(1);
+        }
+        else if (idCargo.equals("2")){// JEFE FUNCIONAL            
+            
+        }
     }
 
     /**
@@ -65,10 +77,16 @@ public class Bitacora extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        lblNombreCaso = new javax.swing.JLabel();
+        lblIdCaso = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         listUser = new javax.swing.JList<>();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        lblPorcentaje = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        listCasos = new javax.swing.JList<>();
+        lblCasoPro = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -149,27 +167,63 @@ public class Bitacora extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(59, 134, 139));
         jLabel10.setText("Observaciones");
 
+        txtDescripcion.setEditable(false);
         txtDescripcion.setColumns(20);
         txtDescripcion.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtDescripcion.setRows(5);
         txtDescripcion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
+        txtDescripcion.setEnabled(false);
         jScrollPane2.setViewportView(txtDescripcion);
 
-        jLabel11.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 51, 102));
-        jLabel11.setText("Nombre");
+        lblNombreCaso.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        lblNombreCaso.setForeground(new java.awt.Color(0, 51, 102));
+        lblNombreCaso.setText("Nombre");
 
-        jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 51, 102));
-        jLabel12.setText("Nombre");
+        lblIdCaso.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        lblIdCaso.setForeground(new java.awt.Color(0, 51, 102));
+        lblIdCaso.setText("Nombre");
 
-        listUser.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        listUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         listUser.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        listUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listUserMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(listUser);
+
+        jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(59, 134, 139));
+        jLabel13.setText("Programadores");
+
+        jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(59, 134, 139));
+        jLabel14.setText("Porcentaje");
+
+        lblPorcentaje.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        lblPorcentaje.setForeground(new java.awt.Color(0, 51, 102));
+        lblPorcentaje.setText("Nombre");
+
+        listCasos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        listCasos.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        listCasos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listCasosMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(listCasos);
+
+        lblCasoPro.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblCasoPro.setForeground(new java.awt.Color(59, 134, 139));
+        lblCasoPro.setText("Casos");
 
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
@@ -189,12 +243,23 @@ public class Bitacora extends javax.swing.JFrame {
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jLabel6))
-                        .addGap(36, 36, 36)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblNombreCaso, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                            .addComponent(lblIdCaso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel14)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblPorcentaje)))
+                .addGap(18, 18, 18)
+                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel11))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                            .addComponent(jLabel13)
+                            .addComponent(lblCasoPro))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlBodyLayout.setVerticalGroup(
@@ -205,43 +270,74 @@ public class Bitacora extends javax.swing.JFrame {
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlBodyLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(lblIdCaso))
                                 .addGap(18, 18, 18)
                                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
-                                    .addComponent(jLabel11)))
-                            .addComponent(jLabel12))
+                                    .addComponent(lblNombreCaso)))
+                            .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel14)
+                                .addComponent(lblPorcentaje)))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCasoPro)
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        getContentPane().add(pnlBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 640, 590));
+        getContentPane().add(pnlBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 640, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        ban = 0;
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
     private void btnMenuCasosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuCasosMouseClicked
         if (valor == 0) {
-            inicio2();
+            Mostrar();
             valor = 1;
         }
         else{ 
-            inicio();
+            Ocultar();
             valor = 0;
         }
     }//GEN-LAST:event_btnMenuCasosMouseClicked
+
+    private void listUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listUserMouseClicked
+        if (Cargo.equals("1")) {
+            if (listUser.getModel().getSize() > 0) {
+                int idProg = Integer.parseInt(String.valueOf(listUser.getSelectedValue()));
+                bita.getBitacoraProgramador(idProg, listBitaB);
+                if (!listBitaB.isEmpty()) {
+                    VerlistaProCaso(0);
+                    LlenarlistaProCaso();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "El Programador con ID "+String.valueOf(listUser.getSelectedValue())+"\nAun no ha realizado una bitacora");
+            }
+        }
+    }//GEN-LAST:event_listUserMouseClicked
+
+    private void listCasosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listCasosMouseClicked
+        MostrarBitacora(listCasos.getSelectedValue());
+    }//GEN-LAST:event_listCasosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -260,20 +356,21 @@ public class Bitacora extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Bitacora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BitacoraC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Bitacora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BitacoraC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Bitacora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BitacoraC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Bitacora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BitacoraC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Bitacora().setVisible(true);
+                new BitacoraC().setVisible(true);
             }
         });
     }
@@ -282,8 +379,8 @@ public class Bitacora extends javax.swing.JFrame {
     private javax.swing.JLabel btnMenuCasos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -292,6 +389,12 @@ public class Bitacora extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel lblCasoPro;
+    private javax.swing.JLabel lblIdCaso;
+    private javax.swing.JLabel lblNombreCaso;
+    private javax.swing.JLabel lblPorcentaje;
+    private javax.swing.JList<String> listCasos;
     private javax.swing.JList<String> listUser;
     private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlHead;
@@ -300,7 +403,18 @@ public class Bitacora extends javax.swing.JFrame {
     public static javax.swing.JTextField txtProgramador;
     // End of variables declaration//GEN-END:variables
 
-    private void inicio() {
+    private void VerlistaProCaso(int i){
+        if (i == 0) {
+            lblCasoPro.setVisible(true);
+            listCasos.setVisible(true);
+        }
+        else{
+            lblCasoPro.setVisible(false);
+            listCasos.setVisible(false);
+        }
+    }
+    
+    private void Ocultar() {
         listUser.setVisible(false);
         this.setSize(490,this.getSize().height);
         pnlHead.setSize(490,pnlHead.getSize().height);
@@ -308,7 +422,7 @@ public class Bitacora extends javax.swing.JFrame {
         btnMenuCasos.setLocation(pnlHead.getSize().width - btnMenuCasos.getSize().width-20, btnMenuCasos.getLocation().y);
     }
 
-    private void inicio2() {
+    private void Mostrar() {
         listUser.setVisible(true);
         this.setSize(656, this.getSize().height);
         pnlHead.setSize(656, pnlHead.getSize().height);
@@ -317,14 +431,58 @@ public class Bitacora extends javax.swing.JFrame {
     }
 
     private void ListarProgramadores(String Departamento) {
-        try {
-            this.setLayout(null);
-            pnlHead.setLayout(null);
-            pnlBody.setLayout(null);
+        try {            
             deptoB = depto.getDatos(Departamento);
             empleado.getProTrabajando(String.valueOf(deptoB.getId_depto()), listUser);
         } catch (Exception e) {
             System.out.println(""+e);
         }
+    }
+
+    private void Inicio(String idCargo) {
+        this.setLocationRelativeTo(null);
+        this.setLayout(null);
+        pnlHead.setLayout(null);
+        pnlBody.setLayout(null);
+        lblIdCaso.setVisible(false);
+        lblNombreCaso.setVisible(false);
+        lblPorcentaje.setVisible(false);
+        Ocultar();
+        this.Cargo = idCargo;
+    }
+
+    private void LlenarlistaProCaso() {
+        listCasos.clearSelection();        
+        DefaultListModel modelo = new DefaultListModel();
+        for (BitacoraBean bitacoraBean : listBitaB) {
+            modelo.addElement(bitacoraBean.getId_caso());
+        }
+        listCasos.setModel(modelo);
+    }
+
+    private void MostrarBitacora(String selectedValue) {
+        for (BitacoraBean bitacoraBean : listBitaB) {
+            if (bitacoraBean.getId_caso().equals(selectedValue)) {
+                lblIdCaso.setVisible(true);
+                lblNombreCaso.setVisible(true);
+                lblPorcentaje.setVisible(true);
+                lblIdCaso.setText(bitacoraBean.getId_caso());
+                lblNombreCaso.setText(bitacoraBean.getNombre_caso());
+                lblPorcentaje.setText(bitacoraBean.getPorcentaje()+" %");
+                txtDescripcion.setText(bitacoraBean.getDescripActiv());
+                txtObservaciones.setText(bitacoraBean.getObservaciones());
+                break;
+            }
+        }
+    }
+
+    private void dato() {
+//                    JOptionPane.showMessageDialog(null, ""+listUser.getSelectedValue());
+//            String valor = listUser.getSelectedValue();
+//                JOptionPane.showMessageDialog(null, ""+valor);
+            //int id = Integer.parseInt(valor);//Integer.parseInt(listUser.getSelectedValue().toString());            
+//            bita.getBitacoraProgramador(id, listBitaB);
+            VerlistaProCaso(0);
+//            LlenarlistaProCaso();
     }
 }

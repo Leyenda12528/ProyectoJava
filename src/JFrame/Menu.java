@@ -8,11 +8,9 @@ package JFrame;
 import Base.Casos;
 import Beans.CasoBean;
 import java.awt.Component;
-import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.ListModel;
+
 
 /**
  *
@@ -657,8 +655,8 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnBitacorasJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBitacorasJDMouseClicked
         try {
-            Bitacora n = new Bitacora(lblDepartamento.getText());
-        n.setVisible(true);
+            BitacoraC n = new BitacoraC(lblDepartamento.getText(), rowfields[2]);
+            n.setVisible(true);
         } catch (Exception e) {
         }
         //para bitacoras con Programadores
