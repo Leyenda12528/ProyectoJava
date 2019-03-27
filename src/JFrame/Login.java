@@ -6,6 +6,7 @@
 package JFrame;
 
 import Base.Empleado;
+import Beans.EmpleadoBean;
 import Help.Help;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -21,6 +22,7 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
     private Color origin;
     private Help h  = new Help();
+    private EmpleadoBean empB = new EmpleadoBean();
     private Empleado emp;
     /**
      * Creates new form Login
@@ -318,18 +320,16 @@ public class Login extends javax.swing.JFrame {
     private void pnlLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlLoginMouseClicked
         pnlLogin.setBackground(new Color (3,147,90));
         try {
-             emp = new Empleado();
+             emp = new Empleado();             
              String pass = new String(txtContraseña.getPassword());
-             String mjs = emp.getLogin(jTxtCorreo.getText(), pass);
-//             JOptionPane.showMessageDialog(null, "- "+pass+" - "+jTxtCorreo.getText());
-//             JOptionPane.showMessageDialog(null, ""+mjs);
-             if (mjs.equals("")) {
+             if (emp.existUSer(jTxtCorreo.getText(), pass, empB)) {
+                 emp.getLogin(empB);                 
+                 new Menu(empB).setVisible(true);
+                 this.dispose();                
+            }
+             else{
                  lblErrorLogin.setText("USUARIO/CONTRASEÑA INCORRECTO");
                  lblErrorLogin.setVisible(true);
-            }
-             else {
-                 new Menu(mjs).setVisible(true);
-                 this.dispose();
              }
         } catch (SQLException e) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);

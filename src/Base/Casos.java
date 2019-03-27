@@ -26,8 +26,9 @@ import javax.swing.table.DefaultTableModel;
 public class Casos {
 
     private Conexion con = new Conexion();
-    private ResultSet casos;
     private CasoBean casoB = new CasoBean();
+    private ResultSet casos = null;
+    private PreparedStatement ps = null;
 
 //    public String getId_caso() {
 //        return id_caso;
@@ -109,21 +110,9 @@ public class Casos {
 
     public void IngresarCasoJF(CasoBean casoB) throws ClassNotFoundException {
         try {
-//            sqlC = "insert into caso values('"
-//                + casoB.getId_caso()
-//                + "','" + casoB.getNombre_caso()
-//                + "','" + casoB.getDescrip_req()
-//                + "','" + casoB.getDescrip_rechazo()
-//                + "','" + casoB.getDescripcion_jefedes()
-//                + "'," + casoB.getId_estado()
-//                + "," + casoB.getPorcentaje()
-//                + ",'" + casoB.getFecha_limite()
-//                + "','" + casoB.getFecha_produccion() + "')";
             sqlC = "insert into caso values(?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = new Conexion().Obtener().prepareStatement(sqlC);
             Conexion.InsertarP(sqlC, ps, casoB.getId_caso(),casoB.getNombre_caso(),casoB.getDescrip_req(),casoB.getDescrip_rechazo(),casoB.getDescripcion_jefedes(),casoB.getId_estado(),casoB.getPorcentaje(),casoB.getFecha_limite(),casoB.getFecha_produccion());
-            //Conexion.Insertar(sqlC);
-//            Conexion.Cerrar();
         } catch (SQLException e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, "ERROR Caso Ingreso JF " + e);
         }
@@ -136,14 +125,14 @@ public class Casos {
         try {
             sqlC = "SELECT        id_caso"
                     + " FROM            caso"
-                    + " WHERE        (id_estado = 1) AND (id_caso LIKE '%" + DeptoCaso + "%')";
+                    + " WHERE        (id_estado = 1) AND (id_caso LIKE '%"+DeptoCaso+"%')";
             casos = Conexion.Buscar(sqlC);
             DefaultListModel modelo = new DefaultListModel();
-            while (casos.next()) {
+            while (casos.next()) 
                 modelo.addElement(casos.getString(1));
-            }
+            
             listUtilidad.setModel(modelo);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -152,7 +141,7 @@ public class Casos {
         try {
             sqlC = "SELECT        nombre_caso, descrip_req, id_estado, porcentaje_avance"
                     + " FROM            caso"
-                    + " WHERE        id_caso='"+idCaso+"'";
+                    + " WHERE        id_caso= "+idCaso+"";
             casos = Conexion.Buscar(sqlC);
             
             if (casos.next()) {
@@ -163,7 +152,7 @@ public class Casos {
                 casoB.setPorcentaje(casos.getInt(4));
             }
             return casoB;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }        
@@ -241,12 +230,21 @@ public class Casos {
         }
     }
 
-//    void getBitacoraVacia(BitacoraBean bitaB, ArrayList<BitacoraBean> listbitaB) {
-//        try {
-//            sqlC="select id_caso, nombre_caso, porcentaje_avance from caso where";
-//        } catch (Exception e) {
-//        }
-//    }
+    public void getIDCaso(String idBeginCaso, JList<String> listUser) {
+        try {
+            sqlC = "SELECT        id_caso"
+                    + " FROM            dbo.caso"
+                    + " WHERE        (id_caso LIKE '%"+idBeginCaso+"%') and (id_estado <> 1) AND (id_estado <> 2) AND (id_estado <> 7)";
+            casos = Conexion.Buscar(sqlC);
+            DefaultListModel modelo = new DefaultListModel();
+            while (casos.next()) {
+                modelo.addElement(casos.getString(1));
+                System.out.println(""+casos.getString(1));}
+            listUser.setModel(modelo);
+            
+        } catch (Exception e) {
+        }
+    }
 
     
 

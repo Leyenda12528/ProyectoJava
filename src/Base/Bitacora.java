@@ -53,7 +53,30 @@ public class Bitacora {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    public void MostrarBitacora(){}
+    
+    public void getBitacoraCaso(String idCaso, BitacoraBean bitaBsend) {
+        try {
+            sql = "SELECT        dbo.bitacoras.id_caso, dbo.caso.nombre_caso, dbo.bitacoras.descripcion_actividad, dbo.caso.porcentaje_avance, dbo.bitacoras.observaciones"
+                    + " FROM            dbo.caso INNER JOIN"
+                    + "                         dbo.bitacoras ON dbo.caso.id_caso = dbo.bitacoras.id_caso"
+                    + " WHERE        dbo.caso.id_caso = ?";
+            ps = con.Obtener().prepareStatement(sql);
+            ps.setObject(1, idCaso);
+            bitacora = ps.executeQuery();
+            while (bitacora.next()) {
+                bitaBsend.setId_caso(bitacora.getString(1));
+                bitaBsend.setNombre_caso(bitacora.getString(2));
+                bitaBsend.setDescripActiv(bitacora.getString(3));
+                bitaBsend.setPorcentaje(bitacora.getInt(4));
+                bitaBsend.setObservaciones(bitacora.getString(5));
+                System.out.println(""+bitacora.getString(1));
+            }
+        } catch (Exception e) {
+            System.out.println(""+e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+        
     
     private void UpdateBitacora() throws SQLException{
         
@@ -63,4 +86,6 @@ public class Bitacora {
     private void ByeBitcora() throws SQLException{
         
     }
+
+    
 }

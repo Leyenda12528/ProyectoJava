@@ -10,10 +10,40 @@ package Beans;
  * @author jorge
  */
 public class EmpleadoBean {
+
+    /**
+     * @return the nombreCargo
+     */
+    public String getNombreCargo() {
+        return nombreCargo;
+    }
+
+    /**
+     * @param nombreCargo the nombreCargo to set
+     */
+    public void setNombreCargo(String nombreCargo) {
+        this.nombreCargo = nombreCargo;
+    }
+
+    /**
+     * @return the nombreDepto
+     */
+    public String getNombreDepto() {
+        return nombreDepto;
+    }
+
+    /**
+     * @param nombreDepto the nombreDepto to set
+     */
+    public void setNombreDepto(String nombreDepto) {
+        this.nombreDepto = nombreDepto;
+    }
     private int id_empleado;
     private String emp_nombre;
     private String emp_apellidos;
     private int cargo;
+    private String nombreCargo;
+    private String nombreDepto;
     private int depto;
     private int edad;
     private String direccion;

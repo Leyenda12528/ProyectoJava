@@ -6,6 +6,7 @@
 package JFrame;
 
 import Base.Bitacora;
+import Base.Casos;
 import Base.Departamento;
 import Base.Empleado;
 import Beans.BitacoraBean;
@@ -29,7 +30,7 @@ public class BitacoraC extends javax.swing.JFrame {
     private Departamento depto;
     private Empleado empleado;
     private Bitacora bita;
-    private String Cargo;
+    private int IdCargo;
     /**
      * Creates new form Bitacora
      */
@@ -37,19 +38,20 @@ public class BitacoraC extends javax.swing.JFrame {
         initComponents();        
     }
 
-    public BitacoraC(String Departamento, String idCargo) throws SQLException {
+    public BitacoraC(String Departamento, int idCargo) throws SQLException {
         ban = 1;
         initComponents();
         Inicio(idCargo);
-        if (idCargo.equals("1")) {//// JEFE DESARROLLO
+        bita = new Bitacora();
+        if (idCargo == 1) {//// JEFE DESARROLLO
             depto = new Departamento();
-            empleado = new Empleado();
-            bita = new Bitacora();
+            empleado = new Empleado();            
             ListarProgramadores(Departamento);
             VerlistaProCaso(1);
         }
-        else if (idCargo.equals("2")){// JEFE FUNCIONAL            
-            
+        else if (idCargo == 2){// JEFE FUNCIONAL            
+            lblProOoCasos.setText("Casos Aperturados");
+            ListarCasos(Departamento);
         }
     }
 
@@ -79,12 +81,12 @@ public class BitacoraC extends javax.swing.JFrame {
         txtDescripcion = new javax.swing.JTextArea();
         lblNombreCaso = new javax.swing.JLabel();
         lblIdCaso = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        ScrollListUser = new javax.swing.JScrollPane();
         listUser = new javax.swing.JList<>();
-        jLabel13 = new javax.swing.JLabel();
+        lblProOoCasos = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         lblPorcentaje = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        ScrollListCasos = new javax.swing.JScrollPane();
         listCasos = new javax.swing.JList<>();
         lblCasoPro = new javax.swing.JLabel();
 
@@ -95,6 +97,7 @@ public class BitacoraC extends javax.swing.JFrame {
         jLabel8.setText("Codigo de caso");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -172,7 +175,6 @@ public class BitacoraC extends javax.swing.JFrame {
         txtDescripcion.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtDescripcion.setRows(5);
         txtDescripcion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
-        txtDescripcion.setEnabled(false);
         jScrollPane2.setViewportView(txtDescripcion);
 
         lblNombreCaso.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -194,11 +196,11 @@ public class BitacoraC extends javax.swing.JFrame {
                 listUserMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(listUser);
+        ScrollListUser.setViewportView(listUser);
 
-        jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(59, 134, 139));
-        jLabel13.setText("Programadores");
+        lblProOoCasos.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblProOoCasos.setForeground(new java.awt.Color(59, 134, 139));
+        lblProOoCasos.setText("Programadores");
 
         jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(59, 134, 139));
@@ -219,7 +221,7 @@ public class BitacoraC extends javax.swing.JFrame {
                 listCasosMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(listCasos);
+        ScrollListCasos.setViewportView(listCasos);
 
         lblCasoPro.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblCasoPro.setForeground(new java.awt.Color(59, 134, 139));
@@ -253,13 +255,12 @@ public class BitacoraC extends javax.swing.JFrame {
                         .addComponent(lblPorcentaje)))
                 .addGap(18, 18, 18)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(ScrollListUser, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(ScrollListCasos, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(lblCasoPro))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(lblCasoPro)
+                        .addGap(0, 113, Short.MAX_VALUE))
+                    .addComponent(lblProOoCasos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlBodyLayout.setVerticalGroup(
@@ -289,13 +290,13 @@ public class BitacoraC extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
+                        .addComponent(lblProOoCasos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ScrollListUser, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblCasoPro)
                         .addGap(10, 10, 10)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ScrollListCasos, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -321,7 +322,7 @@ public class BitacoraC extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuCasosMouseClicked
 
     private void listUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listUserMouseClicked
-        if (Cargo.equals("1")) {
+        if (IdCargo == 1) {
             if (listUser.getModel().getSize() > 0) {
                 int idProg = Integer.parseInt(String.valueOf(listUser.getSelectedValue()));
                 bita.getBitacoraProgramador(idProg, listBitaB);
@@ -331,6 +332,15 @@ public class BitacoraC extends javax.swing.JFrame {
                 }
                 else
                     JOptionPane.showMessageDialog(null, "El Programador con ID "+String.valueOf(listUser.getSelectedValue())+"\nAun no ha realizado una bitacora");
+            }
+        }
+        else if (IdCargo == 2) {
+            if (listUser.getModel().getSize() > 0) {
+                String idCaso1 = String.valueOf(listUser.getSelectedValue());
+                bita.getBitacoraCaso(idCaso1, bitaB);
+                if (bitaB.getId_caso().length() > 0) {
+                    MostrarBitacoraJF();
+                }
             }
         }
     }//GEN-LAST:event_listUserMouseClicked
@@ -376,10 +386,11 @@ public class BitacoraC extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane ScrollListCasos;
+    private javax.swing.JScrollPane ScrollListUser;
     private javax.swing.JLabel btnMenuCasos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -388,12 +399,11 @@ public class BitacoraC extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblCasoPro;
     private javax.swing.JLabel lblIdCaso;
     private javax.swing.JLabel lblNombreCaso;
     private javax.swing.JLabel lblPorcentaje;
+    private javax.swing.JLabel lblProOoCasos;
     private javax.swing.JList<String> listCasos;
     private javax.swing.JList<String> listUser;
     private javax.swing.JPanel pnlBody;
@@ -406,16 +416,16 @@ public class BitacoraC extends javax.swing.JFrame {
     private void VerlistaProCaso(int i){
         if (i == 0) {
             lblCasoPro.setVisible(true);
-            listCasos.setVisible(true);
+            ScrollListCasos.setVisible(true);            
         }
         else{
             lblCasoPro.setVisible(false);
-            listCasos.setVisible(false);
+            ScrollListCasos.setVisible(false);
         }
     }
     
     private void Ocultar() {
-        listUser.setVisible(false);
+        ScrollListUser.setVisible(false);        
         this.setSize(490,this.getSize().height);
         pnlHead.setSize(490,pnlHead.getSize().height);
         pnlBody.setSize(490,pnlBody.getSize().height);
@@ -423,7 +433,7 @@ public class BitacoraC extends javax.swing.JFrame {
     }
 
     private void Mostrar() {
-        listUser.setVisible(true);
+        ScrollListUser.setVisible(true);
         this.setSize(656, this.getSize().height);
         pnlHead.setSize(656, pnlHead.getSize().height);
         pnlBody.setSize(656, pnlBody.getSize().height);
@@ -438,17 +448,25 @@ public class BitacoraC extends javax.swing.JFrame {
             System.out.println(""+e);
         }
     }
+     private void ListarCasos(String Departamento) {
+         try {
+             listUser.clearSelection();
+             Casos caso = new Casos();
+             caso.getIDCaso(Departamento.substring(0, 3),listUser);
+             if (listUser.getModel().getSize()<0) 
+                 JOptionPane.showMessageDialog(null, "No han aperturado ningun caso");             
+         } catch (Exception e) {
+         }
+    }
 
-    private void Inicio(String idCargo) {
+    private void Inicio(int idCargo) {
         this.setLocationRelativeTo(null);
         this.setLayout(null);
         pnlHead.setLayout(null);
         pnlBody.setLayout(null);
-        lblIdCaso.setVisible(false);
-        lblNombreCaso.setVisible(false);
-        lblPorcentaje.setVisible(false);
-        Ocultar();
-        this.Cargo = idCargo;
+        labelsDatosBita(0);
+        Ocultar();        
+        this.IdCargo = idCargo;
     }
 
     private void LlenarlistaProCaso() {
@@ -459,13 +477,22 @@ public class BitacoraC extends javax.swing.JFrame {
         }
         listCasos.setModel(modelo);
     }
+    private void labelsDatosBita(int i) {
+        if (i == 0) {
+            lblIdCaso.setVisible(false);
+            lblNombreCaso.setVisible(false);
+            lblPorcentaje.setVisible(false);
+        } else {
+            lblIdCaso.setVisible(true);
+            lblNombreCaso.setVisible(true);
+            lblPorcentaje.setVisible(true);
+        }
+    }
 
     private void MostrarBitacora(String selectedValue) {
         for (BitacoraBean bitacoraBean : listBitaB) {
             if (bitacoraBean.getId_caso().equals(selectedValue)) {
-                lblIdCaso.setVisible(true);
-                lblNombreCaso.setVisible(true);
-                lblPorcentaje.setVisible(true);
+                labelsDatosBita(1);
                 lblIdCaso.setText(bitacoraBean.getId_caso());
                 lblNombreCaso.setText(bitacoraBean.getNombre_caso());
                 lblPorcentaje.setText(bitacoraBean.getPorcentaje()+" %");
@@ -476,13 +503,17 @@ public class BitacoraC extends javax.swing.JFrame {
         }
     }
 
-    private void dato() {
-//                    JOptionPane.showMessageDialog(null, ""+listUser.getSelectedValue());
-//            String valor = listUser.getSelectedValue();
-//                JOptionPane.showMessageDialog(null, ""+valor);
-            //int id = Integer.parseInt(valor);//Integer.parseInt(listUser.getSelectedValue().toString());            
-//            bita.getBitacoraProgramador(id, listBitaB);
-            VerlistaProCaso(0);
-//            LlenarlistaProCaso();
+    private void MostrarBitacoraJF() {
+        labelsDatosBita(1);
+        lblIdCaso.setText(bitaB.getId_caso());
+        lblNombreCaso.setText(bitaB.getNombre_caso());
+        lblPorcentaje.setText(bitaB.getPorcentaje() + " %");
+        txtDescripcion.setText(bitaB.getDescripActiv());
+        txtObservaciones.setText(bitaB.getObservaciones());
     }
+    
+
+   
+
+
 }

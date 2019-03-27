@@ -6,7 +6,10 @@
 package JFrame;
 
 import Base.Casos;
+import Base.Empleado;
 import Beans.CasoBean;
+import Beans.DepartamentoBean;
+import Beans.EmpleadoBean;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,19 +20,20 @@ import javax.swing.JPanel;
  * @author less_
  */
 public class Menu extends javax.swing.JFrame {
-    private String caden;
+    private int sen;
     private String[] rowfields;
+    private EmpleadoBean User = new EmpleadoBean();
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
     }
-    public Menu(String cadena) {
+
+    public Menu(EmpleadoBean empB) {
         initComponents();
         this.setLocationRelativeTo(null);
-        caden = cadena;
-        rowfields = cadena.split("-");
+        User = empB;
         inicio();
     }
 
@@ -628,8 +632,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void lblConfigPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConfigPerfilMouseClicked
-        Perfil perfil = new Perfil(caden);
-        perfil.setVisible(true);
+//        Perfil perfil = new Perfil(caden);
+//        perfil.setVisible(true);
+//      SOLO PARA CAMBIAR CONTRASEÑA
     }//GEN-LAST:event_lblConfigPerfilMouseClicked
 
     private void btnManteniEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManteniEmpleadosMouseClicked
@@ -639,6 +644,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnSolicitudesJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitudesJDMouseClicked
         try {
+            //JEFE DESARROLLO......listando los casos solicitados
             String DeptoCaso = lblDepartamento.getText().charAt(0) + "" + lblDepartamento.getText().charAt(1) + "" + lblDepartamento.getText().charAt(2);
             Casos casoSoli = new Casos();            
             casoSoli.getSolicitudesJD(DeptoCaso, listUtilidad);
@@ -648,6 +654,7 @@ public class Menu extends javax.swing.JFrame {
                 pnlCasos.setVisible(true);                
                 btnNoCasoJD.setLocation(btnVer.getLocation());
                 btnVer.setVisible(false);
+                sen = 1;
             }
         } catch (Exception e) {            
         }
@@ -655,22 +662,38 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnBitacorasJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBitacorasJDMouseClicked
         try {
-            BitacoraC n = new BitacoraC(lblDepartamento.getText(), rowfields[2]);
-            n.setVisible(true);
+            if (BitacoraC.ban == 0) {
+                BitacoraC n = new BitacoraC(User.getNombreDepto(), User.getCargo());
+                n.setVisible(true);
+            }
         } catch (Exception e) {
         }
-        //para bitacoras con Programadores
+        //JEFE DESARROLLO.... viendo la bitacora de su lista de programadores
     }//GEN-LAST:event_btnBitacorasJDMouseClicked
 
     private void btnListaProgramadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnListaProgramadoresMouseClicked
-        //lista con los nombres de los programadores
+        try {
+            //JEFE DESARROLLO......Listando sus programadores
+            Empleado emp = new Empleado();
+            emp.getProgramadores(listUtilidad, User.getDepto());
+            if (listUtilidad.getModel().getSize()<0) 
+                JOptionPane.showMessageDialog(null, "No tiene Programadores a su cargo");
+            else{
+                pnlCasos.setVisible(true);
+                btnNoCasoJD.setVisible(false);
+                btnOkCasoJD.setVisible(false);
+                btnVer.setVisible(false);
+                sen = 0;
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnListaProgramadoresMouseClicked
 
     private void btnSolicitarCasoJFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitarCasoJFMouseClicked
 
-        try {//Enviando Nombre del departamento
+        try {//JEFE FUNCIONAL ...Solicitando caso .....enviando Nombre del departamento
             if (Solicitud.ban == 0) {
-                Solicitud soli = new Solicitud(rowfields[5]);
+                Solicitud soli = new Solicitud(User.getNombreDepto());
                 soli.setVisible(true);
             }
             else 
@@ -681,7 +704,14 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnBitacorasJFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBitacorasJFMouseClicked
         
-        //bitacoras por departamento
+        try {
+            if (BitacoraC.ban == 0) {
+                BitacoraC n = new BitacoraC(User.getNombreDepto(), User.getCargo());
+                n.setVisible(true);
+            }
+        } catch (Exception e) {
+        }
+        //para bitacoras con Programadores
     }//GEN-LAST:event_btnBitacorasJFMouseClicked
 
     private void btnListaEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnListaEmpleadosMouseClicked
@@ -689,7 +719,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListaEmpleadosMouseClicked
 
     private void btnOkCasoJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOkCasoJDMouseClicked
-        try {
+        try {///JEFE DESARROLLO ....aceptando caso
             if (DescripcionCaso.ban == 0) {
                 DescripcionCaso descrip = new DescripcionCaso(0, listUtilidad.getSelectedValue().toString());
                 descrip.setVisible(true);                
@@ -700,7 +730,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOkCasoJDMouseClicked
 
     private void btnNoCasoJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNoCasoJDMouseClicked
-        try {
+        try {///JEFE DESARROLLO ....rechazando caso
             if (DescripcionCaso.ban == 0) {
                 DescripcionCaso descrip = new DescripcionCaso(1, listUtilidad.getSelectedValue().toString());
                 descrip.setVisible(true);                
@@ -716,8 +746,10 @@ public class Menu extends javax.swing.JFrame {
 
     private void listUtilidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listUtilidadMouseClicked
         //JOptionPane.showMessageDialog(null, ""+listUtilidad.getSelectedValue().toString());
-        btnOkCasoJD.setVisible(true);
-        btnNoCasoJD.setVisible(true);
+        if (User.getCargo() == 1 && sen ==1 ) {
+            btnOkCasoJD.setVisible(true);
+            btnNoCasoJD.setVisible(true);
+        }
     }//GEN-LAST:event_listUtilidadMouseClicked
 
     /**
@@ -802,29 +834,30 @@ public class Menu extends javax.swing.JFrame {
         pnlCasos.setLayout(null);
         cerrarCasoJD();
         switch (llenarDatos()) {
-            case "0":
+            case 0:
                 darMenu(pnlAdmin);
                 break;
-            case "1":
+            case 1:
                 darMenu(pnlJD);
                 break;
-            case "2":
+            case 2:
                 darMenu(pnlJF);
                 break;
-            case "3":
+            case 3:
                 break;
-            case "4":
+            case 4:
                 break;
         }        
     }
 
-    private String llenarDatos() {        
-        if(rowfields[2].equals("0")) lblDepartamento.setText("");
-        else lblDepartamento.setText(rowfields[5]);
-        lblID.setText("ID " + rowfields[0]);
-        lblNombre.setText(rowfields[1]);
-        lblCargo.setText(rowfields[3]);
-        return rowfields[2];
+    private int llenarDatos() {
+        if(User.getCargo() == 0) lblDepartamento.setText("");
+        else lblDepartamento.setText(User.getNombreDepto());
+        
+        lblID.setText("ID " + User.getId_empleado());
+        lblNombre.setText(User.getEmp_nombre());
+        lblCargo.setText(User.getNombreCargo());
+        return User.getCargo();
     }
 
     private void darMenu(JPanel pnlMostrar) {

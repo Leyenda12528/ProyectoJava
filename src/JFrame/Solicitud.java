@@ -23,7 +23,6 @@ public class Solicitud extends javax.swing.JFrame {
     private Casos caso;
     private CasoBean casoB;
     private Color bien = new Color(59,134,139);
-    private int sen=0;
     /**
      * Creates new form Solicitud
      */
@@ -40,7 +39,6 @@ public class Solicitud extends javax.swing.JFrame {
         btnEnviar.setVisible(false);
         error(txtDescripcion);
         error(txtNombre);
-        sen = 0;
     }
 
     /**

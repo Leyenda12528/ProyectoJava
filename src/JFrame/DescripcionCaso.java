@@ -129,7 +129,6 @@ public class DescripcionCaso extends javax.swing.JFrame {
         txtDescripJF.setRows(5);
         txtDescripJF.setAutoscrolls(false);
         txtDescripJF.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
-        txtDescripJF.setEnabled(false);
         jScrollPane1.setViewportView(txtDescripJF);
 
         btnEnviar.setBackground(new java.awt.Color(59, 134, 139));
