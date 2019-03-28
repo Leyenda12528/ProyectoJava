@@ -54,7 +54,6 @@ public class Conexion {
     public static void Cerrar() throws SQLException {
         if (cnx != null) {
             cnx.close();
-            JOptionPane.showMessageDialog(null, "cerar");
         }
     }
 
@@ -62,6 +61,12 @@ public class Conexion {
         PreparedStatement consulta = cnx.prepareStatement(sentencia);
         consulta.execute(sentencia);
 
+    }
+    public static void InsertarP(String sql,PreparedStatement preparedStatement, Object... values) throws SQLException {
+        for (int i = 0; i < values.length; i++) {
+            preparedStatement.setObject(i + 1, values[i]);
+        }
+        preparedStatement.executeUpdate();
     }
    
 

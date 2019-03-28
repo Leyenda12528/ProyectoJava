@@ -5,17 +5,37 @@
  */
 package JFrame;
 
+import Base.Casos;
+import Beans.CasoBean;
+import java.awt.Color;
+import java.sql.SQLException;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author less_
  */
 public class DescripcionCaso extends javax.swing.JFrame {
-
+    private int tipo;
+    private Color bien = new Color(59,134,139);
+    private CasoBean casoB = new CasoBean();
+    private Casos casos;
+    static int ban = 0;
     /**
      * Creates new form DescripcionCaso
      */
     public DescripcionCaso() {
         initComponents();
+    }
+
+    public  DescripcionCaso(int tipo, String Idcaso) throws SQLException{
+        ban = 1;
+        initComponents();
+        casos = new Casos();
+        this.setLocationRelativeTo(null);
+        this.tipo = tipo;
+        inicio(Idcaso);       
     }
 
     /**
@@ -33,15 +53,17 @@ public class DescripcionCaso extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        lblIndicacion = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtDescripcion = new javax.swing.JTextArea();
+        txtDescripJF = new javax.swing.JTextArea();
         btnEnviar = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        lblBtn = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        lblIDCaso = new javax.swing.JLabel();
+        lblNombreCaso = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtDescripJD = new javax.swing.JTextArea();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -60,7 +82,13 @@ public class DescripcionCaso extends javax.swing.JFrame {
 
         jLabel4.setText("jLabel4");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(59, 134, 139));
@@ -73,32 +101,35 @@ public class DescripcionCaso extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(103, 103, 103)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(164, Short.MAX_VALUE)
                 .addComponent(jLabel5)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addGap(158, 158, 158))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel5)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 70));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 70));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(59, 134, 139));
-        jLabel2.setText("Ingrese descripción detallada de las actividades a realizar");
+        lblIndicacion.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblIndicacion.setForeground(new java.awt.Color(59, 134, 139));
+        lblIndicacion.setText("Ingrese descripción detallada de las actividades a realizar");
 
-        txtDescripcion.setColumns(20);
-        txtDescripcion.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        txtDescripcion.setRows(5);
-        txtDescripcion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
-        jScrollPane1.setViewportView(txtDescripcion);
+        txtDescripJF.setEditable(false);
+        txtDescripJF.setColumns(20);
+        txtDescripJF.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtDescripJF.setLineWrap(true);
+        txtDescripJF.setRows(5);
+        txtDescripJF.setAutoscrolls(false);
+        txtDescripJF.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
+        jScrollPane1.setViewportView(txtDescripJF);
 
         btnEnviar.setBackground(new java.awt.Color(59, 134, 139));
         btnEnviar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -107,9 +138,9 @@ public class DescripcionCaso extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Asignar a grupo de trabajo");
+        lblBtn.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        lblBtn.setForeground(new java.awt.Color(255, 255, 255));
+        lblBtn.setText("Asignar a grupo de trabajo");
 
         javax.swing.GroupLayout btnEnviarLayout = new javax.swing.GroupLayout(btnEnviar);
         btnEnviar.setLayout(btnEnviarLayout);
@@ -117,15 +148,15 @@ public class DescripcionCaso extends javax.swing.JFrame {
             btnEnviarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnEnviarLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel7)
+                .addComponent(lblBtn)
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         btnEnviarLayout.setVerticalGroup(
             btnEnviarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnEnviarLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addContainerGap())
+                .addComponent(lblBtn)
+                .addGap(21, 21, 21))
         );
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -136,13 +167,24 @@ public class DescripcionCaso extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(59, 134, 139));
         jLabel6.setText("Nombre");
 
-        jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 51, 102));
-        jLabel8.setText("Nombre");
+        lblIDCaso.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        lblIDCaso.setForeground(new java.awt.Color(0, 51, 102));
+        lblIDCaso.setText("Nombre");
 
-        jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 51, 102));
-        jLabel10.setText("Nombre");
+        lblNombreCaso.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        lblNombreCaso.setForeground(new java.awt.Color(0, 51, 102));
+        lblNombreCaso.setText("Nombre");
+
+        txtDescripJD.setColumns(20);
+        txtDescripJD.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtDescripJD.setRows(5);
+        txtDescripJD.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
+        txtDescripJD.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescripJDKeyTyped(evt);
+            }
+        });
+        jScrollPane2.setViewportView(txtDescripJD);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -151,56 +193,78 @@ public class DescripcionCaso extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel6))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel10))))
-                        .addContainerGap(13, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblIDCaso)
+                            .addComponent(lblNombreCaso))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 120, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEnviar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(80, 80, 80))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addContainerGap())))))
+                                .addComponent(lblIndicacion)
+                                .addGap(16, 16, 16))))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel8))
+                    .addComponent(lblIDCaso))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel10))
+                    .addComponent(lblNombreCaso))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblIndicacion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 420, 470));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 520, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMouseClicked
-        // TODO add your handling code here:
+        if (tipo == 0) {
+            casoB.setDescrip_rechazo(txtDescripJD.getText().trim());
+            casoB.setId_estado(3);//En desarrollo
+        }
+        else {
+            casoB.setDescripcion_jefedes(txtDescripJD.getText().trim());
+            casoB.setId_estado(2);//Rechazada
+        }
+        Asignacion asignacionCaso;
+        //Enviar el CASO_BEAN
+        //asignacionCaso = new Asignacion();
     }//GEN-LAST:event_btnEnviarMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        ban = 0;
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void txtDescripJDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripJDKeyTyped
+        if (txtDescripJD.getText().length() > 0)
+            valido(0);
+        else 
+            valido(1);
+    }//GEN-LAST:event_txtDescripJDKeyTyped
 
     /**
      * @param args the command line arguments
@@ -240,18 +304,44 @@ public class DescripcionCaso extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnEnviar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea txtDescripcion;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblBtn;
+    private javax.swing.JLabel lblIDCaso;
+    private javax.swing.JLabel lblIndicacion;
+    private javax.swing.JLabel lblNombreCaso;
+    private javax.swing.JTextArea txtDescripJD;
+    private javax.swing.JTextArea txtDescripJF;
     // End of variables declaration//GEN-END:variables
+
+    private void inicio(String Idcaso) {
+        valido(1);
+        casoB = casos.getDatosSolicitudJD(Idcaso);
+        lblIDCaso.setText(Idcaso);
+        lblNombreCaso.setText(casoB.getNombre_caso());
+        txtDescripJF.setText(casoB.getDescrip_req());
+        if (tipo == 1) {
+            lblIndicacion.setText("Ingrese una descripcion de rechazo");
+            lblBtn.setText("Aceptar");
+        }
+    }
+
+    private void valido(int i) {
+        if (i == 1) {
+            txtDescripJD.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+            lblIndicacion.setForeground(Color.red);
+            btnEnviar.setVisible(false);
+        } else {
+            txtDescripJD.setBorder(BorderFactory.createLineBorder(bien, 1));
+            lblIndicacion.setForeground(bien);
+            btnEnviar.setVisible(true);
+        }
+    }
 }

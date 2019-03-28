@@ -6,10 +6,13 @@
 package JFrame;
 
 import Base.Empleado;
+import Beans.EmpleadoBean;
 import Help.Help;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,7 +22,9 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
     private Color origin;
     private Help h  = new Help();
+    private EmpleadoBean empB = new EmpleadoBean();
     private Empleado emp;
+    private int j = 0;
     /**
      * Creates new form Login
      */
@@ -296,19 +301,19 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jTxtCorreoMouseClicked
 
     private void jTxtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtCorreoKeyTyped
-        if (evt.getKeyChar() == KeyEvent.VK_SPACE) {
+        if ((evt.getKeyChar() == KeyEvent.VK_SPACE) || h.CampoRestringuido(evt.getKeyChar())){
             evt.consume();
         }
     }//GEN-LAST:event_jTxtCorreoKeyTyped
 
     private void jTxtCorreoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtCorreoKeyReleased
-        if (h.validarCorreo(jTxtCorreo.getText()))
+        if (h.validarCorreo(jTxtCorreo.getText()) )
             jPanel1.setBackground(origin);
-        else jPanel1.setBackground(Color.red);        
+        else jPanel1.setBackground(Color.red);
     }//GEN-LAST:event_jTxtCorreoKeyReleased
 
     private void txtContraseñaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaKeyTyped
-        if (evt.getKeyChar() == KeyEvent.VK_SPACE) {
+        if (evt.getKeyChar() == KeyEvent.VK_SPACE || h.CampoRestringuido(evt.getKeyChar())) {
             evt.consume();
         }
     }//GEN-LAST:event_txtContraseñaKeyTyped
@@ -316,18 +321,25 @@ public class Login extends javax.swing.JFrame {
     private void pnlLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlLoginMouseClicked
         pnlLogin.setBackground(new Color (3,147,90));
         try {
-             emp = new Empleado();
+             emp = new Empleado();             
              String pass = new String(txtContraseña.getPassword());
-             String mjs = emp.ConseguirEmpleadoLogin(jTxtCorreo.getText(), pass);
-             if (mjs.equals("")) {
-                 lblErrorLogin.setText("USUARIO/CONTRASEÑA INCORRECTO");
-                 lblErrorLogin.setVisible(true);
+            if (!pass.equals("") && !jTxtCorreo.getText().equals("")) {
+                if (emp.existUSer(jTxtCorreo.getText(), pass, empB)) {
+                    emp.getLogin(empB);
+                    new Menu(empB).setVisible(true);
+                    this.dispose();
+                } else {
+                    lblErrorLogin.setText("USUARIO/CONTRASEÑA INCORRECTO");
+                    lblErrorLogin.setVisible(true);
+                }
             }
-             else {
-                 new Menu(mjs).setVisible(true);
-                 this.dispose();
-             }
-        } catch (Exception e) {
+            else{
+                lblErrorLogin.setText("CAMPOS VACIOS ");
+                    lblErrorLogin.setVisible(true);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "ERROR INICIO SESION");
         }
     }//GEN-LAST:event_pnlLoginMouseClicked
 
@@ -395,7 +407,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel pnlLogin;
     private javax.swing.JPasswordField txtContraseña;
     // End of variables declaration//GEN-END:variables
-    private int j = 0;
+    
 
     
     

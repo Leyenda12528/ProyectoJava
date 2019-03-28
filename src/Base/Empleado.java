@@ -5,9 +5,12 @@
  */
 package Base;
 
+import Beans.EmpleadoBean;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +20,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Empleado {
     private Conexion con = new Conexion();
-    private ResultSet empleados;
+    private ResultSet empleados = null;
+    private PreparedStatement ps;
     ResultSet resultado=null;
     DefaultTableModel modelo1=null;
     private int id_empleado;
@@ -31,7 +35,7 @@ public class Empleado {
     private String correo;
     private String contraseña;
     private int id_estado;
-
+    
     public int getId_empleado() {
         return id_empleado;
     }
@@ -126,36 +130,91 @@ public class Empleado {
     public void IngresarEmpleado() throws SQLException{
     }
     
-    public String ConseguirEmpleadoLogin(String correo, String Contra){
-        //Code
+    public void getProgramadores(JList<String> listUtilidad, int idDepto, int tipo) {
         try {
-            String sql ="select id_empleado, nombre_emp, id_cargo from empleados where correo = '"+correo+"' and password = '"+Contra+"'";
+            String sql = "select CONCAT(nombre_emp,' ',apellidos) from empleados where id_depto = ? and id_cargo = ?";
+            ps = con.Obtener().prepareStatement(sql);
+            ps.setObject(1, idDepto);
+            ps.setObject(2, tipo);
+            empleados = ps.executeQuery();
+            DefaultListModel modelo = new DefaultListModel();
+            while (empleados.next()) {                
+                modelo.addElement(empleados.getString(1));
+            }
+            listUtilidad.setModel(modelo);
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e.getMessage());
+        }
+    }
+    
+    public void getProTrabajando(String idDepto, JList<String> lista) throws ClassNotFoundException{
+        try {
+            String sql = "SELECT DISTINCT empleados.id_empleado, empleados.nombre_emp"
+                    + " FROM            empleados INNER JOIN"
+                    + "                         empleados_caso ON empleados.id_empleado = empleados_caso.id_empleado"
+                    + " WHERE        (empleados.id_estado_emp = 0) AND (empleados.id_depto = ?) AND (empleados.id_cargo = 3)";
+            ps = con.Obtener().prepareStatement(sql);
+            ps.setObject(1, idDepto);
+            empleados = ps.executeQuery();
             
-            String sql1 = "SELECT  empleados.id_empleado, CONCAT(empleados.nombre_emp,' ',empleados.apellidos)"
-                    + " ,empleados.id_cargo , cargo.nombre_cargo, departamentos.nombre_depto "
+            DefaultListModel modelo = new DefaultListModel();
+            while (empleados.next()) {
+                modelo.addElement(empleados.getInt(1));
+            }
+            lista.setModel(modelo);
+        } catch (SQLException e) {
+            //System.out.println(""+e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e.getMessage());
+        }
+    }
+    
+    public boolean existUSer(String correo, String Contra, EmpleadoBean empB){
+        try {
+            String sql ="select count(*), id_empleado from empleados where correo = ? and password_emp = ? and id_estado_emp = 0";
+            ps = con.Obtener().prepareStatement(sql);
+            ps.setObject(1, correo);
+            ps.setObject(2, Contra);
+            empleados = ps.executeQuery();            
+            if (empleados.next()) {
+                if (empleados.getInt(1) > 0) {
+                    empB.setId_empleado(empleados.getInt(2));
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e.getMessage());
+            return false;
+        }
+    }
+    
+    public void getLogin(EmpleadoBean empB){
+        try {                        
+            String sql1 = "SELECT  CONCAT(empleados.nombre_emp,' ',empleados.apellidos)"
+                    + " ,empleados.id_cargo , cargo.nombre_cargo, empleados.id_depto, departamentos.nombre_depto "
                     + "FROM            empleados INNER JOIN"
                     + "                departamentos ON empleados.id_depto = departamentos.id_depto INNER JOIN"
                     + "                cargo ON empleados.id_cargo = cargo.id_cargo"
-                    + " WHERE        (empleados.correo = '" + correo + "') AND (empleados.password_emp = '" + Contra + "')";
+                    + " WHERE        empleados.id_empleado =  ?";
             
-            ResultSet dato = con.Buscar(sql1);
-            if (dato.next()) {
-                String mjs = "";
-                if (dato.getString(3).equals("0")) //Administrador
-                    mjs += dato.getInt(1) + "-" + dato.getString(2) + "-" + dato.getString(4); 
-                else  //Cualquier otro empleado XDD
-                    mjs += dato.getInt(1) + "-" + dato.getString(2) + "-" + dato.getString(4) + "-" + dato.getString(5);
-                return mjs;
-            }
-            else return "";            
-        } catch (SQLException ex) {
-           Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "ERROR AL BUSCAR");
+            ps = con.Obtener().prepareStatement(sql1);
+            ps.setObject(1, empB.getId_empleado());
+            empleados = ps.executeQuery();
+            if (empleados.next()) {
+                empB.setEmp_nombre(empleados.getString(1));
+                empB.setCargo(empleados.getInt(2));
+                empB.setNombreCargo(empleados.getString(3));
+                if (!empleados.getString(3).equals("0")){ //Si no es Administrador
+                    empB.setDepto(empleados.getInt(4));
+                    empB.setNombreDepto(empleados.getString(5));                    
+                }                
+            }            
+        } catch (Exception ex) {
+           Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
-        return "";
-        
     }
-    public void MostrarEmpleados(){}
+    
     
     public void UpdateEmpleado() throws SQLException{
         //Code
@@ -225,6 +284,12 @@ public class Empleado {
             ResultSet datos= con3.Buscar(sql);
             return datos;
     }
+
+    
+
+
+
+    
     
     
 }
