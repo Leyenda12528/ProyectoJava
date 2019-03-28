@@ -10,6 +10,7 @@ import Base.Casos;
 import Base.Departamento;
 import Base.Empleado;
 import Beans.BitacoraBean;
+import Beans.CasoBean;
 import Beans.DepartamentoBean;
 import Help.Help;
 import java.awt.event.KeyEvent;
@@ -28,11 +29,14 @@ public class BitacoraC extends javax.swing.JFrame {
     private int valor = 0 ;
     private ArrayList<BitacoraBean> listBitaB = new ArrayList();
     private BitacoraBean bitaB = new BitacoraBean();
+    private CasoBean casoB = new CasoBean();
     private Help h  = new Help();
     private Empleado empleado;
+    private Casos caso;
     private Bitacora bita;
     private int IdCargo;
     private int IdDepto;
+    private int statusCaso;
     /**
      * Creates new form Bitacora
      */
@@ -58,25 +62,33 @@ public class BitacoraC extends javax.swing.JFrame {
                 ListarCasos(Departamento);
                 noProniEmp();
                 break;
-            case 3://PROGRAMADOR---> Departamento = IdCaso                                
+            case 3://PROGRAMADOR---> Departamento = IdCaso
+                btnMenuCasos.setVisible(false);
                 bita.getBitacoraCaso(Departamento, bitaB);
+                if (bitaB.getId_caso().length() > 0) {
+                    MostrarBitacoraJF();//Cargando Bitacora del Caso
+                    llenandoCb();
+                    ProgEmp(0);
+                }
+                break;
+            case 4://Empleado---> Departamento = IdCaso
+                btnMenuCasos.setVisible(false);
+                cbPorcentaje.setEnabled(false);
+                bita.getBitacoraCaso(Departamento, bitaB);//Cargando Bitacora del Caso
                 if (bitaB.getId_caso().length() > 0) {
                     MostrarBitacoraJF();
                     llenandoCb();
-                    BtnsPro(1);
-                    BtnsEmp(0);
-                    txtDescripcion.setEditable(true);
-                    txtObservaciones.setEditable(false);
-                }
-                break;
-            case 4:
-                BtnsPro(0);
-                BtnsEmp(1);
-                txtDescripcion.setEditable(false);
-                txtObservaciones.setEditable(true);
+                    ProgEmp(1);
+                    //Ver si el caso esta esperando la respuesta de 
+                    //sino lo es no muestras los botones de acciones
+                    if (!isWaitAnswer()){ 
+                        BtnsEmp(0);
+                        txtObservaciones.setEditable(false);
+                    }
+                    
+                }               
                 break;
         }
-        
     }    
 
     /**
@@ -431,10 +443,13 @@ public class BitacoraC extends javax.swing.JFrame {
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ScrollListUser, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
                     .addComponent(ScrollListCasos, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblProOoCasos, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
                         .addComponent(lblCasoPro)
-                        .addGap(0, 122, Short.MAX_VALUE))
-                    .addComponent(lblProOoCasos, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlBodyLayout.setVerticalGroup(
@@ -561,11 +576,13 @@ public class BitacoraC extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateBitacoraMouseClicked
 
     private void btnRechazarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRechazarMouseClicked
-        // TODO add your handling code here:
+        // PROBADOR/TESTER update Caso a 6-Devuelto con observaciones
+        //Falta codigo
     }//GEN-LAST:event_btnRechazarMouseClicked
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-        // TODO add your handling code here:
+        // PROBADOR/TESTER update Caso a 7-Finalizado -->con la fecha de produccion
+        //Falta codigo
     }//GEN-LAST:event_btnAceptarMouseClicked
 
     private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
@@ -622,13 +639,11 @@ public class BitacoraC extends javax.swing.JFrame {
     private javax.swing.JLabel btnMenuCasos;
     private javax.swing.JPanel btnRechazar;
     private javax.swing.JPanel btnUpdateBitacora;
-    private javax.swing.JPanel btnverCasosJD1;
     private javax.swing.JComboBox<String> cbPorcentaje;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -750,7 +765,7 @@ public class BitacoraC extends javax.swing.JFrame {
         lblNombreCaso.setText(bitaB.getNombre_caso());
         lblPorcentaje.setText(bitaB.getPorcentaje() + " %");
         txtDescripcion.setText(bitaB.getDescripActiv());
-        txtObservaciones.setText(bitaB.getObservaciones());
+        txtObservaciones.setText(bitaB.getObservaciones());        
     }
 
     private void llenandoCb() {
@@ -758,8 +773,7 @@ public class BitacoraC extends javax.swing.JFrame {
         cbPorcentaje.setLocation(lblPorcentaje.getLocation());
         for (int i = 0; i < 101; i++) 
             cbPorcentaje.addItem(i + "");
-        cbPorcentaje.setSelectedIndex(bitaB.getPorcentaje());
-        
+        cbPorcentaje.setSelectedIndex(bitaB.getPorcentaje());        
     }
 
     private void BtnsPro(int i) {
@@ -788,6 +802,33 @@ public class BitacoraC extends javax.swing.JFrame {
         cbPorcentaje.setVisible(false);
         txtDescripcion.setEditable(false);
         txtObservaciones.setEditable(false);
+    }
+
+    private void ProgEmp(int i) {
+        if (i == 0) {
+            BtnsPro(1);
+            BtnsEmp(0);
+            txtDescripcion.setEditable(true);
+            txtObservaciones.setEditable(false);
+        }
+        else {
+            BtnsPro(0);
+            BtnsEmp(1);
+            txtDescripcion.setEditable(false);
+            txtObservaciones.setEditable(true);
+        }
+    }
+
+    private boolean isWaitAnswer() {
+        try {
+            caso = new Casos();
+            casoB.setId_caso(bitaB.getId_caso());
+            caso.getEstado(casoB);
+            if (casoB.getId_estado() == 4) return true;
+            else return false;
+        } catch (Exception e) {
+            return false;
+        }
     }
     
 }

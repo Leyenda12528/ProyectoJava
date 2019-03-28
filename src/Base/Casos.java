@@ -262,6 +262,17 @@ public class Casos {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+
+    public void getEstado(CasoBean casoB) {
+        try {
+            sqlC="select id_estado from caso where id_caso = '"+casoB.getId_caso()+"'";
+            casos = Conexion.Buscar(sqlC);
+            if (casos.next()) 
+                casoB.setId_estado(casos.getInt(1));            
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
     
     
 }

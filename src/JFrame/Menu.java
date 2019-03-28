@@ -834,11 +834,15 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVerMouseClicked
 
     private void listUtilidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listUtilidadMouseClicked
-        if (User.getCargo() == 1 && sen == 1 ) {
+        if (User.getCargo() == 1 && sen == 1 ) {//JEFE DESARROLLO
             btnOkCasoJD.setVisible(true);
             btnNoCasoJD.setVisible(true);
         }
-        else if (User.getCargo() == 3) {
+        else if (User.getCargo() == 3) {//PROGRAMADOR
+            if (listUtilidad.getModel().getSize() > 0)
+                btnVer.setVisible(true);
+        }
+        else if (User.getCargo() == 4) {//EMPLEADO PROBADOR  ///PUEDE HACER LO MISMO CON = 3
             if (listUtilidad.getModel().getSize() > 0)
                 btnVer.setVisible(true);
         }
@@ -958,7 +962,8 @@ public class Menu extends javax.swing.JFrame {
                 btnVer.setVisible(false);
                 loadCasosProgram();
                 break;
-            case 4:                
+            case 4:
+                pnlBarra.setVisible(false);
                 pnlCasos.setLocation(20, 40);
                 pnlCasos.setVisible(true);
                 btnOkCasoJD.setVisible(false);
@@ -969,18 +974,23 @@ public class Menu extends javax.swing.JFrame {
         }        
     }
     private void loadCasosEmplead() {
+        try {
+                Bitacora bita = new Bitacora();
+                ArrayList<BitacoraBean> listaBitaBean = new ArrayList<>();
+                bita.getBitacorasProgramadorToEmp(User.getId_empleado(), listaBitaBean);
+                bita.loadCasosToList(listaBitaBean,listUtilidad,ScrollList);
+            } catch (Exception e) {
+            }
         
     }
     public void loadCasosProgram(){
-        if (User.getCargo() == 3) {
-            try {
+        try {
                 Bitacora bita = new Bitacora();
                 ArrayList<BitacoraBean> listaBitaBean = new ArrayList<>();
                 bita.getBitacorasProgramadorToPro(User.getId_empleado(), listaBitaBean);
                 bita.loadCasosToList(listaBitaBean,listUtilidad,ScrollList);
             } catch (Exception e) {
             }
-        }
     }
 
     private int llenarDatos() {

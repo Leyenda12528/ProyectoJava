@@ -30,6 +30,33 @@ public class Bitacora {
     public void IngresarBitacora() throws SQLException{
         
     }
+    
+    public void getBitacorasProgramadorToEmp(int idProgramador, ArrayList<BitacoraBean> listbitaB) {
+        try {///SOLO CASOS EN DESARROLLO O DEVUELTOS CON CORREPCIONES o ESPERANDO RESPUESTA
+            sql = "SELECT        bitacoras.id_caso, caso.nombre_caso, bitacoras.descripcion_actividad, caso.porcentaje_avance, bitacoras.observaciones"
+                    + " FROM            bitacoras INNER JOIN"
+                    + "                         caso ON bitacoras.id_caso = caso.id_caso INNER JOIN"
+                    + "                         empleados_caso ON caso.id_caso = empleados_caso.id_caso"
+                    + " WHERE        (empleados_caso.id_empleado = ?) AND ((caso.id_estado = 3) or (caso.id_estado = 4) or (caso.id_estado = 6))";
+            ps = con.Obtener().prepareStatement(sql);
+            ps.setObject(1, idProgramador);
+            bitacora = ps.executeQuery();
+            BitacoraBean bitaB = null;
+            while (bitacora.next()) {
+                bitaB = new BitacoraBean();
+                bitaB.setId_caso(bitacora.getString(1));
+                bitaB.setNombre_caso(bitacora.getString(2));
+                bitaB.setDescripActiv(bitacora.getString(3));
+                bitaB.setPorcentaje(bitacora.getInt(4));
+                bitaB.setObservaciones(bitacora.getString(5));
+                listbitaB.add(bitaB);
+            }
+        } catch (Exception e) {
+            System.out.println(""+e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
     public void getBitacorasProgramadorToPro(int idProgramador, ArrayList<BitacoraBean> listbitaB) {
         try {///SOLO CASOS EN DESARROLLO O DEVUELTOS CON CORREPCIONES
             sql = "SELECT        bitacoras.id_caso, caso.nombre_caso, bitacoras.descripcion_actividad, caso.porcentaje_avance, bitacoras.observaciones"

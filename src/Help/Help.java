@@ -23,7 +23,7 @@ public class Help {
     public boolean CampoRestringuido(char keyChar) {
         for (int i = 0; i < valor.length(); i++) {
             if (keyChar == valor.charAt(i) || keyChar == '"') {
-                System.out.println("--> "+keyChar);
+                //System.out.println("--> "+keyChar);
                 var = true;
                 break;
             }
