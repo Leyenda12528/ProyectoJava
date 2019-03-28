@@ -10,46 +10,44 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import Help.Help;
 /**
  *
  * @author less_
  */
 public class Asignacion extends javax.swing.JFrame {
-     
-      
+
     /**
      * Creates new form Asignacion
-     */ 
+     */
     public static String id_p;
     public static String id_tes;
-    String caso="";
-  
+    String caso = "";
+    Help h=new Help();
+
     public Asignacion() throws SQLException {
         initComponents();
-         Empleado_Caso ec=new Empleado_Caso();
-        caso=lblIdcaso.getText();
-        if(ec.verificarAsignacion(lblIdcaso.getText())) {
+        Empleado_Caso ec = new Empleado_Caso();
+        caso = lblIdcaso.getText();
+        if (ec.verificarAsignacion(lblIdcaso.getText())) {
             btnAsignar.setVisible(false);
             btnModificar.setVisible(true);
-           
+
             txtProgramador.setText(ec.nombreEmpleadoP(caso));
             txtProbador.setText(ec.nombreEmpleadoT(caso));
-   
-    id_p=Integer.toString(ec.idProgramador(caso));
-    id_tes=Integer.toString(ec.idTester(caso));
+
+            id_p = Integer.toString(ec.idProgramador(caso));
+            id_tes = Integer.toString(ec.idTester(caso));
+        } else {
+            btnAsignar.setVisible(true);
+            btnModificar.setVisible(false);
         }
-        else { 
-        btnAsignar.setVisible(true);
-        btnModificar.setVisible(false);}
     }
-    
- 
-    public void capturarIdProgramador(){
-    
-   
-        JOptionPane.showMessageDialog(this, id_p+" "+id_tes);
-     
+
+    public void capturarIdProgramador() {
+
+        JOptionPane.showMessageDialog(this, id_p + " " + id_tes);
+
     }
 
     /**
@@ -72,9 +70,9 @@ public class Asignacion extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtProbador = new javax.swing.JTextField();
         txtProgramador = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
+        btnAsignarProgramador = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        btnAsignarTester = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -87,6 +85,8 @@ public class Asignacion extends javax.swing.JFrame {
         lblIdcaso = new javax.swing.JLabel();
         btnModificar = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txtFecha = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -123,7 +123,7 @@ public class Asignacion extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(224, 224, 224)
                 .addComponent(jLabel5)
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addContainerGap(255, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,7 +133,7 @@ public class Asignacion extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -147,10 +147,10 @@ public class Asignacion extends javax.swing.JFrame {
         txtProgramador.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtProgramador.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
 
-        jPanel3.setBackground(new java.awt.Color(59, 134, 139));
-        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAsignarProgramador.setBackground(new java.awt.Color(59, 134, 139));
+        btnAsignarProgramador.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel3MouseClicked(evt);
+                btnAsignarProgramadorMouseClicked(evt);
             }
         });
 
@@ -158,27 +158,27 @@ public class Asignacion extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Buscar");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnAsignarProgramadorLayout = new javax.swing.GroupLayout(btnAsignarProgramador);
+        btnAsignarProgramador.setLayout(btnAsignarProgramadorLayout);
+        btnAsignarProgramadorLayout.setHorizontalGroup(
+            btnAsignarProgramadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnAsignarProgramadorLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel6)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        btnAsignarProgramadorLayout.setVerticalGroup(
+            btnAsignarProgramadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnAsignarProgramadorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel4.setBackground(new java.awt.Color(59, 134, 139));
-        jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAsignarTester.setBackground(new java.awt.Color(59, 134, 139));
+        btnAsignarTester.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel4MouseClicked(evt);
+                btnAsignarTesterMouseClicked(evt);
             }
         });
 
@@ -186,18 +186,18 @@ public class Asignacion extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Buscar");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnAsignarTesterLayout = new javax.swing.GroupLayout(btnAsignarTester);
+        btnAsignarTester.setLayout(btnAsignarTesterLayout);
+        btnAsignarTesterLayout.setHorizontalGroup(
+            btnAsignarTesterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnAsignarTesterLayout.createSequentialGroup()
                 .addContainerGap(27, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(27, 27, 27))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        btnAsignarTesterLayout.setVerticalGroup(
+            btnAsignarTesterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnAsignarTesterLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -290,6 +290,13 @@ public class Asignacion extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(59, 134, 139));
+        jLabel12.setText("Fecha limite de entrega");
+
+        txtFecha.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtFecha.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -314,21 +321,24 @@ public class Asignacion extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(46, 46, 46)
-                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel4)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(txtProbador, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtProgramador, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtProgramador, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel12)
+                                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(50, Short.MAX_VALUE))
+                                    .addComponent(btnAsignarTester, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnAsignarProgramador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(btnAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,17 +365,21 @@ public class Asignacion extends javax.swing.JFrame {
                         .addComponent(txtProbador, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAsignarProgramador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(76, 76, 76)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(127, Short.MAX_VALUE))
+                        .addComponent(btnAsignarTester, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31)
+                .addComponent(jLabel12)
+                .addGap(18, 18, 18)
+                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(73, 73, 73))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 570, 510));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 620, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -374,49 +388,67 @@ public class Asignacion extends javax.swing.JFrame {
         capturarIdProgramador();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+    private void btnAsignarTesterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignarTesterMouseClicked
         try {
-            Probadores tester=new Probadores();
+            Probadores tester = new Probadores();
             tester.show();
         } catch (SQLException ex) {
             Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jPanel4MouseClicked
+    }//GEN-LAST:event_btnAsignarTesterMouseClicked
 
-    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+    private void btnAsignarProgramadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignarProgramadorMouseClicked
         try {
-            Programadores progra =new Programadores();
+            Programadores progra = new Programadores();
             progra.show();
         } catch (SQLException ex) {
             Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }//GEN-LAST:event_jPanel3MouseClicked
+    }//GEN-LAST:event_btnAsignarProgramadorMouseClicked
 
     private void btnAsignarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignarMouseClicked
-        try {
-            Empleado_Caso ec=new Empleado_Caso();
+        String fecha=txtFecha.getText();
+        if(h.verificarFecha(fecha) && h.verificarAnio(fecha) && txtProbador.getText()!="" && txtProbador.getText()!="")
+        {
+             try {
+            Empleado_Caso ec = new Empleado_Caso();
             ec.setId_caso(lblIdcaso.getText());
             ec.Asignar(Integer.parseInt(id_p), Integer.parseInt(id_tes));
-            JOptionPane.showMessageDialog(this, "pruea");
+          
         } catch (SQLException ex) {
             Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this,"Verifique que la información ingresada sea correcta");
+        }
+       
     }//GEN-LAST:event_btnAsignarMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-        try {
-            Empleado_Caso ec=new Empleado_Caso();
+        String fecha=txtFecha.getText();
+        if(h.verificarFecha(fecha) && h.verificarAnio(fecha) && txtProbador.getText()!="" && txtProbador.getText()!="")
+        {
+             try {
+            Empleado_Caso ec = new Empleado_Caso();
             ec.setId_caso(lblIdcaso.getText());
-            ec.ModificarEmpleados(Integer.parseInt(id_p),Integer.parseInt(id_tes),txtProgramador.getText(),txtProbador.getText(),lblIdcaso.getText());
+            ec.ModificarEmpleados(Integer.parseInt(id_p), Integer.parseInt(id_tes), txtProgramador.getText(), txtProbador.getText(), lblIdcaso.getText());
         } catch (SQLException ex) {
             Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Verifique la información ingresada");
+        }
+       
     }//GEN-LAST:event_btnModificarMouseClicked
 
     /**
@@ -460,11 +492,14 @@ public class Asignacion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnAsignar;
+    private javax.swing.JPanel btnAsignarProgramador;
+    private javax.swing.JPanel btnAsignarTester;
     private javax.swing.JPanel btnModificar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -475,14 +510,13 @@ public class Asignacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jToggleButton1;
     public static javax.swing.JLabel lblIdcaso;
     public static javax.swing.JLabel lblNombreDepto;
     public static javax.swing.JLabel lblNombreDepto1;
+    public static javax.swing.JTextField txtFecha;
     public static javax.swing.JTextField txtProbador;
     protected static javax.swing.JTextField txtProgramador;
     // End of variables declaration//GEN-END:variables

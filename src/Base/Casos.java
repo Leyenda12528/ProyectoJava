@@ -140,4 +140,9 @@ public class Casos {
     public void ByeCaso() throws SQLException {
 
     }
+    
+    
+     public void fechaLimite() throws SQLException {
+
+    }
 }
