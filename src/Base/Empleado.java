@@ -130,11 +130,12 @@ public class Empleado {
     public void IngresarEmpleado() throws SQLException{
     }
     
-    public void getProgramadores(JList<String> listUtilidad, int idDepto) {
+    public void getProgramadores(JList<String> listUtilidad, int idDepto, int tipo) {
         try {
-            String sql = "select CONCAT(nombre_emp,' ',apellidos) from empleados where id_depto = ? and id_cargo = 3";
+            String sql = "select CONCAT(nombre_emp,' ',apellidos) from empleados where id_depto = ? and id_cargo = ?";
             ps = con.Obtener().prepareStatement(sql);
             ps.setObject(1, idDepto);
+            ps.setObject(2, tipo);
             empleados = ps.executeQuery();
             DefaultListModel modelo = new DefaultListModel();
             while (empleados.next()) {                
@@ -173,10 +174,13 @@ public class Empleado {
             ps = con.Obtener().prepareStatement(sql);
             ps.setObject(1, correo);
             ps.setObject(2, Contra);
-            empleados = ps.executeQuery();
-            if (empleados.next()){
-                empB.setId_empleado(empleados.getInt(2));
-                return true;
+            empleados = ps.executeQuery();            
+            if (empleados.next()) {
+                if (empleados.getInt(1) > 0) {
+                    empB.setId_empleado(empleados.getInt(2));
+                    return true;
+                }
+                else return false;
             }
             else return false;
         } catch (Exception e) {
@@ -280,6 +284,8 @@ public class Empleado {
             ResultSet datos= con3.Buscar(sql);
             return datos;
     }
+
+    
 
 
 

@@ -158,9 +158,6 @@ public class Casos {
         }        
     }
     
-    private void ConseguirCaso() {
-        
-    }
     private String isVacia(String code) {
         try {
             sqlC = "select count(*) from caso where id_caso like '" + code + "%'";
@@ -171,7 +168,7 @@ public class Casos {
             }
             else return "";
         } catch (SQLException e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, "ERROR Caso isVacia " + e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }      
     }
@@ -203,8 +200,28 @@ public class Casos {
         }
     }
 
-    public void UpdateCaso() throws SQLException {
-
+    public void UpdateCasoToFinalizar(BitacoraBean bitaB){
+        try {
+            sqlC = "update caso set id_estado = 4 where id_caso = ? ";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, bitaB.getId_caso());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(""+e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    public void UpdateCasoPorcent(BitacoraBean bitaB){
+        try {
+            sqlC = "update caso set porcentaje_avance = ? where id_caso = ? ";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, bitaB.getPorcentaje());
+            ps.setObject(2, bitaB.getId_caso());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(""+e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     public void ByeCaso() throws SQLException {
@@ -233,25 +250,18 @@ public class Casos {
     public void getIDCaso(String idBeginCaso, JList<String> listUser) {
         try {
             sqlC = "SELECT        id_caso"
-                    + " FROM            dbo.caso"
+                    + " FROM            caso"
                     + " WHERE        (id_caso LIKE '%"+idBeginCaso+"%') and (id_estado <> 1) AND (id_estado <> 2) AND (id_estado <> 7)";
             casos = Conexion.Buscar(sqlC);
             DefaultListModel modelo = new DefaultListModel();
-            while (casos.next()) {
-                modelo.addElement(casos.getString(1));
-                System.out.println(""+casos.getString(1));}
+            while (casos.next()) 
+                modelo.addElement(casos.getString(1));                
             listUser.setModel(modelo);
             
         } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-
-    
-
-    
-
-    
-
     
     
 }
