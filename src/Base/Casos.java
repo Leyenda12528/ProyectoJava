@@ -227,6 +227,7 @@ public class Casos {
     public void ByeCaso() throws SQLException {
 
     }
+<<<<<<< HEAD
 
     //**************************************************************************************
 
@@ -275,4 +276,11 @@ public class Casos {
     }
     
     
+=======
+    
+    
+     public void fechaLimite() throws SQLException {
+
+    }
+>>>>>>> proyectoj
 }

@@ -6,12 +6,21 @@
         <group/>
 =======
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/jorge/Desktop/ProyectoJava/src/Beans/BitacoraBean.java</file>
             <file>file:/C:/Users/jorge/Desktop/ProyectoJava/src/Base/Bitacora.java</file>
             <file>file:/C:/Users/jorge/Desktop/ProyectoJava/src/Base/Casos.java</file>
             <file>file:/C:/Users/jorge/Desktop/ProyectoJava/src/JFrame/BitacoraC.java</file>
             <file>file:/C:/Users/jorge/Desktop/ProyectoJava/src/JFrame/Login.java</file>
             <file>file:/C:/Users/jorge/Desktop/ProyectoJava/src/JFrame/Menu.java</file>
+=======
+            <file>file:/C:/Users/less_/Desktop/JAVA/Proyectos/ProyectoJava/src/Help/Help.java</file>
+            <file>file:/C:/Users/less_/Desktop/JAVA/Proyectos/ProyectoJava/src/JFrame/Asignacion.java</file>
+            <file>file:/C:/Users/less_/Desktop/JAVA/Proyectos/ProyectoJava/src/JFrame/Menu.java</file>
+            <file>file:/C:/Users/less_/Desktop/JAVA/Proyectos/ProyectoJava/src/JFrame/Bitacora.java</file>
+            <file>file:/C:/Users/less_/Desktop/JAVA/Proyectos/ProyectoJava/src/JFrame/Login.java</file>
+            <file>file:/C:/Users/less_/Desktop/JAVA/Proyectos/ProyectoJava/src/Base/Casos.java</file>
+>>>>>>> proyectoj
         </group>
 >>>>>>> origin/master
     </open-files>
