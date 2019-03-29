@@ -12,6 +12,20 @@ package Beans;
 public class BitacoraBean {
 
     /**
+     * @return the fechaLimite
+     */
+    public String getFechaLimite() {
+        return fechaLimite;
+    }
+
+    /**
+     * @param fechaLimite the fechaLimite to set
+     */
+    public void setFechaLimite(String fechaLimite) {
+        this.fechaLimite = fechaLimite;
+    }
+
+    /**
      * @return the id_caso
      */
     public String getId_caso() {
@@ -85,4 +99,5 @@ public class BitacoraBean {
     private String descripActiv;
     private int porcentaje;
     private String observaciones;
+    private String fechaLimite;
 }

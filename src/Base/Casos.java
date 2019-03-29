@@ -227,7 +227,21 @@ public class Casos {
     public void ByeCaso() throws SQLException {
 
     }
-<<<<<<< HEAD
+    
+      public void UpdateCasoFechaLimite(CasoBean bitaB){
+        try {
+            sqlC = "update caso set fecha_limite = ? where id_caso = ? ";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, bitaB.getFecha_limite());
+            ps.setObject(2, bitaB.getId_caso());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(""+e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+      
+
 
     //**************************************************************************************
 
@@ -276,11 +290,5 @@ public class Casos {
     }
     
     
-=======
-    
-    
-     public void fechaLimite() throws SQLException {
 
-    }
->>>>>>> proyectoj
 }

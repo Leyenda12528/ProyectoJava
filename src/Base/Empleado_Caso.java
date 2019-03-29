@@ -107,7 +107,7 @@ public class Empleado_Caso {
             return band;
      }
      
-     //para capturar nombre del empleado al q se modificara
+     //para capturar nombre del empleado al que se modificara
      
      public String nombreEmpleadoP(String id) throws SQLException{
          String nombre;
@@ -151,6 +151,17 @@ public class Empleado_Caso {
             datos.next();
            // JOptionPane.showMessageDialog(null, datos.getInt(1));
                cod=datos.getInt(1);    
+            return cod;
+     }
+      
+      
+        public String fechaLimite(String id) throws SQLException{
+      String cod;
+       String sql="Select fecha_limite from caso where id_caso='"+id+"'";
+          ResultSet datos= con.Buscar(sql);
+            datos.next();
+           // JOptionPane.showMessageDialog(null, datos.getInt(1));
+               cod=datos.getString(1);    
             return cod;
      }
 }

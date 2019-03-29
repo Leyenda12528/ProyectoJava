@@ -6,11 +6,15 @@
 package JFrame;
 
 import Base.Empleado_Caso;
+import Base.Casos;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import Help.Help;
+import Beans.CasoBean;
+import com.sun.prism.paint.Color;
+
 /**
  *
  * @author less_
@@ -23,19 +27,23 @@ public class Asignacion extends javax.swing.JFrame {
     public static String id_p;
     public static String id_tes;
     String caso = "";
-    Help h=new Help();
+    Help h = new Help();
+    private CasoBean casoFecha;
+    Empleado_Caso ec;
+    Casos casos;
 
     public Asignacion() throws SQLException {
+
         initComponents();
-        Empleado_Caso ec = new Empleado_Caso();
+        ec = new Empleado_Caso();
         caso = lblIdcaso.getText();
+       
         if (ec.verificarAsignacion(lblIdcaso.getText())) {
             btnAsignar.setVisible(false);
             btnModificar.setVisible(true);
-
             txtProgramador.setText(ec.nombreEmpleadoP(caso));
             txtProbador.setText(ec.nombreEmpleadoT(caso));
-
+            txtFecha.setText(ec.fechaLimite(caso));
             id_p = Integer.toString(ec.idProgramador(caso));
             id_tes = Integer.toString(ec.idTester(caso));
         } else {
@@ -87,6 +95,7 @@ public class Asignacion extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JTextField();
+        lblError = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -123,7 +132,7 @@ public class Asignacion extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(224, 224, 224)
                 .addComponent(jLabel5)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addContainerGap(285, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,7 +142,7 @@ public class Asignacion extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -296,6 +305,24 @@ public class Asignacion extends javax.swing.JFrame {
 
         txtFecha.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtFecha.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
+        txtFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtFechaMouseClicked(evt);
+            }
+        });
+        txtFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaActionPerformed(evt);
+            }
+        });
+        txtFecha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFechaKeyReleased(evt);
+            }
+        });
+
+        lblError.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lblError.setForeground(new java.awt.Color(204, 0, 0));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -337,8 +364,10 @@ public class Asignacion extends javax.swing.JFrame {
                                 .addGap(33, 33, 33)
                                 .addComponent(btnAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(39, 39, 39)
-                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(100, Short.MAX_VALUE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,20 +401,23 @@ public class Asignacion extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addGap(18, 18, 18)
                 .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblError)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(73, 73, 73))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 620, 620));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 630, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         capturarIdProgramador();
+    
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnAsignarTesterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignarTesterMouseClicked
@@ -408,48 +440,71 @@ public class Asignacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAsignarProgramadorMouseClicked
 
     private void btnAsignarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignarMouseClicked
-        String fecha=txtFecha.getText();
-        if(h.verificarFecha(fecha) && h.verificarAnio(fecha) && txtProbador.getText()!="" && txtProbador.getText()!="")
-        {
-             try {
-            Empleado_Caso ec = new Empleado_Caso();
-            ec.setId_caso(lblIdcaso.getText());
-            ec.Asignar(Integer.parseInt(id_p), Integer.parseInt(id_tes));
-          
-        } catch (SQLException ex) {
-            Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
+        String fecha = txtFecha.getText();
+        casoFecha = new CasoBean();
+        casoFecha.setFecha_limite(fecha);
+        casoFecha.setId_caso(caso);
+        if (h.verificarFecha(fecha) && h.verificarAnio(fecha) && !txtProbador.getText().equals("") && !txtProbador.getText().equals("")) {
+            try {
+                ec = new Empleado_Caso();
+                casos = new Casos();
+                ec.setId_caso(lblIdcaso.getText());
+                ec.Asignar(Integer.parseInt(id_p), Integer.parseInt(id_tes));
+                casos.UpdateCasoFechaLimite(casoFecha);
+            } catch (SQLException ex) {
+                Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Verifique que la información ingresada sea correcta");
         }
 
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(this,"Verifique que la información ingresada sea correcta");
-        }
-       
     }//GEN-LAST:event_btnAsignarMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-        String fecha=txtFecha.getText();
-        if(h.verificarFecha(fecha) && h.verificarAnio(fecha) && txtProbador.getText()!="" && txtProbador.getText()!="")
-        {
-             try {
-            Empleado_Caso ec = new Empleado_Caso();
-            ec.setId_caso(lblIdcaso.getText());
-            ec.ModificarEmpleados(Integer.parseInt(id_p), Integer.parseInt(id_tes), txtProgramador.getText(), txtProbador.getText(), lblIdcaso.getText());
-        } catch (SQLException ex) {
-            Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
-        else
-        {
+        String fecha = txtFecha.getText();
+        casoFecha = new CasoBean();
+        casoFecha.setFecha_limite(fecha);
+        casoFecha.setId_caso(caso);
+        if (h.verificarFecha(fecha) && h.verificarAnio(fecha) && !txtProbador.getText().equals("") && !txtProbador.getText().equals("")) {
+            try {
+                ec = new Empleado_Caso();
+                casos = new Casos();
+                ec.setId_caso(lblIdcaso.getText());
+                ec.ModificarEmpleados(Integer.parseInt(id_p), Integer.parseInt(id_tes), txtProgramador.getText(), txtProbador.getText(), lblIdcaso.getText());
+                casos.UpdateCasoFechaLimite(casoFecha);
+            } catch (SQLException ex) {
+                Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
             JOptionPane.showMessageDialog(this, "Verifique la información ingresada");
         }
-       
+
     }//GEN-LAST:event_btnModificarMouseClicked
+
+    private void txtFechaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaKeyReleased
+        String fecha = txtFecha.getText();
+        if (h.verificarFecha(fecha) && h.verificarAnio(fecha)) {
+            lblError.setText("");
+
+        } else {
+            lblError.setText("Verifique la fecha");
+        }
+    }//GEN-LAST:event_txtFechaKeyReleased
+
+    private void txtFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtFechaMouseClicked
+        if (txtFecha.getText().equals("02-02-2019")) {
+            txtFecha.setText("");
+        }
+    }//GEN-LAST:event_txtFechaMouseClicked
+
+    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -513,6 +568,7 @@ public class Asignacion extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel lblError;
     public static javax.swing.JLabel lblIdcaso;
     public static javax.swing.JLabel lblNombreDepto;
     public static javax.swing.JLabel lblNombreDepto1;
