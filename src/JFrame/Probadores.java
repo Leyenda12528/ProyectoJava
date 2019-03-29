@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -43,7 +44,7 @@ public class Probadores extends javax.swing.JFrame {
        
        
 
-            Object[][] data =null;
+        Object[][] data =null;
         String [] columns= {
         "Codigo", "Nombre","Cargo","Departamento"
         };
@@ -246,7 +247,8 @@ int  filaSeleccionada=-1;
     }//GEN-LAST:event_btnRegresarMouseClicked
 
     private void jPanel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel2KeyPressed
-         while(modelo1.getRowCount()!=0) modelo1.removeRow(0);
+      
+        while(modelo1.getRowCount()!=0) modelo1.removeRow(0);
 
         con3.setRs("Select id_empleado,CONCAT(nombre_emp,' ',apellidos) Nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"
                 +depto+"' and emp.id_depto='"

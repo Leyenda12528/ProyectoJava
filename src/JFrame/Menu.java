@@ -14,7 +14,10 @@ import Beans.DepartamentoBean;
 import Beans.EmpleadoBean;
 import com.sun.media.jfxmedia.events.NewFrameEvent;
 import java.awt.Component;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -708,8 +711,12 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_lblConfigPerfilMouseClicked
 
     private void btnManteniEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManteniEmpleadosMouseClicked
-        MantenimientoEmpleados call = new MantenimientoEmpleados();
-        call.setVisible(true);
+        try {
+            MantenimientoEmpleados call = new MantenimientoEmpleados();
+            call.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnManteniEmpleadosMouseClicked
 
     private void btnSolicitudesJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitudesJDMouseClicked

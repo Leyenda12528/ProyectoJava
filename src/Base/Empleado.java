@@ -13,6 +13,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -35,7 +36,7 @@ public class Empleado {
     private String correo;
     private String contraseña;
     private int id_estado;
-    
+    Conexion_c c4=new Conexion_c();
     public int getId_empleado() {
         return id_empleado;
     }
@@ -284,6 +285,41 @@ public class Empleado {
             ResultSet datos= con3.Buscar(sql);
             return datos;
     }
+    
+    
+     
+     public void iniciarValores(JTable JtableResultado) throws SQLException
+    {
+
+        Object[][] data =null;
+        String [] columns= {
+        "Codigo", "Nombre","Edad","Telefono","Correo","Cargo","Departamento","Estado"
+        };
+        modelo1=new DefaultTableModel(data,columns);
+        JtableResultado.setModel(modelo1);
+        String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,edad,telefono,correo,nombre_cargo,nombre_depto,estado FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto=emp.id_depto and emp.id_depto=dep.id_depto\n" +
+            "INNER JOIN  cargo c ON c.id_cargo=emp.id_cargo  INNER JOIN estado_empleados ee ON ee.id_estado=emp.id_estado_emp";
+          c4.setRs(sql);
+        
+        generarListado();
+    }
+    
+     public void generarListado() throws SQLException
+    {
+        resultado =c4.getRs();
+        while(resultado.next())
+        {
+            Object [] newRow= {
+                resultado.getString(1),resultado.getString(2),resultado.getString(3),resultado.getString(4),resultado.getString(5),
+                resultado.getString(6),resultado.getString(7),resultado.getString(8)
+               };
+            modelo1.addRow(newRow);
+        }
+        
+        resultado.close();
+    }
+      
+      
 
     
 

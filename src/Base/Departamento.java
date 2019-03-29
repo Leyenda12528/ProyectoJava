@@ -9,6 +9,8 @@ import Beans.DepartamentoBean;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 /**
  *
  * @author jorge
@@ -19,6 +21,29 @@ public class Departamento {
     private PreparedStatement ps = null;
     private ResultSet departamentos = null;    
     private String sql = "";
+    private int id_depto;
+    private String nombre_depto;
+
+    public Departamento(int id_depto, String nombre_depto)  throws SQLException {
+        this.id_depto = id_depto;
+        this.nombre_depto = nombre_depto;
+    }
+
+    public int getId_depto() {
+        return id_depto;
+    }
+
+    public void setId_depto(int id_depto) {
+        this.id_depto = id_depto;
+    }
+
+    public String getNombre_depto() {
+        return nombre_depto;
+    }
+
+    public void setNombre_depto(String nombre_depto) {
+        this.nombre_depto = nombre_depto;
+    }
 
     public Departamento() throws SQLException{
     }
@@ -44,7 +69,26 @@ public class Departamento {
         }
     }
         
-    public void MostrarDepartamento(){}
+    public void MostrarDepartamento(JComboBox <Departamento> comboDepto)throws SQLException{
+         
+        try {
+            Conexion con = new Conexion();
+            String sql = "select * from departamentos";
+            ResultSet datos= con.Buscar(sql);
+           
+           while (datos.next()) {
+                comboDepto.addItem(
+                        new Departamento(
+                                datos.getInt("id_depto"),
+                                datos.getString("nombre_depto")                               
+                        )
+                );
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Departamento.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS DEPARTAMENTOS");
+        }
+    }
     
     private void UpdateDepartamento() throws SQLException{
         //Code
@@ -52,6 +96,9 @@ public class Departamento {
 
     
 
-    
+        @Override
+       public String toString(){
+        return nombre_depto;
+    }
         
 }
