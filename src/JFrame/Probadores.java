@@ -51,7 +51,7 @@ public class Probadores extends javax.swing.JFrame {
         modelo1=new DefaultTableModel(data,columns);
         this.jTableResultado.setModel(modelo1);
         String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=2 and emp.id_cargo=2 where id_estado_emp=1";
+            "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=0";
         con3.setRs(sql);
         
         generarListado();
@@ -253,7 +253,7 @@ int  filaSeleccionada=-1;
         con3.setRs("Select id_empleado,CONCAT(nombre_emp,' ',apellidos) Nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"
                 +depto+"' and emp.id_depto='"
                 +depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=2 and emp.id_cargo=2 where id_estado_emp=1 and concat (nombre_emp,'',apellidos)"
+            "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=0 and concat (nombre_emp,'',apellidos)"
             +"like '%"+this.txtBusqueda.getText()+"%'");
 
         try {

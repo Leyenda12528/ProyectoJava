@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import Beans.*;
 
 /**
  *
@@ -21,16 +22,18 @@ import javax.swing.table.DefaultTableModel;
 public class MantenimientoEmpleados extends javax.swing.JFrame {
 
     Empleado emp = new Empleado();
+    EmpleadoBean empB=new EmpleadoBean();
     EstadosEmpleado estado = new EstadosEmpleado();
     Departamento depto = new Departamento();
     Cargo cargo = new Cargo();
-     DefaultTableModel modelo1=null;
+    DefaultTableModel modelo1=null;
       //static int bandera=0;
       ResultSet resultado=null;
       Conexion_c con3=new Conexion_c();
     /**
      * Creates new form MantenimientoEmpleados
      */
+      
     public MantenimientoEmpleados() throws SQLException {
         initComponents();
         iniciarValores();
@@ -46,11 +49,11 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
 
         Object[][] data =null;
         String [] columns= {
-        "Codigo", "Nombre","Edad","Telefono","Correo","Cargo","Departamento","Estado"
+        "Codigo", "Nombre","Apellido","Edad","Direccion","Telefono","Correo","Cargo","Departamento","Estado"
         };
         modelo1=new DefaultTableModel(data,columns);
         JtableResultado.setModel(modelo1);
-        String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,edad,telefono,correo,nombre_cargo,nombre_depto,estado FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto=emp.id_depto and emp.id_depto=dep.id_depto\n" +
+        String sql="SELECT id_empleado,nombre_emp,apellidos,edad,direccion,telefono,correo,nombre_cargo,nombre_depto,estado FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto=emp.id_depto and emp.id_depto=dep.id_depto\n" +
             "INNER JOIN  cargo c ON c.id_cargo=emp.id_cargo  INNER JOIN estado_empleados ee ON ee.id_estado=emp.id_estado_emp";
           con3.setRs(sql);
         
@@ -64,7 +67,7 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
         {
             Object [] newRow= {
                 resultado.getString(1),resultado.getString(2),resultado.getString(3),resultado.getString(4),resultado.getString(5),
-                resultado.getString(6),resultado.getString(7),resultado.getString(8)
+                resultado.getString(6),resultado.getString(7),resultado.getString(8),resultado.getString(9),resultado.getString(10)
                };
             modelo1.addRow(newRow);
         }
@@ -103,10 +106,11 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
         txtDireccion = new javax.swing.JTextField();
         txtEdad = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtPass = new javax.swing.JPasswordField();
         cmbCargo = new javax.swing.JComboBox<>();
         cmbDepto = new javax.swing.JComboBox<>();
         cmbEstados = new javax.swing.JComboBox<>();
+        txtTel = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
@@ -219,9 +223,9 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
         txtCorreo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
         txtCorreo.setCaretColor(new java.awt.Color(59, 134, 139));
 
-        jPasswordField1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jPasswordField1.setText("jPasswordField1");
-        jPasswordField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
+        txtPass.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtPass.setText("jPasswordField1");
+        txtPass.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
 
         cmbCargo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         cmbCargo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
@@ -231,6 +235,10 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
 
         cmbEstados.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         cmbEstados.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
+
+        txtTel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtTel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
+        txtTel.setCaretColor(new java.awt.Color(59, 134, 139));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -270,10 +278,11 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cmbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cmbDepto, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(cmbEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 41, Short.MAX_VALUE))))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -321,7 +330,7 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -334,7 +343,9 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(cmbEstados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(txtTel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(22, 22, 22)
@@ -461,6 +472,11 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        JtableResultado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JtableResultadoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(JtableResultado);
 
         jLabel18.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -515,17 +531,63 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+     
+   
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        // TODO add your handling code here:
+        try {
+            empB.setId_empleado(Integer.parseInt(txtCodigo.getText()));
+            empB.setEmp_nombre(txtNombres.getText());
+            empB.setEmp_apellidos(txtApellidos.getText());
+            empB.setCargo(cmbCargo.getItemAt(cmbCargo.getSelectedIndex()).getId_cargo());
+            empB.setCorreo(txtCorreo.getText());
+            empB.setDepto(cmbDepto.getItemAt(cmbDepto.getSelectedIndex()).getId_depto());
+            empB.setContraseña(txtPass.getText());
+            empB.setTelefono(txtTel.getText());
+            empB.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getCodigo());
+            empB.setDireccion(txtDireccion.getText());
+            empB.setEdad(Integer.parseInt(txtEdad.getText()));
+            
+            emp.AgregarEmpleado(empB);
+             iniciarValores();
+        } catch (SQLException ex) {
+            Logger.getLogger(MantenimientoEmpleados.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MantenimientoEmpleados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+       
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        // TODO add your handling code here:
+        try {
+            empB.setId_empleado(Integer.parseInt(txtCodigo.getText()));
+            emp.EliminarEmpleado(empB);
+            iniciarValores();
+        } catch (SQLException ex) {
+            Logger.getLogger(MantenimientoEmpleados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-        // TODO add your handling code here:
+      try {
+            empB.setId_empleado(Integer.parseInt(txtCodigo.getText()));
+            empB.setEmp_nombre(txtNombres.getText());
+            empB.setEmp_apellidos(txtApellidos.getText());
+            empB.setCargo(cmbCargo.getItemAt(cmbCargo.getSelectedIndex()).getId_cargo());
+            empB.setCorreo(txtCorreo.getText());
+            empB.setDepto(cmbDepto.getItemAt(cmbDepto.getSelectedIndex()).getId_depto());
+            empB.setContraseña(txtPass.getText());
+            empB.setTelefono(txtTel.getText());
+            empB.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getCodigo());
+            empB.setDireccion(txtDireccion.getText());
+            empB.setEdad(Integer.parseInt(txtEdad.getText()));
+            
+            emp.ModifcarEmpleado(empB);
+           iniciarValores();
+        } catch (SQLException ex) {
+            Logger.getLogger(MantenimientoEmpleados.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
@@ -544,6 +606,36 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
             Logger.getLogger(Programadores.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }//GEN-LAST:event_txtBusquedaKeyPressed
+int filaSeleccionada=-1;
+    private void JtableResultadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JtableResultadoMouseClicked
+          filaSeleccionada = JtableResultado.getSelectedRow();
+
+            int pass;
+        if (filaSeleccionada != -1) {
+            int rec = this.JtableResultado.getSelectedRow();
+          
+           
+            this.txtCodigo.setText(JtableResultado.getValueAt(rec, 0).toString());
+            this.txtNombres.setText(JtableResultado.getValueAt(rec, 1).toString());
+            this.txtApellidos.setText(JtableResultado.getValueAt(rec, 2).toString());
+            this.txtEdad.setText(JtableResultado.getValueAt(rec, 3).toString());
+            this.txtDireccion.setText(JtableResultado.getValueAt(rec, 4).toString());
+            this.txtTel.setText(JtableResultado.getValueAt(rec, 5).toString());
+            this.txtCorreo.setText(JtableResultado.getValueAt(rec, 6).toString());
+            String carg=JtableResultado.getValueAt(rec, 7).toString();
+            String depto=JtableResultado.getValueAt(rec, 8).toString();      
+            String estado=JtableResultado.getValueAt(rec, 9).toString();
+            
+          if(carg.equals("Inactivo")){
+              cargo.setId_cargo(1);
+             cmbCargo.getItemAt(2);
+          }
+
+        }  
+        btnEliminar.setEnabled(true);
+        btnModificar.setEnabled(true);
+        btnGuardar.setEnabled(true);
+    }//GEN-LAST:event_JtableResultadoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -613,7 +705,6 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtBusqueda;
@@ -622,5 +713,7 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEdad;
     private javax.swing.JTextField txtNombres;
+    private javax.swing.JPasswordField txtPass;
+    private javax.swing.JTextField txtTel;
     // End of variables declaration//GEN-END:variables
 }

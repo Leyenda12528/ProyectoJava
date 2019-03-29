@@ -230,7 +230,7 @@ public class Empleado {
           modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre","Cargo","Departamento"});
         try {
             String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=1";
+            "INNER JOIN  cargo c ON c.id_cargo=3 and emp.id_cargo=3 where id_estado_emp=0";
             ResultSet datos= con.Buscar(sql);
             while (datos.next()) {
                 modelo.addRow(new Object[]{
@@ -254,7 +254,7 @@ public class Empleado {
           modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre","Cargo","Departamento"});
         try {
             String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=2 and emp.id_cargo=2 where id_estado_emp=1";
+            "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=0";
             ResultSet datos= con.Buscar(sql);
             while (datos.next()) {
                modelo.addRow(new Object[]{
@@ -281,45 +281,83 @@ public class Empleado {
         resultado.setModel(modelo1);
         
         String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=1";
+            "INNER JOIN  cargo c ON c.id_cargo=3 and emp.id_cargo=3 where id_estado_emp=0";
             ResultSet datos= con3.Buscar(sql);
             return datos;
     }
     
-    
-     
-     public void iniciarValores(JTable JtableResultado) throws SQLException
-    {
-
-        Object[][] data =null;
-        String [] columns= {
-        "Codigo", "Nombre","Edad","Telefono","Correo","Cargo","Departamento","Estado"
-        };
-        modelo1=new DefaultTableModel(data,columns);
-        JtableResultado.setModel(modelo1);
-        String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,edad,telefono,correo,nombre_cargo,nombre_depto,estado FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto=emp.id_depto and emp.id_depto=dep.id_depto\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=emp.id_cargo  INNER JOIN estado_empleados ee ON ee.id_estado=emp.id_estado_emp";
-          c4.setRs(sql);
-        
-        generarListado();
-    }
-    
-     public void generarListado() throws SQLException
-    {
-        resultado =c4.getRs();
-        while(resultado.next())
-        {
-            Object [] newRow= {
-                resultado.getString(1),resultado.getString(2),resultado.getString(3),resultado.getString(4),resultado.getString(5),
-                resultado.getString(6),resultado.getString(7),resultado.getString(8)
-               };
-            modelo1.addRow(newRow);
+     public void AgregarEmpleado(EmpleadoBean emp) throws SQLException, ClassNotFoundException{
+          String sql="insert into empleados  values(?,?,?,?,?,?,?,?,?,?,?) ";
+          
+        try  {
+            PreparedStatement psta = con.Obtener().prepareStatement(sql);
+          
+             psta.setInt(1, emp.getId_empleado());
+            psta.setString(2,emp.getEmp_nombre());
+            psta.setString(3,emp.getEmp_apellidos());
+            psta.setInt(4, emp.getCargo());
+            psta.setInt(5, emp.getDepto());
+            psta.setInt(6, emp.getEdad());
+            psta.setString(7, emp.getDireccion());
+            psta.setString(8,emp.getTelefono());
+            psta.setString(9, emp.getCorreo());
+            psta.setString(10, emp.getContraseña());
+            psta.setInt(11, emp.getId_estado());
+            psta.execute();
+            
+            
+            JOptionPane.showMessageDialog(null,"Empleado Ingresado con exito");
+        }
+        catch(ClassNotFoundException | SQLException e){
+            JOptionPane.showMessageDialog(null, e);
         }
         
-        resultado.close();
+     }
+       public void ModifcarEmpleado(EmpleadoBean emp) throws SQLException{
+          String sql="update  empleados set nombre_emp=?,apellidos=?,id_cargo=?,id_depto=?,"
+                  + "edad=?,direccion=?,telefono=?,correo=?,password_emp=?,id_estado_emp=? where id_empleado=? ";
+          
+        try  {
+            PreparedStatement psta = con.Obtener().prepareStatement(sql);
+            psta.setString(1,emp.getEmp_nombre());
+            psta.setString(2,emp.getEmp_apellidos());
+            psta.setInt(3, emp.getCargo());
+            psta.setInt(4, emp.getDepto());
+            psta.setInt(5, emp.getEdad());
+            psta.setString(6, emp.getDireccion());
+            psta.setString(7,emp.getTelefono());
+            psta.setString(8, emp.getCorreo());
+            psta.setString(9, emp.getContraseña());
+            psta.setInt(10, emp.getId_estado());
+            psta.setInt(11, emp.getId_empleado());
+            psta.execute();
+            
+            
+            JOptionPane.showMessageDialog(null,"Empleado Modificado con exito");
+        }
+        catch(ClassNotFoundException | SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
-      
-      
+    
+    
+  
+             public void EliminarEmpleado(EmpleadoBean emp) throws SQLException{
+          String sql="update  empleados set id_estado_emp=1 where id_empleado=?";
+          
+        try  {
+            PreparedStatement psta = con.Obtener().prepareStatement(sql);
+          
+            psta.setInt(1, emp.getId_empleado());
+            psta.execute();
+            
+            
+            JOptionPane.showMessageDialog(null,"Empleado Inactivo");
+        }
+        catch(ClassNotFoundException | SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
     
 
