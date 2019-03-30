@@ -7,6 +7,7 @@ package Base;
 
 import Beans.EmpleadoBean;
 import java.sql.*;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -357,7 +358,14 @@ public class Empleado {
         catch(ClassNotFoundException | SQLException e){
             JOptionPane.showMessageDialog(null, e);
         }
+        
     }
+             
+             public int generarId(){
+             Random aleatorio = new Random();
+             int numeros=(int)(aleatorio.nextDouble() * 99+1000);
+          return numeros; 
+             }
 
     
 

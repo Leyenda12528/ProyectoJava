@@ -83,7 +83,6 @@ public class Asignacion extends javax.swing.JFrame {
         btnAsignarTester = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         lblNombreDepto = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -216,13 +215,6 @@ public class Asignacion extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(59, 134, 139));
         jLabel4.setText("Nombre del programador");
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(59, 134, 139));
         jLabel8.setText("Departamento");
@@ -341,10 +333,7 @@ public class Asignacion extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNombreDepto1)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lblNombreDepto)
-                                .addGap(159, 159, 159)
-                                .addComponent(jButton1))))
+                            .addComponent(lblNombreDepto)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,9 +364,8 @@ public class Asignacion extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombreDepto)
-                    .addComponent(jLabel8)
-                    .addComponent(jButton1))
-                .addGap(9, 9, 9)
+                    .addComponent(jLabel8))
+                .addGap(13, 13, 13)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(lblNombreDepto1)
@@ -414,11 +402,6 @@ public class Asignacion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        capturarIdProgramador();
-    
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnAsignarTesterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignarTesterMouseClicked
         try {
@@ -487,7 +470,7 @@ public class Asignacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void txtFechaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaKeyReleased
-        String fecha = txtFecha.getText();
+                String fecha = txtFecha.getText();
         if (h.verificarFecha(fecha) && h.verificarAnio(fecha)) {
             lblError.setText("");
 
@@ -550,7 +533,6 @@ public class Asignacion extends javax.swing.JFrame {
     private javax.swing.JPanel btnAsignarProgramador;
     private javax.swing.JPanel btnAsignarTester;
     private javax.swing.JPanel btnModificar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

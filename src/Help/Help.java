@@ -31,8 +31,7 @@ public class Help {
         }
         return var;
     }
-    
-    
+
     public boolean verificarAnio(String fecha) {
         boolean valida = false;
         try {
@@ -48,4 +47,9 @@ public class Help {
      public boolean verificarFecha(String fechaEnviada) {      
         return (Pattern.matches("\\d{1,2}-\\d{1,2}-\\d{4}", fechaEnviada));
     } 
+     
+     public boolean validarTel(String tel)
+     {
+         return (Pattern.matches("\\d{4}-\\d{4}", tel));
+     }
 }
