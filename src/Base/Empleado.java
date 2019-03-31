@@ -187,6 +187,7 @@ public class Empleado {
             else return false;
         } catch (Exception e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e.getMessage());
+            System.out.println(""+e);
             return false;
         }
     }

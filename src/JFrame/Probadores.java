@@ -32,10 +32,10 @@ public class Probadores extends javax.swing.JFrame {
       //static int bandera=0;
       ResultSet resultado=null;
       Conexion_c con3=new Conexion_c();
-      int depto=1;
+      int depto;
     public Probadores() throws SQLException{
         initComponents();
-    
+        depto=Integer.parseInt(lblIdDepto.getText());
        btnRegresar.setVisible(false);
        iniciarValores();
     }
@@ -88,6 +88,8 @@ public class Probadores extends javax.swing.JFrame {
         txtBusqueda = new javax.swing.JTextField();
         btnRegresar = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        lblIdDepto = new javax.swing.JLabel();
+        lblNombreDepto = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -177,6 +179,14 @@ public class Probadores extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        lblIdDepto.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblIdDepto.setForeground(new java.awt.Color(59, 134, 139));
+        lblIdDepto.setText("1");
+
+        lblNombreDepto.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblNombreDepto.setForeground(new java.awt.Color(59, 134, 139));
+        lblNombreDepto.setText("Nombre departamento");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -186,20 +196,31 @@ public class Probadores extends javax.swing.JFrame {
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel4)
-                        .addGap(27, 27, 27)
-                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addComponent(jLabel4)
+                                .addGap(27, 27, 27)
+                                .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(lblIdDepto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblNombreDepto)))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(88, 88, 88)
+                .addGap(22, 22, 22)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblIdDepto)
+                    .addComponent(lblNombreDepto))
+                .addGap(47, 47, 47)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -313,6 +334,8 @@ int  filaSeleccionada=-1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableResultado;
+    private javax.swing.JLabel lblIdDepto;
+    private javax.swing.JLabel lblNombreDepto;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }

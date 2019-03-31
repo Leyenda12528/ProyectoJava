@@ -102,7 +102,6 @@ public class Casos {
 //    private int porcentaje; //porcentaje de avance de proyecto
 //    private String fecha_limite;
 //    private String fecha_produccion;
-    
     private String sqlC;
 
     public Casos() throws SQLException {
@@ -112,38 +111,39 @@ public class Casos {
         try {
             sqlC = "insert into caso values(?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = new Conexion().Obtener().prepareStatement(sqlC);
-            Conexion.InsertarP(sqlC, ps, casoB.getId_caso(),casoB.getNombre_caso(),casoB.getDescrip_req(),casoB.getDescrip_rechazo(),casoB.getDescripcion_jefedes(),casoB.getId_estado(),casoB.getPorcentaje(),casoB.getFecha_limite(),casoB.getFecha_produccion());
+            Conexion.InsertarP(sqlC, ps, casoB.getId_caso(), casoB.getNombre_caso(), casoB.getDescrip_req(), casoB.getDescrip_rechazo(), casoB.getDescripcion_jefedes(), casoB.getId_estado(), casoB.getPorcentaje(), casoB.getFecha_limite(), casoB.getFecha_produccion());
         } catch (SQLException e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, "ERROR Caso Ingreso JF " + e);
         }
     }
-    
+
     public void IngresarCaso() throws SQLException {
     }
-        
+
     public void getSolicitudesJD(String DeptoCaso, JList<String> listUtilidad) {
         try {
             sqlC = "SELECT        id_caso"
                     + " FROM            caso"
-                    + " WHERE        (id_estado = 1) AND (id_caso LIKE '%"+DeptoCaso+"%')";
+                    + " WHERE        (id_estado = 1) AND (id_caso LIKE '%" + DeptoCaso + "%')";
             casos = Conexion.Buscar(sqlC);
             DefaultListModel modelo = new DefaultListModel();
-            while (casos.next()) 
+            while (casos.next()) {
                 modelo.addElement(casos.getString(1));
-            
+            }
+
             listUtilidad.setModel(modelo);
         } catch (Exception e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
-    public CasoBean getDatosSolicitudJD(String idCaso){
+
+    public CasoBean getDatosSolicitudJD(String idCaso) {
         try {
             sqlC = "SELECT        nombre_caso, descrip_req, id_estado, porcentaje_avance"
                     + " FROM            caso"
-                    + " WHERE        id_caso= "+idCaso+"";
+                    + " WHERE        id_caso= " + idCaso + "";
             casos = Conexion.Buscar(sqlC);
-            
+
             if (casos.next()) {
                 casoB.setId_caso(idCaso);
                 casoB.setNombre_caso(casos.getString(1));
@@ -155,63 +155,65 @@ public class Casos {
         } catch (Exception e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
             return null;
-        }        
+        }
     }
-    
+
     private String isVacia(String code) {
         try {
             sqlC = "select count(*) from caso where id_caso like '" + code + "%'";
             casos = Conexion.Buscar(sqlC);
             if (casos.next()) {
                 int cant = casos.getInt(1);
-                return cant+"";
+                return cant + "";
+            } else {
+                return "";
             }
-            else return "";
         } catch (SQLException e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
             return null;
-        }      
+        }
     }
 
     public void MostrarCaso(JTable casos) {
-          DefaultTableModel modelo = new DefaultTableModel();  
-          modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre","Descripción","Motivo Rechazo","Descripción Jefe","Estado",
-              "Porcentaje","Fecha Limite","Fecha Produccion"});
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre", "Descripción", "Motivo Rechazo", "Descripción Jefe", "Estado",
+            "Porcentaje", "Fecha Limite", "Fecha Produccion"});
         try {
-            String sql="Select * from caso";
-            ResultSet datos= con.Buscar(sql);
+            String sql = "Select * from caso";
+            ResultSet datos = con.Buscar(sql);
             while (datos.next()) {
                 modelo.addRow(new Object[]{
-               datos.getString("id_caso"),
-               datos.getString("nombre_caso"),
-               datos.getString("descrip_req"),
-               datos.getString("descrip_rechazo"),
-               datos.getString("descripcion_jefedes"),
-               datos.getInt("id_estado"),
-               datos.getInt("porcentaje_avance"),
-               datos.getString("fecha_limite"),
-               datos.getString("fecha_produccion")
-               
+                    datos.getString("id_caso"),
+                    datos.getString("nombre_caso"),
+                    datos.getString("descrip_req"),
+                    datos.getString("descrip_rechazo"),
+                    datos.getString("descripcion_jefedes"),
+                    datos.getInt("id_estado"),
+                    datos.getInt("porcentaje_avance"),
+                    datos.getString("fecha_limite"),
+                    datos.getString("fecha_produccion")
+
                 });
             }
-           casos.setModel(modelo);
+            casos.setModel(modelo);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
 
-    public void UpdateCasoToFinalizar(BitacoraBean bitaB){
+    public void UpdateCasoToFinalizar(BitacoraBean bitaB) {
         try {
             sqlC = "update caso set id_estado = 4 where id_caso = ? ";
             ps = con.Obtener().prepareStatement(sqlC);
             ps.setObject(1, bitaB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println(""+e);
+            System.out.println("" + e);
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    public void UpdateCasoPorcent(BitacoraBean bitaB){
+
+    public void UpdateCasoPorcent(BitacoraBean bitaB) {
         try {
             sqlC = "update caso set porcentaje_avance = ? where id_caso = ? ";
             ps = con.Obtener().prepareStatement(sqlC);
@@ -219,7 +221,7 @@ public class Casos {
             ps.setObject(2, bitaB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println(""+e);
+            System.out.println("" + e);
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -227,8 +229,8 @@ public class Casos {
     public void ByeCaso() throws SQLException {
 
     }
-    
-      public void UpdateCasoFechaLimite(CasoBean bitaB){
+
+    public void UpdateCasoFechaLimite(CasoBean bitaB) {
         try {
             sqlC = "update caso set fecha_limite = ? where id_caso = ? ";
             ps = con.Obtener().prepareStatement(sqlC);
@@ -236,24 +238,22 @@ public class Casos {
             ps.setObject(2, bitaB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println(""+e);
+            System.out.println("" + e);
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-      
-
 
     //**************************************************************************************
-
     public CasoBean getNewIdCaso(String nombreDepartamento) {
         try {
-            Calendar cal= Calendar.getInstance();
-            int year= cal.get(Calendar.YEAR);            
-            String code = nombreDepartamento.charAt(0)+ "" + nombreDepartamento.charAt(1)+ "" + nombreDepartamento.charAt(2) + "";
-            String yer = String.valueOf(year).charAt(2)+ "" + String.valueOf(year).charAt(3) + "";
+            Calendar cal = Calendar.getInstance();
+            int year = cal.get(Calendar.YEAR);
+            String code = nombreDepartamento.charAt(0) + "" + nombreDepartamento.charAt(1) + "" + nombreDepartamento.charAt(2) + "";
+            String yer = String.valueOf(year).charAt(2) + "" + String.valueOf(year).charAt(3) + "";
             String cant = String.valueOf(Integer.parseInt(isVacia(code)) + 1);
-            while (cant.length() < 3)
+            while (cant.length() < 3) {
                 cant = "0" + cant;
+            }
             String newId = code + yer + cant;
             casoB.setId_caso(newId);
             return casoB;
@@ -266,13 +266,14 @@ public class Casos {
         try {
             sqlC = "SELECT        id_caso"
                     + " FROM            caso"
-                    + " WHERE        (id_caso LIKE '%"+idBeginCaso+"%') and (id_estado <> 1) AND (id_estado <> 2) AND (id_estado <> 7)";
+                    + " WHERE        (id_caso LIKE '%" + idBeginCaso + "%') and (id_estado <> 1) AND (id_estado <> 2) AND (id_estado <> 7)";
             casos = Conexion.Buscar(sqlC);
             DefaultListModel modelo = new DefaultListModel();
-            while (casos.next()) 
-                modelo.addElement(casos.getString(1));                
+            while (casos.next()) {
+                modelo.addElement(casos.getString(1));
+            }
             listUser.setModel(modelo);
-            
+
         } catch (Exception e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -280,15 +281,45 @@ public class Casos {
 
     public void getEstado(CasoBean casoB) {
         try {
-            sqlC="select id_estado from caso where id_caso = '"+casoB.getId_caso()+"'";
+            sqlC = "select id_estado from caso where id_caso = '" + casoB.getId_caso() + "'";
             casos = Conexion.Buscar(sqlC);
-            if (casos.next()) 
-                casoB.setId_estado(casos.getInt(1));            
+            if (casos.next()) {
+                casoB.setId_estado(casos.getInt(1));
+            }
         } catch (Exception e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
-    
 
+    public void listarCasosPorEstado(Estados estado,JTable estadoCasos,int depto) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre", "Descripción", "Motivo Rechazo", "Descripción Jefe",
+            "Porcentaje", "Fecha Limite", "Fecha Produccion"});
+        try {
+            String sql = "SELECT c.id_caso,nombre_caso,descrip_req,descrip_rechazo,descripcion_jefedes,porcentaje_avance,fecha_limite,fecha_produccion"
+                    + " FROM empledos_caso ec "
+                    + "INNER JOIN caso c ON c.id_caso=ec.id_caso\n" +
+                     "INNER JOIN empleados e ON e.id_empleado=ec.id_empleado"
+                    + " INNER JOIN departamentos dep ON dep.id_depto=e.id_depto where e.id_depto='"+depto+"' and id_estado='"+estado.getId_estado()+"'";
+            ResultSet datos = con.Buscar(sql);
+            while (datos.next()) {
+                modelo.addRow(new Object[]{
+                    datos.getString("id_caso"),
+                    datos.getString("nombre_caso"),
+                    datos.getString("descrip_req"),
+                    datos.getString("descrip_rechazo"),
+                    datos.getString("descripcion_jefedes"),
+                  
+                    datos.getInt("porcentaje_avance"),
+                    datos.getString("fecha_limite"),
+                    datos.getString("fecha_produccion")
+
+                });
+            }
+            estadoCasos.setModel(modelo);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+          
+    }
 }
