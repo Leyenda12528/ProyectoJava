@@ -99,7 +99,7 @@ public class Empleado_Caso {
         ResultSet datos = con.Buscar(sql);
         datos.next();
         /// JOptionPane.showMessageDialog(null, datos.getInt(1));
-        if (datos.getInt(1) >= 4) 
+        if (datos.getInt(1) >= 2) 
             band = true;
         return band;
     }
