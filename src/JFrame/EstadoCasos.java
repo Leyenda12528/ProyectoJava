@@ -22,6 +22,7 @@ public class EstadoCasos extends javax.swing.JFrame {
     int id_dep;
     static int ban = 0;
     int id_emp;
+    String nombre_depto;
     /**
      * Creates new form NewJFrame
      */
@@ -31,11 +32,11 @@ public class EstadoCasos extends javax.swing.JFrame {
     estados.mostrarEstados(cmbEstados);
         
     id_emp=Integer.parseInt(lblIdEmpleado.getText());
-        //     cmbEstados.getSelectedIndex();
-      estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
-        caso.listarCasosPorEstado(estados, JTableResultado,id_dep,id_emp);
-//        lblDescripcion.setText("");   
-//         
+     
+     estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
+     nombre_depto=lblNombre.getText().substring(0, 3);  //captando primeras 3 letras del nombre del departamento 
+     caso.listarCasosPorEstado(estados, JTableResultado,nombre_depto);
+        
 
     }
 
@@ -50,7 +51,7 @@ public class EstadoCasos extends javax.swing.JFrame {
         cmbEstados.getSelectedIndex();
         estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
         JOptionPane.showMessageDialog(null, ""+estados.getId_estado());
-        caso.listarCasosPorEstado(estados, JTableResultado, id_dep,id_emp);
+        caso.listarCasosPorEstado(estados, JTableResultado, nombreDepto);
         lblDescripcion.setText("");
     }
 
@@ -118,7 +119,7 @@ public class EstadoCasos extends javax.swing.JFrame {
 
         lblNombre.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(59, 134, 139));
-        lblNombre.setText("Nombre del departamentos");
+        lblNombre.setText("Logistico");
 
         lblIdEmpleado.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblIdEmpleado.setForeground(new java.awt.Color(59, 134, 139));
@@ -126,14 +127,14 @@ public class EstadoCasos extends javax.swing.JFrame {
 
         lblNombreEmp.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblNombreEmp.setForeground(new java.awt.Color(59, 134, 139));
-        lblNombreEmp.setText("Nombre del empleado si se puede xD");
+        lblNombreEmp.setText("si se puede mostrar el nombre del susodicho xD");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(lblId)
@@ -146,10 +147,9 @@ public class EstadoCasos extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(lblIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblNombreEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)))
-                .addContainerGap(195, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNombreEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,15 +157,11 @@ public class EstadoCasos extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblId))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(lblIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblNombreEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombreEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(cmbEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -213,9 +209,9 @@ public class EstadoCasos extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(293, 293, 293)
+                .addGap(428, 428, 428)
                 .addComponent(jLabel6)
-                .addContainerGap(635, Short.MAX_VALUE))
+                .addContainerGap(500, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,7 +230,7 @@ public class EstadoCasos extends javax.swing.JFrame {
         // TODO add your handling code here:   
         estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
        
-        caso.listarCasosPorEstado(estados, JTableResultado, id_dep,id_emp);
+        caso.listarCasosPorEstado(estados, JTableResultado, nombre_depto);
         lblDescripcion.setText("\nMostrando información de casos en estado: " + cmbEstados.getSelectedItem());
     }//GEN-LAST:event_cmbEstadosActionPerformed
 
