@@ -226,7 +226,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(btnBitacorasJDLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jLabel12)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         btnBitacorasJDLayout.setVerticalGroup(
             btnBitacorasJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,7 +284,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(btnverCasosJDLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel17)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         btnverCasosJDLayout.setVerticalGroup(
             btnverCasosJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,11 +303,11 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(btnSolicitudesJD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBitacorasJD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnListaProgramadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnverCasosJD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         pnlJDLayout.setVerticalGroup(
             pnlJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,16 +381,16 @@ public class Menu extends javax.swing.JFrame {
         btnSolicitarCasoJFLayout.setHorizontalGroup(
             btnSolicitarCasoJFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnSolicitarCasoJFLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addComponent(jLabel8)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         btnSolicitarCasoJFLayout.setVerticalGroup(
             btnSolicitarCasoJFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnSolicitarCasoJFLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnSolicitarCasoJFLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         btnBitacorasJF.setBackground(new java.awt.Color(89, 199, 198));
@@ -412,7 +412,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(btnBitacorasJFLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jLabel9)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         btnBitacorasJFLayout.setVerticalGroup(
             btnBitacorasJFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -470,7 +470,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(btnVerCasosJFLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel18)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         btnVerCasosJFLayout.setVerticalGroup(
             btnVerCasosJFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -489,7 +489,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(btnSolicitarCasoJF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBitacorasJF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addGap(18, 18, 18)
                 .addComponent(btnListaEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnVerCasosJF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
