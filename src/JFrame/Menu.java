@@ -712,8 +712,10 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnManteniEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManteniEmpleadosMouseClicked
         try {
-            MantenimientoEmpleados call = new MantenimientoEmpleados();
+            if (MantenimientoEmpleados.ban == 0) {
+                MantenimientoEmpleados call = new MantenimientoEmpleados();
             call.setVisible(true);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -809,7 +811,7 @@ public class Menu extends javax.swing.JFrame {
     private void btnOkCasoJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOkCasoJDMouseClicked
         try {///JEFE DESARROLLO ....aceptando caso
             if (DescripcionCaso.ban == 0) {
-                DescripcionCaso descrip = new DescripcionCaso(0, listUtilidad.getSelectedValue().toString());
+                DescripcionCaso descrip = new DescripcionCaso(0, listUtilidad.getSelectedValue().toString(), User.getDepto());
                 descrip.setVisible(true);                
             }
             cerrarCasoJD();
@@ -820,7 +822,7 @@ public class Menu extends javax.swing.JFrame {
     private void btnNoCasoJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNoCasoJDMouseClicked
         try {///JEFE DESARROLLO ....rechazando caso
             if (DescripcionCaso.ban == 0) {
-                DescripcionCaso descrip = new DescripcionCaso(1, listUtilidad.getSelectedValue().toString());
+                DescripcionCaso descrip = new DescripcionCaso(1, listUtilidad.getSelectedValue().toString(), User.getDepto());
                 descrip.setVisible(true);                
             }
             cerrarCasoJD();
@@ -859,10 +861,24 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnverCasosJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnverCasosJDMouseClicked
         // TODO add your handling code here:
+        try {
+            if (EstadoCasos.ban == 0) {
+                EstadoCasos estCasos = new EstadoCasos(User.getDepto(), User.getNombreDepto());
+                estCasos.setVisible(true);
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnverCasosJDMouseClicked
 
     private void btnVerCasosJFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerCasosJFMouseClicked
         // TODO add your handling code here:
+        try {
+            if (EstadoCasos.ban == 0) {
+                EstadoCasos estCasos = new EstadoCasos(User.getDepto(), User.getNombreDepto());
+                estCasos.setVisible(true);
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnVerCasosJFMouseClicked
 
     /**

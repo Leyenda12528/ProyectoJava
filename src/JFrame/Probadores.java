@@ -24,52 +24,58 @@ public class Probadores extends javax.swing.JFrame {
     /**
      * Creates new form Probadores
      */
-      ResultSet programadores;
-     public static String id_programador;
-     public static String nombre;
-    static int bandera=0;
-     DefaultTableModel modelo1=null;
-      //static int bandera=0;
-      ResultSet resultado=null;
-      Conexion_c con3=new Conexion_c();
-      int depto;
-    public Probadores() throws SQLException{
-        initComponents();
-        depto=Integer.parseInt(lblIdDepto.getText());
-       btnRegresar.setVisible(false);
-       iniciarValores();
-    }
- public void iniciarValores() throws SQLException
-    {
-       
-       
+    ResultSet programadores;
+    public static String id_programador;
+    public static String nombre;
+    static int bandera = 0;
+    DefaultTableModel modelo1 = null;
+    //static int bandera=0;
+    ResultSet resultado = null;
+    Conexion_c con3 = new Conexion_c();
+    int depto;
 
-        Object[][] data =null;
-        String [] columns= {
-        "Codigo", "Nombre","Cargo","Departamento"
+    public Probadores() throws SQLException {
+        initComponents();
+//        depto = Integer.parseInt(lblIdDepto.getText());
+//        btnRegresar.setVisible(false);
+//        iniciarValores();
+    }
+
+    Probadores(String id_depto, String nombre_depto)throws SQLException  {
+        initComponents();
+        lblIdDepto.setText(id_depto);
+        lblNombreDepto.setText(nombre_depto);
+        depto = Integer.parseInt(lblIdDepto.getText());
+        btnRegresar.setVisible(false);
+        iniciarValores();
+    }
+
+    public void iniciarValores() throws SQLException {
+
+        Object[][] data = null;
+        String[] columns = {
+            "Codigo", "Nombre", "Cargo", "Departamento"
         };
-        modelo1=new DefaultTableModel(data,columns);
+        modelo1 = new DefaultTableModel(data, columns);
         this.jTableResultado.setModel(modelo1);
-        String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=0";
+        String sql = "SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='" + depto + "' and emp.id_depto='" + depto + "'\n"
+                + "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=0";
         con3.setRs(sql);
-        
+
         generarListado();
     }
-    
-      void generarListado() throws SQLException
-    {
-        resultado =con3.getRs();
-        while(resultado.next())
-        {
-            Object [] newRow= {
-                resultado.getString(1),resultado.getString(2),resultado.getString(3),resultado.getString(4)
-               };
+
+    void generarListado() throws SQLException {
+        resultado = con3.getRs();
+        while (resultado.next()) {
+            Object[] newRow = {
+                resultado.getString(1), resultado.getString(2), resultado.getString(3), resultado.getString(4)
+            };
             modelo1.addRow(newRow);
         }
-        
         resultado.close();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -258,32 +264,29 @@ int  filaSeleccionada=-1;
     }//GEN-LAST:event_jTableResultadoMouseClicked
 
     private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
-         Asignacion.txtProbador.setText(nombre);
-        Asignacion.id_tes=id_programador;
-       // JOptionPane.showMessageDialog(this, programador.id_p);
+        Asignacion.txtProbador.setText(nombre);
+        Asignacion.id_tes = id_programador;
+        // JOptionPane.showMessageDialog(this, programador.id_p);
         Asignacion.getWindows();
         this.dispose();
-       
+
 
     }//GEN-LAST:event_btnRegresarMouseClicked
 
     private void jPanel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel2KeyPressed
       
-        while(modelo1.getRowCount()!=0) modelo1.removeRow(0);
-
+        while (modelo1.getRowCount() != 0)
+            modelo1.removeRow(0);
         con3.setRs("Select id_empleado,CONCAT(nombre_emp,' ',apellidos) Nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"
-                +depto+"' and emp.id_depto='"
-                +depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=0 and concat (nombre_emp,'',apellidos)"
-            +"like '%"+this.txtBusqueda.getText()+"%'");
-
+                + depto + "' and emp.id_depto='"
+                + depto + "'\n"
+                + "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=0 and concat (nombre_emp,'',apellidos)"
+                + "like '%" + this.txtBusqueda.getText() + "%'");
         try {
-
             generarListado();
-
         } catch (SQLException ex) {
             Logger.getLogger(Programadores.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }//GEN-LAST:event_jPanel2KeyPressed
 
     /**

@@ -22,6 +22,7 @@ public class DescripcionCaso extends javax.swing.JFrame {
     private CasoBean casoB = new CasoBean();
     private Casos casos;
     static int ban = 0;
+    private int IdDepto;
     /**
      * Creates new form DescripcionCaso
      */
@@ -29,12 +30,13 @@ public class DescripcionCaso extends javax.swing.JFrame {
         initComponents();
     }
 
-    public  DescripcionCaso(int tipo, String Idcaso) throws SQLException{
+    public  DescripcionCaso(int tipo, String Idcaso, int Idepartamento) throws SQLException{
         ban = 1;
         initComponents();
         casos = new Casos();
         this.setLocationRelativeTo(null);
         this.tipo = tipo;
+        this.IdDepto = Idepartamento;
         inicio(Idcaso);       
     }
 
@@ -241,17 +243,19 @@ public class DescripcionCaso extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMouseClicked
-        if (tipo == 0) {
-            casoB.setDescrip_rechazo(txtDescripJD.getText().trim());
-            casoB.setId_estado(3);//En desarrollo
+        try {
+            if (tipo == 0) {
+                casoB.setDescrip_rechazo(txtDescripJD.getText().trim());
+                casoB.setId_estado(3);//En desarrollo
+            } else {
+                casoB.setDescripcion_jefedes(txtDescripJD.getText().trim());
+                casoB.setId_estado(2);//Rechazada
+            }
+            Asignacion asignacionCaso = new Asignacion(casoB, IdDepto);
+            asignacionCaso.setVisible(true);
+            formWindowClosing(null);
+        } catch (Exception e) {
         }
-        else {
-            casoB.setDescripcion_jefedes(txtDescripJD.getText().trim());
-            casoB.setId_estado(2);//Rechazada
-        }
-        Asignacion asignacionCaso;
-        //Enviar el CASO_BEAN
-        //asignacionCaso = new Asignacion();
     }//GEN-LAST:event_btnEnviarMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

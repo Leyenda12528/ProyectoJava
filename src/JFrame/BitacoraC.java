@@ -47,6 +47,7 @@ public class BitacoraC extends javax.swing.JFrame {
     public BitacoraC(int Iddepto, String Departamento, int idCargo) throws SQLException {
         ban = 1;
         initComponents();
+        this.setLocationRelativeTo(null);
         Inicio(idCargo);
         bita = new Bitacora();
         switch (idCargo) {
@@ -80,9 +81,9 @@ public class BitacoraC extends javax.swing.JFrame {
                     llenandoCb();
                     ProgEmp(1);
                     //Ver si el caso esta esperando la respuesta de 
-                    //sino lo es no muestras los botones de acciones
+                    //sino no muestras los botones de acciones
                     if (!isWaitAnswer()){ 
-                        BtnsEmp(0);
+                        //BtnsEmp(0);
                         txtObservaciones.setEditable(false);
                     }
                     
@@ -134,6 +135,8 @@ public class BitacoraC extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
+        lblFechaProduccion = new javax.swing.JLabel();
+        txtFecha = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
 
@@ -400,6 +403,28 @@ public class BitacoraC extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        lblFechaProduccion.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblFechaProduccion.setForeground(new java.awt.Color(59, 134, 139));
+        lblFechaProduccion.setText("Fecha Produccion");
+
+        txtFecha.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtFecha.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
+        txtFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtFechaMouseClicked(evt);
+            }
+        });
+        txtFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaActionPerformed(evt);
+            }
+        });
+        txtFecha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFechaKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
         pnlBodyLayout.setHorizontalGroup(
@@ -409,12 +434,6 @@ public class BitacoraC extends javax.swing.JFrame {
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlBodyLayout.createSequentialGroup()
-                                .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnUpdateBitacora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10)
                             .addComponent(jLabel9)
                             .addGroup(pnlBodyLayout.createSequentialGroup()
                                 .addComponent(jLabel6)
@@ -429,22 +448,37 @@ public class BitacoraC extends javax.swing.JFrame {
                                 .addGap(4, 4, 4)
                                 .addComponent(jLabel14)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblPorcentaje)))
-                        .addGap(0, 1, Short.MAX_VALUE))
+                                .addComponent(lblPorcentaje))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnUpdateBitacora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(lblFechaProduccion)
+                                .addGap(43, 43, 43)))
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlBodyLayout.createSequentialGroup()
                                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRechazar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(18, 18, 18)
+                                .addComponent(btnRechazar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(4, 4, 4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ScrollListUser, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                    .addComponent(ScrollListCasos, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                    .addComponent(ScrollListUser, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                    .addComponent(ScrollListCasos, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 36, Short.MAX_VALUE)
                         .addComponent(lblProOoCasos, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGap(31, 31, 31)
@@ -475,7 +509,7 @@ public class BitacoraC extends javax.swing.JFrame {
                                 .addComponent(cbPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
@@ -489,16 +523,25 @@ public class BitacoraC extends javax.swing.JFrame {
                         .addComponent(lblCasoPro)
                         .addGap(10, 10, 10)
                         .addComponent(ScrollListCasos, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUpdateBitacora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRechazar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblFechaProduccion)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnUpdateBitacora, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRechazar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
-        getContentPane().add(pnlBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 640, 610));
+        getContentPane().add(pnlBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 640, 640));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -577,12 +620,37 @@ public class BitacoraC extends javax.swing.JFrame {
 
     private void btnRechazarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRechazarMouseClicked
         // PROBADOR/TESTER update Caso a 6-Devuelto con observaciones
-        //Falta codigo
+        try {
+            if (txtObservaciones.getText().length() > 0) {
+                caso.getDateLimit(casoB);
+                if (h.Plus7Days(casoB)){ //Actualizar fecha limite
+                    caso.UpdateDevolucion(casoB);
+                    JOptionPane.showMessageDialog(null, "Observaciones enviadas");
+                }                
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnRechazarMouseClicked
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-        // PROBADOR/TESTER update Caso a 7-Finalizado -->con la fecha de produccion
-        //Falta codigo
+        // PROBADOR/TESTER update Caso a 7-Finalizado -->con la fecha de produccion        
+        try {
+            String fechaProd = txtFecha.getText();
+            if (h.verificarFecha(fechaProd) && h.verificarAnio(fechaProd)) {
+                if (!h.dateMaxNow(fechaProd) || !h.exitsFecha(fechaProd)) //Verificar si es menor a al fecha actual y si existe
+                    JOptionPane.showMessageDialog(null, "La fecha ingresada no es valida");
+                else {
+                    System.out.println("Bien");
+                    casoB.setFecha_produccion(fechaProd);
+                    casoB.setId_estado(7);//Caso Finalizado
+                    caso.FinCaso(casoB);
+                    formWindowClosing(null);
+                }           
+            }
+            else 
+                JOptionPane.showMessageDialog(null, "Verifique formato de la Fecha");
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnAceptarMouseClicked
 
     private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
@@ -594,6 +662,26 @@ public class BitacoraC extends javax.swing.JFrame {
         if (h.CampoRestringuido(evt.getKeyChar()))
             evt.consume();
     }//GEN-LAST:event_txtObservacionesKeyTyped
+
+    private void txtFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtFechaMouseClicked
+        if (txtFecha.getText().equals("02-02-2019")) {
+            txtFecha.setText("");
+        }
+    }//GEN-LAST:event_txtFechaMouseClicked
+
+    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaActionPerformed
+
+    private void txtFechaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaKeyReleased
+        String fecha = txtFecha.getText();
+        if (h.verificarFecha(fecha) && h.verificarAnio(fecha)) {
+//            lblError.setText("");
+//
+//        } else {
+//            lblError.setText("Verifique la fecha");
+        }
+    }//GEN-LAST:event_txtFechaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -655,6 +743,7 @@ public class BitacoraC extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCasoPro;
+    private javax.swing.JLabel lblFechaProduccion;
     private javax.swing.JLabel lblIdCaso;
     private javax.swing.JLabel lblNombreCaso;
     private javax.swing.JLabel lblPorcentaje;
@@ -664,6 +753,7 @@ public class BitacoraC extends javax.swing.JFrame {
     private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlHead;
     private javax.swing.JTextArea txtDescripcion;
+    public static javax.swing.JTextField txtFecha;
     private javax.swing.JTextArea txtObservaciones;
     public static javax.swing.JTextField txtProgramador;
     // End of variables declaration//GEN-END:variables
@@ -790,9 +880,13 @@ public class BitacoraC extends javax.swing.JFrame {
         if (i == 1) {
             btnAceptar.setVisible(true);
             btnRechazar.setVisible(true);
+            lblFechaProduccion.setVisible(true);
+            txtFecha.setVisible(true);
         } else {
             btnAceptar.setVisible(false);
             btnRechazar.setVisible(false);
+            lblFechaProduccion.setVisible(false);
+            txtFecha.setVisible(false);
         }
     }
 

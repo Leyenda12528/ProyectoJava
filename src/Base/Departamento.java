@@ -52,20 +52,16 @@ public class Departamento {
        
     }
     
-    public DepartamentoBean getDatos(String Departamento) {
+    public void getDatos(DepartamentoBean Departamento) {
         try {
-            sql="select id_depto from departamentos where nombre_depto = ?";
+            sql="select nombre_depto from departamentos where id_depto = ?";
             ps = con.Obtener().prepareStatement(sql);
-            ps.setObject(1, Departamento);
+            ps.setObject(1, Departamento.getId_depto());
             departamentos = ps.executeQuery();
-            if (departamentos.next()) {
-                deptoB.setId_depto(departamentos.getInt(1));
-                deptoB.setNombre_depto(Departamento);
-            }
-            return deptoB;
+            if (departamentos.next()) 
+                Departamento.setNombre_depto(departamentos.getString(1));                       
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
-            return null;
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);            
         }
     }
         

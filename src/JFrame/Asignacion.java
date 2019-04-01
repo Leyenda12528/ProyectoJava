@@ -7,12 +7,14 @@ package JFrame;
 
 import Base.Empleado_Caso;
 import Base.Casos;
+import Base.Departamento;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import Help.Help;
 import Beans.CasoBean;
+import Beans.DepartamentoBean;
 import com.sun.prism.paint.Color;
 
 /**
@@ -30,20 +32,48 @@ public class Asignacion extends javax.swing.JFrame {
     int id_depto;
     Help h = new Help();
     private CasoBean casoFecha;
+    private DepartamentoBean deptoB = new DepartamentoBean();
+    private Departamento depto = new Departamento();
     Empleado_Caso ec;
     Casos casos;
 
     public Asignacion() throws SQLException {
-
         initComponents();
+//        this.setLocationRelativeTo(null);
+//        ec = new Empleado_Caso();
+//        caso = lblIdcaso.getText();
+//        id_depto = Integer.parseInt(lblIdDepto.getText());
+//        if (ec.verificarAsignacion(lblIdcaso.getText())) {
+//            btnAsignar.setVisible(false);
+//            btnModificar.setVisible(true);
+//            txtProgramador.setText(ec.nombreEmpleadoP(caso));
+//            txtProbador.setText(ec.nombreEmpleadoT(caso));
+//            txtFecha.setText(ec.fechaLimite(caso));
+//            id_p = Integer.toString(ec.idProgramador(caso));
+//            id_tes = Integer.toString(ec.idTester(caso));
+//        } else {
+//            btnAsignar.setVisible(true);
+//            btnModificar.setVisible(false);
+//        }
+    }
+
+    Asignacion(CasoBean casoB, int idDepartamento) throws SQLException {
+        initComponents();
+        this.setLocationRelativeTo(null);
         ec = new Empleado_Caso();
-        caso = lblIdcaso.getText();
-        id_depto=Integer.parseInt(lblIdDepto.getText());
+        caso = casoB.getId_caso();//lblIdcaso.getText();
+        id_depto = idDepartamento;//Integer.parseInt(lblIdDepto.getText());
+        lblIdcaso.setText(casoB.getId_caso());
+        lblNombreCaso.setText(casoB.getNombre_caso());
+        lblIdDepto.setText(String.valueOf(idDepartamento));
+        deptoB.setId_depto(id_depto);
+        depto.getDatos(deptoB);
+        lblNombreDepto.setText(deptoB.getNombre_depto());
         if (ec.verificarAsignacion(lblIdcaso.getText())) {
             btnAsignar.setVisible(false);
             btnModificar.setVisible(true);
             txtProgramador.setText(ec.nombreEmpleadoP(caso));
-           txtProbador.setText(ec.nombreEmpleadoT(caso));
+            txtProbador.setText(ec.nombreEmpleadoT(caso));
             txtFecha.setText(ec.fechaLimite(caso));
             id_p = Integer.toString(ec.idProgramador(caso));
             id_tes = Integer.toString(ec.idTester(caso));
@@ -54,9 +84,7 @@ public class Asignacion extends javax.swing.JFrame {
     }
 
     public void capturarIdProgramador() {
-
         JOptionPane.showMessageDialog(this, id_p + " " + id_tes);
-
     }
 
     /**
@@ -87,7 +115,7 @@ public class Asignacion extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         lblNombreDepto = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        lblNombreDepto1 = new javax.swing.JLabel();
+        lblNombreCaso = new javax.swing.JLabel();
         btnAsignar = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         lblIdcaso = new javax.swing.JLabel();
@@ -223,9 +251,9 @@ public class Asignacion extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(59, 134, 139));
         jLabel9.setText("Caso");
 
-        lblNombreDepto1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblNombreDepto1.setForeground(new java.awt.Color(36, 46, 68));
-        lblNombreDepto1.setText("nombre caso");
+        lblNombreCaso.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblNombreCaso.setForeground(new java.awt.Color(36, 46, 68));
+        lblNombreCaso.setText("nombre caso");
 
         btnAsignar.setBackground(new java.awt.Color(59, 134, 139));
         btnAsignar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -330,7 +358,7 @@ public class Asignacion extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(lblIdcaso)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblNombreDepto1))
+                                .addComponent(lblNombreCaso))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
@@ -372,7 +400,7 @@ public class Asignacion extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(lblNombreDepto1)
+                    .addComponent(lblNombreCaso)
                     .addComponent(lblIdcaso))
                 .addGap(50, 50, 50)
                 .addComponent(jLabel4)
@@ -409,7 +437,7 @@ public class Asignacion extends javax.swing.JFrame {
 
     private void btnAsignarTesterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignarTesterMouseClicked
         try {
-            Probadores tester = new Probadores();
+            Probadores tester = new Probadores(lblIdDepto.getText(), deptoB.getNombre_depto());
             tester.show();
         } catch (SQLException ex) {
             Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
@@ -418,7 +446,7 @@ public class Asignacion extends javax.swing.JFrame {
 
     private void btnAsignarProgramadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignarProgramadorMouseClicked
         try {
-            Programadores progra = new Programadores();
+            Programadores progra = new Programadores(lblIdDepto.getText(), deptoB.getNombre_depto());
             progra.show();
         } catch (SQLException ex) {
             Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
@@ -431,6 +459,7 @@ public class Asignacion extends javax.swing.JFrame {
         casoFecha = new CasoBean();
         casoFecha.setFecha_limite(fecha);
         casoFecha.setId_caso(caso);
+        casoFecha.setId_estado(3);//Cambiar a CASO en desarrollo
         if (h.verificarFecha(fecha) && h.verificarAnio(fecha) && !txtProbador.getText().equals("") && !txtProbador.getText().equals("")) {
             try {
                 ec = new Empleado_Caso();
@@ -474,7 +503,7 @@ public class Asignacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void txtFechaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaKeyReleased
-                String fecha = txtFecha.getText();
+        String fecha = txtFecha.getText();
         if (h.verificarFecha(fecha) && h.verificarAnio(fecha)) {
             lblError.setText("");
 
@@ -557,8 +586,8 @@ public class Asignacion extends javax.swing.JFrame {
     private javax.swing.JLabel lblError;
     public static javax.swing.JLabel lblIdDepto;
     public static javax.swing.JLabel lblIdcaso;
+    public static javax.swing.JLabel lblNombreCaso;
     public static javax.swing.JLabel lblNombreDepto;
-    public static javax.swing.JLabel lblNombreDepto1;
     public static javax.swing.JTextField txtFecha;
     public static javax.swing.JTextField txtProbador;
     protected static javax.swing.JTextField txtProgramador;

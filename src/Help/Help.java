@@ -5,6 +5,11 @@
  */
 package Help;
 
+import Beans.CasoBean;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
@@ -52,4 +57,48 @@ public class Help {
      {
          return (Pattern.matches("\\d{4}-\\d{4}", tel));
      }
+     public boolean exitsFecha(String fechaProd) {
+        try {
+            String formatoFecha = "dd-MM-yyyy";
+            String fechaGenerada;
+            Date fec = new SimpleDateFormat(formatoFecha).parse(fechaProd);
+            fechaGenerada = new SimpleDateFormat(formatoFecha).format(fec);
+            if (fechaProd.equals(fechaGenerada)) return true;
+            else return false;
+         } catch (Exception e) {
+             return false;
+         }
+     }
+    public boolean dateMaxNow(String fechaProd) {
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+            Date now = new Date();
+            String snow = formato.format(now);
+            Date Fnow = formato.parse(snow);
+            Date fProd = formato.parse(String.valueOf(fechaProd));
+            if (fProd.compareTo(Fnow) < 0) return false;//si Produccion es menor que Ahora                
+             else return true;            
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean Plus7Days(CasoBean casoB) {
+        try {
+            String formatoFecha = "dd-MM-yyyy";
+            String fechaGenerada;
+            Date newDateLmit = new SimpleDateFormat(formatoFecha).parse(casoB.getFecha_limite());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(newDateLmit);
+            calendar.add(Calendar.DAY_OF_YEAR, 7);
+            newDateLmit = calendar.getTime();
+            String fecNew = new SimpleDateFormat(formatoFecha).format(newDateLmit);
+            casoB.setFecha_limite(fecNew);
+            return true;
+        } catch (Exception e) {
+            System.out.println(""+e);
+            return false;
+        }
+    }
+     
 }

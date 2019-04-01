@@ -10,6 +10,7 @@ import Base.Estados;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,18 +20,33 @@ public class EstadoCasos extends javax.swing.JFrame {
     Estados estados=new Estados();
     Casos caso=new Casos();
     int id_dep;
+    static int ban = 0;
     /**
      * Creates new form NewJFrame
      */
     public EstadoCasos() throws SQLException{
         initComponents();
-        id_dep=Integer.parseInt(lblId.getText());
+//        id_dep=Integer.parseInt(lblId.getText());
+//        estados.mostrarEstados(cmbEstados);
+//        cmbEstados.getSelectedIndex();
+//        estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
+//        caso.listarCasosPorEstado(estados, JTableResultado,id_dep);
+//        lblDescripcion.setText("");        
+    }
+
+    EstadoCasos(int depto, String nombreDepto) throws SQLException {
+        initComponents();
+        ban = 1;
+        this.setLocationRelativeTo(null);
+        lblNombre.setText(nombreDepto);
+        lblId.setText(String.valueOf(depto));
+        id_dep = Integer.parseInt(lblId.getText());
         estados.mostrarEstados(cmbEstados);
         cmbEstados.getSelectedIndex();
         estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
-        caso.listarCasosPorEstado(estados, JTableResultado,id_dep);
+        JOptionPane.showMessageDialog(null, ""+estados.getId_estado());
+        caso.listarCasosPorEstado(estados, JTableResultado, id_dep);
         lblDescripcion.setText("");
-        
     }
 
     /**
@@ -61,8 +77,13 @@ public class EstadoCasos extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -186,10 +207,17 @@ public class EstadoCasos extends javax.swing.JFrame {
 
     private void cmbEstadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadosActionPerformed
         // TODO add your handling code here:   
-           estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
-           caso.listarCasosPorEstado(estados, JTableResultado,id_dep);
-           lblDescripcion.setText("\nMostrando información de casos en estado: "+cmbEstados.getSelectedItem());
+        estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
+        JOptionPane.showMessageDialog(null, ""+estados.getId_estado());
+        caso.listarCasosPorEstado(estados, JTableResultado, id_dep);
+        lblDescripcion.setText("\nMostrando información de casos en estado: " + cmbEstados.getSelectedItem());
     }//GEN-LAST:event_cmbEstadosActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        ban = 0;
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

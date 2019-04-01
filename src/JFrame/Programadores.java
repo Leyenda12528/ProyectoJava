@@ -18,51 +18,59 @@ import Base.Conexion_c;
  * @author less_
  */
 public class Programadores extends javax.swing.JFrame {
-     ResultSet programadores;
-     public static String id_programador;
-     public static String nombre;
-    static int bandera=0;
-     DefaultTableModel modelo1=null;
-      //static int bandera=0;
-      ResultSet resultado=null;
-      Conexion_c con3=new Conexion_c();
-      int depto;
-    public Programadores() throws SQLException{
+
+    ResultSet programadores;
+    public static String id_programador;
+    public static String nombre;
+    static int bandera = 0;
+    DefaultTableModel modelo1 = null;
+    //static int bandera=0;
+    ResultSet resultado = null;
+    Conexion_c con3 = new Conexion_c();
+    int depto;
+
+    public Programadores() throws SQLException {
         initComponents();
-        depto=Integer.parseInt(lblIdDepto.getText());
-   
+//        depto=Integer.parseInt(lblIdDepto.getText());
+//   
+//        iniciarValores();
+//        btnRegresar.setVisible(false);
+    }
+
+    Programadores(String id_depto, String nombre_depto) throws SQLException {
+        initComponents();
+        lblIdDepto.setText(id_depto);
+        lblNombreDepto.setText(nombre_depto);
+        depto = Integer.parseInt(lblIdDepto.getText());
+
         iniciarValores();
         btnRegresar.setVisible(false);
     }
     
-    public void iniciarValores() throws SQLException
-    {
-            Object[][] data =null;
-        String [] columns= {
-        "Codigo", "Nombre","Cargo","Departamento"
+    public void iniciarValores() throws SQLException {
+        Object[][] data = null;
+        String[] columns = {
+            "Codigo", "Nombre", "Cargo", "Departamento"
         };
-        modelo1=new DefaultTableModel(data,columns);
+        modelo1 = new DefaultTableModel(data, columns);
         this.jTableResultado.setModel(modelo1);
-        String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"
-                +depto+"' and emp.id_depto='"
-                +depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=3 and emp.id_cargo=3 where id_estado_emp=0";  //modificar el id cuando se obtenga de ventana anterior
+        String sql = "SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"
+                + depto + "' and emp.id_depto='"
+                + depto + "'\n"
+                + "INNER JOIN  cargo c ON c.id_cargo=3 and emp.id_cargo=3 where id_estado_emp=0";  //modificar el id cuando se obtenga de ventana anterior
         con3.setRs(sql);
-        
+
         generarListado();
     }
-    
-      void generarListado() throws SQLException
-    {
-        resultado =con3.getRs();
-        while(resultado.next())
-        {
-            Object [] newRow= {
-                resultado.getString(1),resultado.getString(2),resultado.getString(3),resultado.getString(4)
-               };
+
+    void generarListado() throws SQLException {
+        resultado = con3.getRs();
+        while (resultado.next()) {
+            Object[] newRow = {
+                resultado.getString(1), resultado.getString(2), resultado.getString(3), resultado.getString(4)
+            };
             modelo1.addRow(newRow);
         }
-        
         resultado.close();
     }
 

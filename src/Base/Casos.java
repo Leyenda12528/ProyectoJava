@@ -30,78 +30,7 @@ public class Casos {
     private ResultSet casos = null;
     private PreparedStatement ps = null;
 
-//    public String getId_caso() {
-//        return id_caso;
-//    }
-//
-//    public void setId_caso(String id_caso) {
-//        this.id_caso = id_caso;
-//    }
-//
-//    public String getDescrip_req() {
-//        return descrip_req;
-//    }
-//
-//    public void setDescrip_req(String descrip_req) {
-//        this.descrip_req = descrip_req;
-//    }
-//
-//    public String getDescripcion_jefedes() {
-//        return descripcion_jefedes;
-//    }
-//
-//    public void setDescripcion_jefedes(String descripcion_jefedes) {
-//        this.descripcion_jefedes = descripcion_jefedes;
-//    }
-//
-//    public String getDescrip_rechazo() {
-//        return descrip_rechazo;
-//    }
-//
-//    public void setDescrip_rechazo(String descrip_rechazo) {
-//        this.descrip_rechazo = descrip_rechazo;
-//    }
-//
-//    public int getId_estado() {
-//        return id_estado;
-//    }
-//
-//    public void setId_estado(int id_estado) {
-//        this.id_estado = id_estado;
-//    }
-//
-//    public int getPorcentaje() {
-//        return porcentaje;
-//    }
-//
-//    public void setPorcentaje(int porcentaje) {
-//        this.porcentaje = porcentaje;
-//    }
-//
-//    public String getFecha_limite() {
-//        return fecha_limite;
-//    }
-//
-//    public void setFecha_limite(String fecha_limite) {
-//        this.fecha_limite = fecha_limite;
-//    }
-//
-//    public String getFecha_produccion() {
-//        return fecha_produccion;
-//    }
-//
-//    public void setFecha_produccion(String fecha_produccion) {
-//        this.fecha_produccion = fecha_produccion;
-//    }
-//    private String id_caso;
-//    private String nombre_caso;
-//    private String descrip_req; //Descripción realizada por el jefe de área funcional
-//    private String descripcion_jefedes;//Descripcion que realiza el jefe de desarrollo si acapta el proyecyo
-//    private String descrip_rechazo; //el porq rechazo el caso
-//    private int id_estado;
-//    private int porcentaje; //porcentaje de avance de proyecto
-//    private String fecha_limite;
-//    private String fecha_produccion;
+
     private String sqlC;
 
     public Casos() throws SQLException {
@@ -141,7 +70,7 @@ public class Casos {
         try {
             sqlC = "SELECT        nombre_caso, descrip_req, id_estado, porcentaje_avance"
                     + " FROM            caso"
-                    + " WHERE        id_caso= " + idCaso + "";
+                    + " WHERE        id_caso= '" + idCaso + "'";
             casos = Conexion.Buscar(sqlC);
 
             if (casos.next()) {
@@ -232,7 +161,20 @@ public class Casos {
 
     public void UpdateCasoFechaLimite(CasoBean bitaB) {
         try {
-            sqlC = "update caso set fecha_limite = ? where id_caso = ? ";
+            sqlC = "update caso set fecha_limite = ?, id_estado = ? where id_caso = ? ";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, bitaB.getFecha_limite());
+            ps.setObject(2, bitaB.getId_estado());
+            ps.setObject(3, bitaB.getId_caso());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("" + e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    public void UpdateDevolucion(CasoBean bitaB) {
+        try {
+            sqlC = "update caso set fecha_limite = ?, id_estado = 6 where id_caso = ? ";
             ps = con.Obtener().prepareStatement(sqlC);
             ps.setObject(1, bitaB.getFecha_limite());
             ps.setObject(2, bitaB.getId_caso());
@@ -297,10 +239,10 @@ public class Casos {
             "Porcentaje", "Fecha Limite", "Fecha Produccion"});
         try {
             String sql = "SELECT c.id_caso,nombre_caso,descrip_req,descrip_rechazo,descripcion_jefedes,porcentaje_avance,fecha_limite,fecha_produccion"
-                    + " FROM empledos_caso ec "
-                    + "INNER JOIN caso c ON c.id_caso=ec.id_caso\n" +
-                     "INNER JOIN empleados e ON e.id_empleado=ec.id_empleado"
-                    + " INNER JOIN departamentos dep ON dep.id_depto=e.id_depto where e.id_depto='"+depto+"' and id_estado='"+estado.getId_estado()+"'";
+                    + " FROM empleados_caso ec "
+                    + " INNER JOIN caso c ON c.id_caso=ec.id_caso"
+                    + " INNER JOIN empleados e ON e.id_empleado=ec.id_empleado"
+                    + " INNER JOIN departamentos dep ON dep.id_depto=e.id_depto where e.id_depto =" + depto + " and id_estado = " + estado.getId_estado() + "";
             ResultSet datos = con.Buscar(sql);
             while (datos.next()) {
                 modelo.addRow(new Object[]{
@@ -319,7 +261,34 @@ public class Casos {
             estadoCasos.setModel(modelo);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
           
     }
+
+    public void FinCaso(CasoBean casoB) {
+        try {
+            sqlC = "update caso set fecha_produccion = ?, id_estado = ? where id_caso = ? ";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, casoB.getFecha_produccion());
+            ps.setObject(2, casoB.getId_estado());
+            ps.setObject(3, casoB.getId_caso());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("" + e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void getDateLimit(CasoBean casoB) {
+        try {
+            sqlC = "select fecha_limite from caso where id_caso = '" + casoB.getId_caso() + "'";
+            casos = Conexion.Buscar(sqlC);
+            if (casos.next()) 
+                casoB.setFecha_limite(casos.getString(1));            
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
 }

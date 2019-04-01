@@ -34,12 +34,15 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
     //static int bandera=0;
     ResultSet resultado = null;
     Conexion_c con3 = new Conexion_c();
+    static int ban = 0;
 
     /**
      * Creates new form MantenimientoEmpleados
      */
     public MantenimientoEmpleados() throws SQLException {
         initComponents();
+        this.setLocationRelativeTo(null);
+        ban = 1;
         iniciarValores();
         depto.MostrarDepartamento(cmbDepto);
         estado.mostrarEstados(cmbEstados);
@@ -150,7 +153,12 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(59, 134, 139));
@@ -773,6 +781,12 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
        }
        else if(txtPass.getText().length()<=8){lblPass.setText("");} 
     }//GEN-LAST:event_txtPassKeyReleased
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        ban = 0;
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
