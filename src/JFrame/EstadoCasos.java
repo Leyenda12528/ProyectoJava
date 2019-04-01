@@ -21,17 +21,22 @@ public class EstadoCasos extends javax.swing.JFrame {
     Casos caso=new Casos();
     int id_dep;
     static int ban = 0;
+    int id_emp;
     /**
      * Creates new form NewJFrame
      */
     public EstadoCasos() throws SQLException{
-        initComponents();
-//        id_dep=Integer.parseInt(lblId.getText());
-//        estados.mostrarEstados(cmbEstados);
-//        cmbEstados.getSelectedIndex();
-//        estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
-//        caso.listarCasosPorEstado(estados, JTableResultado,id_dep);
-//        lblDescripcion.setText("");        
+    initComponents();
+    id_dep=Integer.parseInt(lblId.getText());
+    estados.mostrarEstados(cmbEstados);
+        
+    id_emp=Integer.parseInt(lblIdEmpleado.getText());
+        //     cmbEstados.getSelectedIndex();
+      estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
+        caso.listarCasosPorEstado(estados, JTableResultado,id_dep,id_emp);
+//        lblDescripcion.setText("");   
+//         
+
     }
 
     EstadoCasos(int depto, String nombreDepto) throws SQLException {
@@ -45,7 +50,7 @@ public class EstadoCasos extends javax.swing.JFrame {
         cmbEstados.getSelectedIndex();
         estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
         JOptionPane.showMessageDialog(null, ""+estados.getId_estado());
-        caso.listarCasosPorEstado(estados, JTableResultado, id_dep);
+        caso.listarCasosPorEstado(estados, JTableResultado, id_dep,id_emp);
         lblDescripcion.setText("");
     }
 
@@ -68,6 +73,8 @@ public class EstadoCasos extends javax.swing.JFrame {
         cmbEstados = new javax.swing.JComboBox<>();
         lblId = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
+        lblIdEmpleado = new javax.swing.JLabel();
+        lblNombreEmp = new javax.swing.JLabel();
         lblDescripcion = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -113,33 +120,51 @@ public class EstadoCasos extends javax.swing.JFrame {
         lblNombre.setForeground(new java.awt.Color(59, 134, 139));
         lblNombre.setText("Nombre del departamentos");
 
+        lblIdEmpleado.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblIdEmpleado.setForeground(new java.awt.Color(59, 134, 139));
+        lblIdEmpleado.setText("2");
+
+        lblNombreEmp.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblNombreEmp.setForeground(new java.awt.Color(59, 134, 139));
+        lblNombreEmp.setText("Nombre del empleado si se puede xD");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(lblId)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNombre))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(cmbEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblId)
-                        .addGap(35, 35, 35)
-                        .addComponent(lblNombre)))
+                        .addGap(45, 45, 45)
+                        .addComponent(lblIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblNombreEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)))
                 .addContainerGap(195, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblId))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lblIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblId)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblNombreEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -172,7 +197,7 @@ public class EstadoCasos extends javax.swing.JFrame {
                 .addComponent(lblDescripcion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1000, 500));
@@ -208,8 +233,8 @@ public class EstadoCasos extends javax.swing.JFrame {
     private void cmbEstadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadosActionPerformed
         // TODO add your handling code here:   
         estados.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getId_estado());
-        JOptionPane.showMessageDialog(null, ""+estados.getId_estado());
-        caso.listarCasosPorEstado(estados, JTableResultado, id_dep);
+       
+        caso.listarCasosPorEstado(estados, JTableResultado, id_dep,id_emp);
         lblDescripcion.setText("\nMostrando información de casos en estado: " + cmbEstados.getSelectedItem());
     }//GEN-LAST:event_cmbEstadosActionPerformed
 
@@ -272,6 +297,8 @@ public class EstadoCasos extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblId;
+    private javax.swing.JLabel lblIdEmpleado;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblNombreEmp;
     // End of variables declaration//GEN-END:variables
 }

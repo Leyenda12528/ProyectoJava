@@ -289,7 +289,7 @@ public class Empleado {
     }
     
      public void AgregarEmpleado(EmpleadoBean emp) throws SQLException, ClassNotFoundException{
-          String sql="insert into empleados  values(?,?,?,?,?,?,?,?,?,?,?) ";
+          String sql="insert into empleados  values(?,?,?,?,?,?,?,?,?,SHA2(?,256),?) ";
           
         try  {
             PreparedStatement psta = con.Obtener().prepareStatement(sql);

@@ -233,16 +233,16 @@ public class Casos {
         }
     }
 
-    public void listarCasosPorEstado(Estados estado,JTable estadoCasos,int depto) {
+    public void listarCasosPorEstado(Estados estado,JTable estadoCasos,int depto,int id_emp) {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre", "Descripción", "Motivo Rechazo", "Descripción Jefe",
             "Porcentaje", "Fecha Limite", "Fecha Produccion"});
         try {
             String sql = "SELECT c.id_caso,nombre_caso,descrip_req,descrip_rechazo,descripcion_jefedes,porcentaje_avance,fecha_limite,fecha_produccion"
-                    + " FROM empleados_caso ec "
+                    + " FROM empledos_caso ec "
                     + " INNER JOIN caso c ON c.id_caso=ec.id_caso"
                     + " INNER JOIN empleados e ON e.id_empleado=ec.id_empleado"
-                    + " INNER JOIN departamentos dep ON dep.id_depto=e.id_depto where e.id_depto =" + depto + " and id_estado = " + estado.getId_estado() + "";
+                    + " INNER JOIN departamentos dep ON dep.id_depto=e.id_depto where e.id_depto ="+depto+" and id_estado ="+estado.getId_estado()+" and e.id_empleado="+id_emp+"";
             ResultSet datos = con.Buscar(sql);
             while (datos.next()) {
                 modelo.addRow(new Object[]{
