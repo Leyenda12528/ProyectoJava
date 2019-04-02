@@ -145,7 +145,12 @@ public class Asignacion extends javax.swing.JFrame {
 
         jToggleButton1.setText("jToggleButton1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(59, 134, 139));
@@ -467,6 +472,7 @@ public class Asignacion extends javax.swing.JFrame {
                 ec.setId_caso(lblIdcaso.getText());
                 ec.Asignar(Integer.parseInt(id_p), Integer.parseInt(id_tes));
                 casos.UpdateCasoFechaLimite(casoFecha);
+                casos.firstBitacora(casoFecha);
             } catch (SQLException ex) {
                 Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -521,6 +527,11 @@ public class Asignacion extends javax.swing.JFrame {
     private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

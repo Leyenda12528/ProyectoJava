@@ -29,8 +29,6 @@ public class Casos {
     private CasoBean casoB = new CasoBean();
     private ResultSet casos = null;
     private PreparedStatement ps = null;
-
-
     private String sqlC;
 
     public Casos() throws SQLException {
@@ -44,9 +42,6 @@ public class Casos {
         } catch (SQLException e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, "ERROR Caso Ingreso JF " + e);
         }
-    }
-
-    public void IngresarCaso() throws SQLException {
     }
 
     public void getSolicitudesJD(String DeptoCaso, JList<String> listUtilidad) {
@@ -282,6 +277,24 @@ public class Casos {
             casos = Conexion.Buscar(sqlC);
             if (casos.next()) 
                 casoB.setFecha_limite(casos.getString(1));            
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void firstBitacora(CasoBean casoFecha) {
+        try {
+            sqlC = "select  count(*) from bitacoras";
+            casos = Conexion.Buscar(sqlC);
+            casos.next();
+            sqlC = "insert into bitacoras values (?,?,?,?)";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, casos.getInt(1) + 1);
+            ps.setObject(2, casoFecha.getId_caso());
+            ps.setObject(3, "");
+            ps.setObject(4, "");
+            ps.executeUpdate();
+
         } catch (Exception e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
