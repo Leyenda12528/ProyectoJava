@@ -44,18 +44,19 @@ public class Cargo {
     public void setNombre_cargo(String nombre_cargo) {
         this.nombre_cargo = nombre_cargo;
     }
-         public void mostrarCargo(JComboBox <Cargo> comboEstados)throws SQLException{
-         
+
+    public void mostrarCargo(JComboBox<Cargo> comboEstados) throws SQLException {
+
         try {
-             con = new Conexion();
+            con = new Conexion();
             String sql = "select * from cargo";
-            ResultSet datos= con.Buscar(sql);
-           
-           while (datos.next()) {
+            ResultSet datos = con.Buscar(sql);
+
+            while (datos.next()) {
                 comboEstados.addItem(
                         new Cargo(
                                 datos.getInt("id_cargo"),
-                                datos.getString("nombre_cargo")                               
+                                datos.getString("nombre_cargo")
                         )
                 );
             }

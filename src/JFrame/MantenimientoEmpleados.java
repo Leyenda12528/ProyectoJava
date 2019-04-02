@@ -61,7 +61,6 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
         txtPass.setText("");
         txtTel.setText("");
         txtNombres.setText("");
-
     }
 
     public void iniciarValores() throws SQLException {
@@ -87,10 +86,9 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
                 resultado.getString(1), resultado.getString(2), resultado.getString(3), resultado.getString(4), resultado.getString(5),
                 resultado.getString(6), resultado.getString(7), resultado.getString(8), resultado.getString(9), resultado.getString(10)
             };
-          
+
             modelo1.addRow(newRow);
         }
-
         resultado.close();
     }
 
@@ -674,6 +672,7 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
             empB.setId_empleado(Integer.parseInt(txtCodigo.getText()));
             empB.setEmp_nombre(txtNombres.getText());
             empB.setEmp_apellidos(txtApellidos.getText());
+            JOptionPane.showMessageDialog(null, ""+cmbCargo.getItemAt(cmbCargo.getSelectedIndex()));
             empB.setCargo(cmbCargo.getItemAt(cmbCargo.getSelectedIndex()).getId_cargo());
             empB.setCorreo(txtCorreo.getText());
             empB.setDepto(cmbDepto.getItemAt(cmbDepto.getSelectedIndex()).getId_depto());
@@ -737,10 +736,10 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
 //            int idcargo=cmbCargo.getSelectedIndex();
 //           
 
-            String c = JtableResultado.getValueAt(rec, 10).toString();
-            cargo.setId_cargo(Integer.parseInt(c));
-            //empB.setCargo(cmbCargo.getItemAt(cmbCargo.getSelectedIndex()).getId_cargo());
-            JOptionPane.showMessageDialog(this, cargo.getId_cargo());
+//            String c = JtableResultado.getValueAt(rec, 10).toString();
+//            cargo.setId_cargo(Integer.parseInt(c));
+//            //empB.setCargo(cmbCargo.getItemAt(cmbCargo.getSelectedIndex()).getId_cargo());
+//            JOptionPane.showMessageDialog(this, cargo.getId_cargo());
 
         }
         btnEliminar.setVisible(true);

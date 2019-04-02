@@ -21,11 +21,12 @@ import javax.swing.table.DefaultTableModel;
  * @author jorge
  */
 public class Empleado {
+
     private Conexion con = new Conexion();
     private ResultSet empleados = null;
     private PreparedStatement ps;
-    ResultSet resultado=null;
-    DefaultTableModel modelo1=null;
+    ResultSet resultado = null;
+    DefaultTableModel modelo1 = null;
     private int id_empleado;
     private String emp_nombre;
     private String emp_apellidos;
@@ -37,7 +38,8 @@ public class Empleado {
     private String correo;
     private String contraseña;
     private int id_estado;
-    Conexion_c c4=new Conexion_c();
+    Conexion_c c4 = new Conexion_c();
+
     public int getId_empleado() {
         return id_empleado;
     }
@@ -125,13 +127,13 @@ public class Empleado {
     public void setId_estado(int id_estado) {
         this.id_estado = id_estado;
     }
-    
-    public Empleado() throws SQLException{
+
+    public Empleado() throws SQLException {
     }
-    
-    public void IngresarEmpleado() throws SQLException{
+
+    public void IngresarEmpleado() throws SQLException {
     }
-    
+
     public void getProgramadores(JList<String> listUtilidad, int idDepto, int tipo) {
         try {
             String sql = "select CONCAT(nombre_emp,' ',apellidos) from empleados where id_depto = ? and id_cargo = ?";
@@ -140,7 +142,7 @@ public class Empleado {
             ps.setObject(2, tipo);
             empleados = ps.executeQuery();
             DefaultListModel modelo = new DefaultListModel();
-            while (empleados.next()) {                
+            while (empleados.next()) {
                 modelo.addElement(empleados.getString(1));
             }
             listUtilidad.setModel(modelo);
@@ -148,8 +150,8 @@ public class Empleado {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e.getMessage());
         }
     }
-    
-    public void getProTrabajando(String idDepto, JList<String> lista) throws ClassNotFoundException{
+
+    public void getProTrabajando(String idDepto, JList<String> lista) throws ClassNotFoundException {
         try {
             String sql = "SELECT DISTINCT empleados.id_empleado, empleados.nombre_emp"
                     + " FROM            empleados INNER JOIN"
@@ -158,7 +160,7 @@ public class Empleado {
             ps = con.Obtener().prepareStatement(sql);
             ps.setObject(1, idDepto);
             empleados = ps.executeQuery();
-            
+
             DefaultListModel modelo = new DefaultListModel();
             while (empleados.next()) {
                 modelo.addElement(empleados.getInt(1));
@@ -169,38 +171,40 @@ public class Empleado {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e.getMessage());
         }
     }
-    
-    public boolean existUSer(String correo, String Contra, EmpleadoBean empB){
+
+    public boolean existUSer(String correo, String Contra, EmpleadoBean empB) {
         try {
-            String sql ="select count(*), id_empleado from empleados where correo = ? and password_emp = ? and id_estado_emp = 0";
+            String sql = "select count(*), id_empleado from empleados where correo = ? and password_emp = ? and id_estado_emp = 0";
             ps = con.Obtener().prepareStatement(sql);
             ps.setObject(1, correo);
             ps.setObject(2, Contra);
-            empleados = ps.executeQuery();            
+            empleados = ps.executeQuery();
             if (empleados.next()) {
                 if (empleados.getInt(1) > 0) {
                     empB.setId_empleado(empleados.getInt(2));
                     return true;
+                } else {
+                    return false;
                 }
-                else return false;
+            } else {
+                return false;
             }
-            else return false;
         } catch (Exception e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e.getMessage());
-            System.out.println(""+e);
+            System.out.println("" + e);
             return false;
         }
     }
-    
-    public void getLogin(EmpleadoBean empB){
-        try {                        
+
+    public void getLogin(EmpleadoBean empB) {
+        try {
             String sql1 = "SELECT  CONCAT(empleados.nombre_emp,' ',empleados.apellidos)"
                     + " ,empleados.id_cargo , cargo.nombre_cargo, empleados.id_depto, departamentos.nombre_depto "
                     + "FROM            empleados INNER JOIN"
                     + "                departamentos ON empleados.id_depto = departamentos.id_depto INNER JOIN"
                     + "                cargo ON empleados.id_cargo = cargo.id_cargo"
                     + " WHERE        empleados.id_empleado =  ?";
-            
+
             ps = con.Obtener().prepareStatement(sql1);
             ps.setObject(1, empB.getId_empleado());
             empleados = ps.executeQuery();
@@ -208,171 +212,153 @@ public class Empleado {
                 empB.setEmp_nombre(empleados.getString(1));
                 empB.setCargo(empleados.getInt(2));
                 empB.setNombreCargo(empleados.getString(3));
-                if (!empleados.getString(3).equals("0")){ //Si no es Administrador
+                if (!empleados.getString(3).equals("0")) { //Si no es Administrador
                     empB.setDepto(empleados.getInt(4));
-                    empB.setNombreDepto(empleados.getString(5));                    
-                }                
-            }            
+                    empB.setNombreDepto(empleados.getString(5));
+                }
+            }
         } catch (Exception ex) {
-           Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
     }
-    
-    
-    public void UpdateEmpleado() throws SQLException{
+
+    public void UpdateEmpleado() throws SQLException {
         //Code
     }
-    
-    public void ByeEmpleado() throws SQLException{
+
+    public void ByeEmpleado() throws SQLException {
     }
-    
-    public void MostrarProgramadores(JTable programadores,int depto)
-    {
-         DefaultTableModel modelo = new DefaultTableModel();  
-          modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre","Cargo","Departamento"});
+
+    public void MostrarProgramadores(JTable programadores, int depto) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre", "Cargo", "Departamento"});
         try {
-            String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=3 and emp.id_cargo=3 where id_estado_emp=0";
-            ResultSet datos= con.Buscar(sql);
+            String sql = "SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='" + depto + "' and emp.id_depto='" + depto + "'\n"
+                    + "INNER JOIN  cargo c ON c.id_cargo=3 and emp.id_cargo=3 where id_estado_emp=0";
+            ResultSet datos = con.Buscar(sql);
             while (datos.next()) {
                 modelo.addRow(new Object[]{
-               datos.getInt("id_empleado"),
-               datos.getString("nombre"),      
-               datos.getString("nombre_cargo"),
-               datos.getString("nombre_depto"),         
-                });
+                    datos.getInt("id_empleado"),
+                    datos.getString("nombre"),
+                    datos.getString("nombre_cargo"),
+                    datos.getString("nombre_depto"),});
             }
-           programadores.setModel(modelo);
+            programadores.setModel(modelo);
         } catch (SQLException ex) {
-           Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR");
         }
     }
-    
-    public void MostrarProbadores(JTable tester,int depto)
-    {
-        
-         DefaultTableModel modelo = new DefaultTableModel();  
-          modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre","Cargo","Departamento"});
+
+    public void MostrarProbadores(JTable tester, int depto) {
+
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Codigo", "Nombre", "Cargo", "Departamento"});
         try {
-            String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=0";
-            ResultSet datos= con.Buscar(sql);
+            String sql = "SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='" + depto + "' and emp.id_depto='" + depto + "'\n"
+                    + "INNER JOIN  cargo c ON c.id_cargo=4 and emp.id_cargo=4 where id_estado_emp=0";
+            ResultSet datos = con.Buscar(sql);
             while (datos.next()) {
-               modelo.addRow(new Object[]{
-               datos.getInt("id_empleado"),
-               datos.getString("nombre"),      
-               datos.getString("nombre_cargo"),
-               datos.getString("nombre_depto"),         
-                });
+                modelo.addRow(new Object[]{
+                    datos.getInt("id_empleado"),
+                    datos.getString("nombre"),
+                    datos.getString("nombre_cargo"),
+                    datos.getString("nombre_depto"),});
             }
-           tester.setModel(modelo);
-           
+            tester.setModel(modelo);
+
         } catch (SQLException ex) {
-           Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR"+ex);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR" + ex);
         }
     }
-     Conexion con3=new Conexion();
-    public ResultSet iniciarValoresProgramadores(JTable resultado) throws SQLException{
-        Object[][] data =null;
-        String [] columns= {
-        "ID","Nombres","Apellidos"
+    Conexion con3 = new Conexion();
+
+    public ResultSet iniciarValoresProgramadores(JTable resultado) throws SQLException {
+        Object[][] data = null;
+        String[] columns = {
+            "ID", "Nombres", "Apellidos"
         };
-        modelo1=new DefaultTableModel(data,columns);
+        modelo1 = new DefaultTableModel(data, columns);
         resultado.setModel(modelo1);
-        
-        String sql="SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='"+depto+"' and emp.id_depto='"+depto+"'\n" +
-            "INNER JOIN  cargo c ON c.id_cargo=3 and emp.id_cargo=3 where id_estado_emp=0";
-            ResultSet datos= con3.Buscar(sql);
-            return datos;
+
+        String sql = "SELECT id_empleado,CONCAT(nombre_emp,' ',apellidos) nombre,nombre_cargo,nombre_depto FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto='" + depto + "' and emp.id_depto='" + depto + "'\n"
+                + "INNER JOIN  cargo c ON c.id_cargo=3 and emp.id_cargo=3 where id_estado_emp=0";
+        ResultSet datos = con3.Buscar(sql);
+        return datos;
     }
-    
-     public void AgregarEmpleado(EmpleadoBean emp) throws SQLException, ClassNotFoundException{
-          String sql="insert into empleados  values(?,?,?,?,?,?,?,?,?,SHA2(?,256),?) ";
-          
-        try  {
+
+    public void AgregarEmpleado(EmpleadoBean emp) throws SQLException, ClassNotFoundException {
+        String sql = "insert into empleados  values(?,?,?,?,?,?,?,?,?,SHA2(?,256),?) ";
+
+        try {
             PreparedStatement psta = con.Obtener().prepareStatement(sql);
-          
-             psta.setInt(1, emp.getId_empleado());
-            psta.setString(2,emp.getEmp_nombre());
-            psta.setString(3,emp.getEmp_apellidos());
+
+            psta.setInt(1, emp.getId_empleado());
+            psta.setString(2, emp.getEmp_nombre());
+            psta.setString(3, emp.getEmp_apellidos());
             psta.setInt(4, emp.getCargo());
             psta.setInt(5, emp.getDepto());
             psta.setInt(6, emp.getEdad());
             psta.setString(7, emp.getDireccion());
-            psta.setString(8,emp.getTelefono());
+            psta.setString(8, emp.getTelefono());
             psta.setString(9, emp.getCorreo());
             psta.setString(10, emp.getContraseña());
             psta.setInt(11, emp.getId_estado());
             psta.execute();
-            
-            
-            JOptionPane.showMessageDialog(null,"Empleado Ingresado con exito");
-        }
-        catch(ClassNotFoundException | SQLException e){
+
+            JOptionPane.showMessageDialog(null, "Empleado Ingresado con exito");
+        } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
-        
-     }
-       public void ModifcarEmpleado(EmpleadoBean emp) throws SQLException{
-          String sql="update  empleados set nombre_emp=?,apellidos=?,id_cargo=?,id_depto=?,"
-                  + "edad=?,direccion=?,telefono=?,correo=?,password_emp=?,id_estado_emp=? where id_empleado=? ";
-          
-        try  {
+
+    }
+
+    public void ModifcarEmpleado(EmpleadoBean emp) throws SQLException {
+        String sql = "update  empleados set nombre_emp=?,apellidos=?,id_cargo=?,id_depto=?,"
+                + "edad=?,direccion=?,telefono=?,correo=?,password_emp=?,id_estado_emp=? where id_empleado=? ";
+
+        try {
             PreparedStatement psta = con.Obtener().prepareStatement(sql);
-            psta.setString(1,emp.getEmp_nombre());
-            psta.setString(2,emp.getEmp_apellidos());
+            psta.setString(1, emp.getEmp_nombre());
+            psta.setString(2, emp.getEmp_apellidos());
             psta.setInt(3, emp.getCargo());
             psta.setInt(4, emp.getDepto());
             psta.setInt(5, emp.getEdad());
             psta.setString(6, emp.getDireccion());
-            psta.setString(7,emp.getTelefono());
+            psta.setString(7, emp.getTelefono());
             psta.setString(8, emp.getCorreo());
             psta.setString(9, emp.getContraseña());
             psta.setInt(10, emp.getId_estado());
             psta.setInt(11, emp.getId_empleado());
             psta.execute();
-            
-            
-            JOptionPane.showMessageDialog(null,"Empleado Modificado con exito");
-        }
-        catch(ClassNotFoundException | SQLException e){
+
+            JOptionPane.showMessageDialog(null, "Empleado Modificado con exito");
+        } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
-    
-  
-             public void EliminarEmpleado(EmpleadoBean emp) throws SQLException{
-          String sql="update  empleados set id_estado_emp=1 where id_empleado=?";
-          
-        try  {
+
+    public void EliminarEmpleado(EmpleadoBean emp) throws SQLException {
+        String sql = "update  empleados set id_estado_emp=1 where id_empleado=?";
+
+        try {
             PreparedStatement psta = con.Obtener().prepareStatement(sql);
-          
+
             psta.setInt(1, emp.getId_empleado());
             psta.execute();
-            
-            
-            JOptionPane.showMessageDialog(null,"Empleado Inactivo");
-        }
-        catch(ClassNotFoundException | SQLException e){
+
+            JOptionPane.showMessageDialog(null, "Empleado Inactivo");
+        } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
-        
+
     }
-             
-             public int generarId(){
-             Random aleatorio = new Random();
-             int numeros=(int)(aleatorio.nextDouble() * 99+1000);
-          return numeros; 
-             }
 
-    
+    public int generarId() {
+        Random aleatorio = new Random();
+        int numeros = (int) (aleatorio.nextDouble() * 99 + 1000);
+        return numeros;
+    }
 
-
-
-    
-    
-    
 }

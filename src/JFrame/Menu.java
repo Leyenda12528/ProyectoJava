@@ -863,7 +863,7 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (EstadoCasos.ban == 0) {
-                EstadoCasos estCasos = new EstadoCasos(User.getDepto(), User.getNombreDepto());
+                EstadoCasos estCasos = new EstadoCasos(User);
                 estCasos.setVisible(true);
             }
         } catch (Exception e) {
@@ -874,7 +874,7 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (EstadoCasos.ban == 0) {
-                EstadoCasos estCasos = new EstadoCasos(User.getDepto(), User.getNombreDepto());
+                EstadoCasos estCasos = new EstadoCasos(User);
                 estCasos.setVisible(true);
             }
         } catch (Exception e) {
