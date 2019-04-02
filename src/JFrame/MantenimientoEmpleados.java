@@ -273,6 +273,11 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
 
         cmbCargo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         cmbCargo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
+        cmbCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCargoActionPerformed(evt);
+            }
+        });
 
         cmbDepto.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         cmbDepto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 134, 139), 1, true));
@@ -672,8 +677,9 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
             empB.setId_empleado(Integer.parseInt(txtCodigo.getText()));
             empB.setEmp_nombre(txtNombres.getText());
             empB.setEmp_apellidos(txtApellidos.getText());
-            JOptionPane.showMessageDialog(null, ""+cmbCargo.getItemAt(cmbCargo.getSelectedIndex()));
+            
             empB.setCargo(cmbCargo.getItemAt(cmbCargo.getSelectedIndex()).getId_cargo());
+            JOptionPane.showMessageDialog(null, ""+cmbCargo.getItemAt(cmbCargo.getSelectedIndex()));
             empB.setCorreo(txtCorreo.getText());
             empB.setDepto(cmbDepto.getItemAt(cmbDepto.getSelectedIndex()).getId_depto());
             empB.setContraseña(txtPass.getText());
@@ -728,18 +734,6 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
             this.txtTel.setText(JtableResultado.getValueAt(rec, 5).toString());
             this.txtCorreo.setText(JtableResultado.getValueAt(rec, 6).toString());
 
-            this.cmbCargo.getModel().setSelectedItem(JtableResultado.getValueAt(rec, 7).toString());
-//                
-//            this.cmbDepto.getModel().setSelectedItem(JtableResultado.getValueAt(rec, 8).toString());
-//            this.cmbEstados.getModel().setSelectedItem(JtableResultado.getValueAt(rec, 9).toString());
-//           
-//            int idcargo=cmbCargo.getSelectedIndex();
-//           
-
-//            String c = JtableResultado.getValueAt(rec, 10).toString();
-//            cargo.setId_cargo(Integer.parseInt(c));
-//            //empB.setCargo(cmbCargo.getItemAt(cmbCargo.getSelectedIndex()).getId_cargo());
-//            JOptionPane.showMessageDialog(this, cargo.getId_cargo());
 
         }
         btnEliminar.setVisible(true);
@@ -786,6 +780,10 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
         ban = 0;
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
+
+    private void cmbCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCargoActionPerformed
+      
+    }//GEN-LAST:event_cmbCargoActionPerformed
 
     /**
      * @param args the command line arguments
