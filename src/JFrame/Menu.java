@@ -75,6 +75,8 @@ public class Menu extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         btnverCasosJD = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
+        btnCasosVencidosJD = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
         pnlAdmin = new javax.swing.JPanel();
         btnManteniEmpleados = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -95,7 +97,7 @@ public class Menu extends javax.swing.JFrame {
         btnNoCasoJD = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         btnVer = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
+        lblBtnVer = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(102, 0, 51));
@@ -195,7 +197,7 @@ public class Menu extends javax.swing.JFrame {
         btnSolicitudesJDLayout.setHorizontalGroup(
             btnSolicitudesJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnSolicitudesJDLayout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(21, 21, 21))
         );
@@ -223,10 +225,10 @@ public class Menu extends javax.swing.JFrame {
         btnBitacorasJD.setLayout(btnBitacorasJDLayout);
         btnBitacorasJDLayout.setHorizontalGroup(
             btnBitacorasJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnBitacorasJDLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnBitacorasJDLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel12)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap())
         );
         btnBitacorasJDLayout.setVerticalGroup(
             btnBitacorasJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,17 +283,46 @@ public class Menu extends javax.swing.JFrame {
         btnverCasosJD.setLayout(btnverCasosJDLayout);
         btnverCasosJDLayout.setHorizontalGroup(
             btnverCasosJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnverCasosJDLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnverCasosJDLayout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addComponent(jLabel17)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap())
         );
         btnverCasosJDLayout.setVerticalGroup(
             btnverCasosJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnverCasosJDLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(btnverCasosJDLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel17)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        btnCasosVencidosJD.setBackground(new java.awt.Color(89, 199, 198));
+        btnCasosVencidosJD.setToolTipText("Ver Bitacora");
+        btnCasosVencidosJD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCasosVencidosJDMouseClicked(evt);
+            }
+        });
+
+        jLabel19.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Modificar");
+
+        javax.swing.GroupLayout btnCasosVencidosJDLayout = new javax.swing.GroupLayout(btnCasosVencidosJD);
+        btnCasosVencidosJD.setLayout(btnCasosVencidosJDLayout);
+        btnCasosVencidosJDLayout.setHorizontalGroup(
+            btnCasosVencidosJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnCasosVencidosJDLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel19)
                 .addContainerGap())
+        );
+        btnCasosVencidosJDLayout.setVerticalGroup(
+            btnCasosVencidosJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnCasosVencidosJDLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel19)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlJDLayout = new javax.swing.GroupLayout(pnlJD);
@@ -300,14 +331,16 @@ public class Menu extends javax.swing.JFrame {
             pnlJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlJDLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnSolicitudesJD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSolicitudesJD, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCasosVencidosJD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBitacorasJD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnListaProgramadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnverCasosJD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         pnlJDLayout.setVerticalGroup(
             pnlJDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,6 +348,7 @@ public class Menu extends javax.swing.JFrame {
             .addComponent(btnSolicitudesJD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnListaProgramadores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnverCasosJD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnCasosVencidosJD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pnlAdmin.setBackground(new java.awt.Color(34, 46, 88));
@@ -607,9 +641,9 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jLabel16.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Bitacora");
+        lblBtnVer.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        lblBtnVer.setForeground(new java.awt.Color(255, 255, 255));
+        lblBtnVer.setText("Bitacora");
 
         javax.swing.GroupLayout btnVerLayout = new javax.swing.GroupLayout(btnVer);
         btnVer.setLayout(btnVerLayout);
@@ -617,14 +651,14 @@ public class Menu extends javax.swing.JFrame {
             btnVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnVerLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jLabel16)
+                .addComponent(lblBtnVer)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         btnVerLayout.setVerticalGroup(
             btnVerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnVerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel16)
+                .addComponent(lblBtnVer)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -699,21 +733,27 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        Login login = new Login();
+        //Login login = new Login();
+        LoginW login = new LoginW();
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
     private void lblConfigPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConfigPerfilMouseClicked
-//        Perfil perfil = new Perfil(caden);
-//        perfil.setVisible(true);
+        try {
+            if (Perfil.ban == 0) {
+                Perfil perfil = new Perfil(User, this);
+                perfil.setVisible(true);
+            }
+        } catch (Exception e) {
+        }
 //      SOLO PARA CAMBIAR CONTRASEÑA
     }//GEN-LAST:event_lblConfigPerfilMouseClicked
 
     private void btnManteniEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnManteniEmpleadosMouseClicked
         try {
             if (MantenimientoEmpleados.ban == 0) {
-                MantenimientoEmpleados call = new MantenimientoEmpleados();
+                MantenimientoEmpleados call = new MantenimientoEmpleados(User, this);
             call.setVisible(true);
             }
         } catch (SQLException ex) {
@@ -742,7 +782,7 @@ public class Menu extends javax.swing.JFrame {
     private void btnBitacorasJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBitacorasJDMouseClicked
         try {
             if (BitacoraC.ban == 0) {
-                BitacoraC n = new BitacoraC(User.getDepto(), User.getNombreDepto(), User.getCargo());
+                BitacoraC n = new BitacoraC(User.getDepto(), User.getNombreDepto(), User.getCargo(), this, User);
                 n.setVisible(true);
             }
         } catch (Exception e) {
@@ -771,7 +811,7 @@ public class Menu extends javax.swing.JFrame {
     private void btnSolicitarCasoJFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSolicitarCasoJFMouseClicked
         try {//JEFE FUNCIONAL ...Solicitando caso .....enviando Nombre del departamento
             if (Solicitud.ban == 0) {
-                Solicitud soli = new Solicitud(User.getNombreDepto());
+                Solicitud soli = new Solicitud(User, this);
                 soli.setVisible(true);
             }
             else 
@@ -784,7 +824,7 @@ public class Menu extends javax.swing.JFrame {
         //JEFE FUNCIONAL......Bitacoras de los casos aperturados
         try {
             if (BitacoraC.ban == 0) {
-                BitacoraC n = new BitacoraC(User.getDepto(), User.getNombreDepto(), User.getCargo());
+                BitacoraC n = new BitacoraC(User.getDepto(), User.getNombreDepto(), User.getCargo(), this, User);
                 n.setVisible(true);
             }
         } catch (Exception e) {
@@ -831,12 +871,24 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNoCasoJDMouseClicked
 
     private void btnVerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerMouseClicked
-        //PROGRAMADOR.......modificando la bitacora de su caso
+        //PROGRAMADOR y PROBADOR/TESTER.......modificando la bitacora de un caso
         try {
-            if (BitacoraC.ban == 0) {
-                String IDcaso = String.valueOf(listUtilidad.getSelectedValue());
-                BitacoraC n = new BitacoraC(User.getDepto(), IDcaso, User.getCargo());
-                n.setVisible(true);
+            if (User.getCargo() == 3 || User.getCargo() == 4) {
+                if (BitacoraC.ban == 0) {
+                    String IDcaso = String.valueOf(listUtilidad.getSelectedValue());
+                    BitacoraC n = new BitacoraC(User.getDepto(), IDcaso, User.getCargo(), this, User);
+                    n.setVisible(true);
+                }
+            }
+            else if (User.getCargo() == 1) {
+                //Abrir asignacion
+                CasoBean casoB = new CasoBean();
+                Casos casos = new Casos();
+                String id_caso = listUtilidad.getSelectedValue().toString();                
+                casoB = casos.getDatosSolicitudJD(id_caso);                                
+                                
+                Asignacion asignacionCaso = new Asignacion(casoB, User.getDepto());
+                asignacionCaso.setVisible(true);
             }
         } catch (Exception e) {
         }
@@ -846,7 +898,7 @@ public class Menu extends javax.swing.JFrame {
         if (User.getCargo() == 1 && sen == 1 ) {//JEFE DESARROLLO
             btnOkCasoJD.setVisible(true);
             btnNoCasoJD.setVisible(true);
-        }
+        }        
         else if (User.getCargo() == 3) {//PROGRAMADOR
             if (listUtilidad.getModel().getSize() > 0)
                 btnVer.setVisible(true);
@@ -860,7 +912,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_listUtilidadMouseClicked
 
     private void btnverCasosJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnverCasosJDMouseClicked
-        // TODO add your handling code here:
+        // JEFE DESARROLLO ve los casos de acorde al estado 
         try {
             if (EstadoCasos.ban == 0) {
                 EstadoCasos estCasos = new EstadoCasos(User);
@@ -871,7 +923,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnverCasosJDMouseClicked
 
     private void btnVerCasosJFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerCasosJFMouseClicked
-        // TODO add your handling code here:
+        // JEFE FUNCIONAL  puede ver los casos de acorde al estado
         try {
             if (EstadoCasos.ban == 0) {
                 EstadoCasos estCasos = new EstadoCasos(User);
@@ -880,6 +932,26 @@ public class Menu extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnVerCasosJFMouseClicked
+
+    private void btnCasosVencidosJDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCasosVencidosJDMouseClicked
+        try {
+            //JEFE DESARROLLO......listando los casos VENCIDOS
+            String DeptoCaso = lblDepartamento.getText().charAt(0) + "" + lblDepartamento.getText().charAt(1) + "" + lblDepartamento.getText().charAt(2);
+            Casos casoSoli = new Casos();            
+            casoSoli.getCasosVencidos(DeptoCaso, listUtilidad);
+            if (listUtilidad.getModel().getSize() == 0)
+                JOptionPane.showMessageDialog(null, "No hay solicitudes");
+            else {
+                pnlCasos.setVisible(true);                
+                btnNoCasoJD.setVisible(false);
+                btnOkCasoJD.setVisible(false);
+                btnVer.setVisible(true);
+                lblBtnVer.setText("Modificar");
+                sen = 2;
+            }
+        } catch (Exception e) {            
+        }
+    }//GEN-LAST:event_btnCasosVencidosJDMouseClicked
 
     /**
      * @param args the command line arguments
@@ -920,6 +992,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JScrollPane ScrollList;
     private javax.swing.JPanel btnBitacorasJD;
     private javax.swing.JPanel btnBitacorasJF;
+    private javax.swing.JPanel btnCasosVencidosJD;
     private javax.swing.JPanel btnListaEmpleados;
     private javax.swing.JPanel btnListaProgramadores;
     private javax.swing.JPanel btnManteniEmpleados;
@@ -937,9 +1010,9 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -947,6 +1020,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblBtnVer;
     private javax.swing.JLabel lblCargo;
     private javax.swing.JLabel lblConfigPerfil;
     private javax.swing.JLabel lblDepartamento;

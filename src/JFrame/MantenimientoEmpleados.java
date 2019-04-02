@@ -35,12 +35,27 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
     ResultSet resultado = null;
     Conexion_c con3 = new Conexion_c();
     static int ban = 0;
+    private EmpleadoBean men;
 
     /**
      * Creates new form MantenimientoEmpleados
      */
     public MantenimientoEmpleados() throws SQLException {
         initComponents();
+        this.setLocationRelativeTo(null);
+//        ban = 1;
+//        iniciarValores();
+//        depto.MostrarDepartamento(cmbDepto);
+//        estado.mostrarEstados(cmbEstados);
+//        cargo.mostrarCargo(cmbCargo);
+//        btnEliminar.setVisible(false);
+//        btnModificar.setVisible(false);
+    }
+
+    MantenimientoEmpleados(EmpleadoBean User, Menu aThis)  throws SQLException {
+        initComponents();
+        aThis.dispose();
+        men = User;
         this.setLocationRelativeTo(null);
         ban = 1;
         iniciarValores();
@@ -49,8 +64,8 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
         cargo.mostrarCargo(cmbCargo);
         btnEliminar.setVisible(false);
         btnModificar.setVisible(false);
-
     }
+
 
     public void limpiar() {
         txtApellidos.setText("");
@@ -633,8 +648,9 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
                 empB.setEmp_apellidos(txtApellidos.getText());
                 empB.setCargo(cmbCargo.getItemAt(cmbCargo.getSelectedIndex()).getId_cargo());
                 empB.setCorreo(txtCorreo.getText());
-                empB.setDepto(cmbDepto.getItemAt(cmbDepto.getSelectedIndex()).getId_depto());
+                empB.setDepto(cmbDepto.getItemAt(cmbDepto.getSelectedIndex()).getId_depto());                
                 empB.setContraseña(txtPass.getText());
+                JOptionPane.showMessageDialog(null, ""+empB.getContraseña());
                 empB.setTelefono(txtTel.getText());
                 empB.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getCodigo());
                 empB.setDireccion(txtDireccion.getText());
@@ -776,8 +792,9 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPassKeyReleased
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        
         ban = 0;
+        new Menu(men).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 

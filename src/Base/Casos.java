@@ -150,8 +150,17 @@ public class Casos {
         }
     }
 
-    public void ByeCaso() throws SQLException {
-
+    public void UpdateCasoDescrpDes(CasoBean bitaB) {
+        try {
+            sqlC = "update caso set descripcion_jefedes = ?  where id_caso = ? ";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, bitaB.getDescripcion_jefedes());                        
+            ps.setObject(2, bitaB.getId_caso());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("" + e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     public void UpdateCasoFechaLimite(CasoBean bitaB) {
@@ -167,11 +176,26 @@ public class Casos {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    public void UpdateDevolucion(CasoBean bitaB) {
+    public void UpdateDevolucion(CasoBean bitaB, String obser) {
         try {
             sqlC = "update caso set fecha_limite = ?, id_estado = 6 where id_caso = ? ";
             ps = con.Obtener().prepareStatement(sqlC);
             ps.setObject(1, bitaB.getFecha_limite());
+            ps.setObject(2, bitaB.getId_caso());
+            ps.executeUpdate();
+            updateObservacionesBitacora(bitaB, obser);
+        } catch (Exception e) {
+            System.out.println("" + e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    private void updateObservacionesBitacora(CasoBean bitaB, String obser){
+        try {
+            //JOptionPane.showMessageDialog(null, "obser "+obser+"\n id "+bitaB.getId_caso());
+            sqlC = "update bitacoras set observaciones = ? where id_caso = ?";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, obser);
             ps.setObject(2, bitaB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
@@ -179,7 +203,7 @@ public class Casos {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-
+    
     //**************************************************************************************
     public CasoBean getNewIdCaso(String nombreDepartamento) {
         try {
@@ -295,6 +319,34 @@ public class Casos {
             ps.setObject(4, "");
             ps.executeUpdate();
 
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void rechazarCaso(CasoBean casoB) {
+        try {
+            sqlC="update caso set id_estado = ?, descrip_rechazo = ? where id_caso = ?";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, casoB.getId_estado());
+            ps.setObject(2, casoB.getDescrip_rechazo());
+            ps.setObject(3, casoB.getId_caso());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void getCasosVencidos(String DeptoCaso, JList<String> listUtilidad) {
+        try {
+            sqlC = "SELECT        id_caso"
+                    + " FROM            caso"
+                    + " WHERE        ((id_estado = 3) or(id_estado = 4)or(id_estado = 5)or(id_estado = 6) ) AND (id_caso LIKE '%" + DeptoCaso + "%')";
+            casos = Conexion.Buscar(sqlC);
+            DefaultListModel modelo = new DefaultListModel();
+            while (casos.next()) 
+                modelo.addElement(casos.getString(1));            
+            listUtilidad.setModel(modelo);
         } catch (Exception e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }

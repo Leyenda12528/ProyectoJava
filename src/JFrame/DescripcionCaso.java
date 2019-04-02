@@ -245,16 +245,20 @@ public class DescripcionCaso extends javax.swing.JFrame {
     private void btnEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMouseClicked
         try {
             if (tipo == 0) {
-                casoB.setDescrip_rechazo(txtDescripJD.getText().trim());
-                casoB.setId_estado(3);//En desarrollo
-            } else {
                 casoB.setDescripcion_jefedes(txtDescripJD.getText().trim());
+                casoB.setId_estado(3);//En desarrollo
+                Asignacion asignacionCaso = new Asignacion(casoB, IdDepto);
+
+                asignacionCaso.setVisible(true);
+
+            } else if (tipo == 1){
+                casoB.setDescrip_rechazo(txtDescripJD.getText().trim());
                 casoB.setId_estado(2);//Rechazada
-            }
-            Asignacion asignacionCaso = new Asignacion(casoB, IdDepto);
-            asignacionCaso.setVisible(true);
+                casos.rechazarCaso(casoB);
+            }            
             formWindowClosing(null);
         } catch (Exception e) {
+            System.out.println(""+e);
         }
     }//GEN-LAST:event_btnEnviarMouseClicked
 

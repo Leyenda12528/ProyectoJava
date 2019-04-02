@@ -7,6 +7,7 @@ package JFrame;
 
 import Base.Casos;
 import Beans.CasoBean;
+import Beans.EmpleadoBean;
 import java.awt.Color;
 import java.sql.SQLException;
 import javax.swing.BorderFactory;
@@ -23,23 +24,28 @@ public class Solicitud extends javax.swing.JFrame {
     private Casos caso;
     private CasoBean casoB;
     private Color bien = new Color(59,134,139);
+    private EmpleadoBean men;
     /**
      * Creates new form Solicitud
      */
     public Solicitud() {
         initComponents();
     }
-    public Solicitud(String nombreDepartamento) throws SQLException {
+    public Solicitud(EmpleadoBean User, Menu aThis) throws SQLException {
         ban = 1;
+        aThis.dispose();
+        men = User;
         initComponents();
         caso = new Casos();
         this.setLocationRelativeTo(null);
-        getNewId(nombreDepartamento);
+        getNewId(User.getNombreDepto());
         lblError.setVisible(true);
         btnEnviar.setVisible(false);
         error(txtDescripcion);
         error(txtNombre);
     }
+
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -284,8 +290,7 @@ public class Solicitud extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-        ban = 0;
-        this.dispose();
+        formWindowClosing(null);
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMouseClicked
@@ -300,13 +305,14 @@ public class Solicitud extends javax.swing.JFrame {
                 casoB.setFecha_produccion("");
                 caso.IngresarCasoJF(casoB);
                 JOptionPane.showMessageDialog(null, "Caso Solicitado");
-                this.dispose();
+                formWindowClosing(null);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnEnviarMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         ban = 0;
+        new Menu(men).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 

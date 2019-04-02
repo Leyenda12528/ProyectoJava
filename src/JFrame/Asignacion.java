@@ -36,6 +36,7 @@ public class Asignacion extends javax.swing.JFrame {
     private Departamento depto = new Departamento();
     Empleado_Caso ec;
     Casos casos;
+    private String DescripJD;
 
     public Asignacion() throws SQLException {
         initComponents();
@@ -69,6 +70,7 @@ public class Asignacion extends javax.swing.JFrame {
         deptoB.setId_depto(id_depto);
         depto.getDatos(deptoB);
         lblNombreDepto.setText(deptoB.getNombre_depto());
+        DescripJD = casoB.getDescripcion_jefedes();
         if (ec.verificarAsignacion(lblIdcaso.getText())) {
             btnAsignar.setVisible(false);
             btnModificar.setVisible(true);
@@ -465,6 +467,7 @@ public class Asignacion extends javax.swing.JFrame {
         casoFecha.setFecha_limite(fecha);
         casoFecha.setId_caso(caso);
         casoFecha.setId_estado(3);//Cambiar a CASO en desarrollo
+        casoFecha.setDescripcion_jefedes(DescripJD);
         if (h.verificarFecha(fecha) && h.verificarAnio(fecha) && !txtProbador.getText().equals("") && !txtProbador.getText().equals("")) {
             try {
                 ec = new Empleado_Caso();
@@ -473,6 +476,8 @@ public class Asignacion extends javax.swing.JFrame {
                 ec.Asignar(Integer.parseInt(id_p), Integer.parseInt(id_tes));
                 casos.UpdateCasoFechaLimite(casoFecha);
                 casos.firstBitacora(casoFecha);
+                casos.UpdateCasoDescrpDes(casoFecha);
+                this.dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -490,6 +495,7 @@ public class Asignacion extends javax.swing.JFrame {
         casoFecha = new CasoBean();
         casoFecha.setFecha_limite(fecha);
         casoFecha.setId_caso(caso);
+        casoFecha.setId_estado(3);
         if (h.verificarFecha(fecha) && h.verificarAnio(fecha) && !txtProbador.getText().equals("") && !txtProbador.getText().equals("")) {
             try {
                 ec = new Empleado_Caso();
@@ -497,6 +503,7 @@ public class Asignacion extends javax.swing.JFrame {
                 ec.setId_caso(lblIdcaso.getText());
                 ec.ModificarEmpleados(Integer.parseInt(id_p), Integer.parseInt(id_tes), txtProgramador.getText(), txtProbador.getText(), lblIdcaso.getText());
                 casos.UpdateCasoFechaLimite(casoFecha);
+                this.dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -566,6 +573,7 @@ public class Asignacion extends javax.swing.JFrame {
                 try {
                     new Asignacion().setVisible(true);
                 } catch (SQLException ex) {
+                    System.out.println(""+ex);
                     Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

@@ -12,6 +12,7 @@ import Base.Empleado;
 import Beans.BitacoraBean;
 import Beans.CasoBean;
 import Beans.DepartamentoBean;
+import Beans.EmpleadoBean;
 import Help.Help;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -37,6 +38,9 @@ public class BitacoraC extends javax.swing.JFrame {
     private int IdCargo;
     private int IdDepto;
     private int statusCaso;
+    //Proeuba
+    private EmpleadoBean men;
+    //
     /**
      * Creates new form Bitacora
      */
@@ -44,8 +48,10 @@ public class BitacoraC extends javax.swing.JFrame {
         initComponents();        
     }
 
-    public BitacoraC(int Iddepto, String Departamento, int idCargo) throws SQLException {
+    public BitacoraC(int Iddepto, String Departamento, int idCargo, Menu aThis, EmpleadoBean User) throws SQLException {
         ban = 1;
+        aThis.dispose();        
+        men = User;
         initComponents();
         this.setLocationRelativeTo(null);
         Inicio(idCargo);
@@ -83,7 +89,7 @@ public class BitacoraC extends javax.swing.JFrame {
                     //Ver si el caso esta esperando la respuesta de 
                     //sino no muestras los botones de acciones
                     if (!isWaitAnswer()){ 
-                        //BtnsEmp(0);
+                        BtnsEmp(0);
                         txtObservaciones.setEditable(false);
                     }
                     
@@ -91,6 +97,9 @@ public class BitacoraC extends javax.swing.JFrame {
                 break;
         }
     }    
+
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -548,6 +557,7 @@ public class BitacoraC extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         ban = 0;
+        new Menu(men).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
@@ -599,6 +609,8 @@ public class BitacoraC extends javax.swing.JFrame {
             Casos caso = new Casos();
             caso.UpdateCasoToFinalizar(bitaB);//ACTUALIZANDO caso a ...esperando respuesta
             bita.UpdateBitacora(bitaB);///Actualizando ultima bitacora
+            JOptionPane.showMessageDialog(null, "Bitacora Finalizada!!");
+            formWindowClosing(null);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnFinalizarMouseClicked
@@ -623,9 +635,10 @@ public class BitacoraC extends javax.swing.JFrame {
         try {
             if (txtObservaciones.getText().length() > 0) {
                 caso.getDateLimit(casoB);
-                if (h.Plus7Days(casoB)){ //Actualizar fecha limite
-                    caso.UpdateDevolucion(casoB);
+                if (h.Plus7Days(casoB)){ //Actualizar fecha limite                    
+                    caso.UpdateDevolucion(casoB, txtObservaciones.getText());
                     JOptionPane.showMessageDialog(null, "Observaciones enviadas");
+                    formWindowClosing(null);
                 }                
             }
         } catch (Exception e) {
@@ -640,10 +653,11 @@ public class BitacoraC extends javax.swing.JFrame {
                 if (!h.dateMaxNow(fechaProd) || !h.exitsFecha(fechaProd)) //Verificar si es menor a al fecha actual y si existe
                     JOptionPane.showMessageDialog(null, "La fecha ingresada no es valida");
                 else {
-                    System.out.println("Bien");
+                    //System.out.println("Bien");                    
                     casoB.setFecha_produccion(fechaProd);
                     casoB.setId_estado(7);//Caso Finalizado
                     caso.FinCaso(casoB);
+                    JOptionPane.showMessageDialog(null, "Caso Finalizado");
                     formWindowClosing(null);
                 }           
             }

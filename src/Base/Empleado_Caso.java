@@ -118,7 +118,7 @@ public class Empleado_Caso {
    
     public String nombreEmpleadoT(String id) throws SQLException {
         String nombre;
-        String sql = "Select concat(nombre_emp,' ',apellidos) from empleados emp Inner Join empledos_caso ec ON ec.id_empleado=emp.id_empleado where id_cargo=4 and"
+        String sql = "Select concat(nombre_emp,' ',apellidos) from empleados emp Inner Join empleados_caso ec ON ec.id_empleado=emp.id_empleado where id_cargo=4 and"
                 + " ec.id_caso='" + id + "'";
         ResultSet datos = con.Buscar(sql);
         datos.next();

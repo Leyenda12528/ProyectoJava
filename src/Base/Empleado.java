@@ -39,6 +39,7 @@ public class Empleado {
     private String contraseña;
     private int id_estado;
     Conexion_c c4 = new Conexion_c();
+    private String sqlC;
 
     public int getId_empleado() {
         return id_empleado;
@@ -174,7 +175,7 @@ public class Empleado {
 
     public boolean existUSer(String correo, String Contra, EmpleadoBean empB) {
         try {
-            String sql = "select count(*), id_empleado from empleados where correo = ? and password_emp = ? and id_estado_emp = 0";
+            String sql = "select count(*), id_empleado from empleados where correo = ? and password_emp = SHA2(?,256) and id_estado_emp = 0";
             ps = con.Obtener().prepareStatement(sql);
             ps.setObject(1, correo);
             ps.setObject(2, Contra);
@@ -220,13 +221,6 @@ public class Empleado {
         } catch (Exception ex) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
-    }
-
-    public void UpdateEmpleado() throws SQLException {
-        //Code
-    }
-
-    public void ByeEmpleado() throws SQLException {
     }
 
     public void MostrarProgramadores(JTable programadores, int depto) {
@@ -310,13 +304,14 @@ public class Empleado {
             JOptionPane.showMessageDialog(null, "Empleado Ingresado con exito");
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
 
     }
 
     public void ModifcarEmpleado(EmpleadoBean emp) throws SQLException {
         String sql = "update  empleados set nombre_emp=?,apellidos=?,id_cargo=?,id_depto=?,"
-                + "edad=?,direccion=?,telefono=?,correo=?,password_emp=?,id_estado_emp=? where id_empleado=? ";
+                + "edad=?,direccion=?,telefono=?,correo=?,password_emp=SHA2(?,256),id_estado_emp=? where id_empleado=? ";
 
         try {
             PreparedStatement psta = con.Obtener().prepareStatement(sql);
@@ -336,6 +331,7 @@ public class Empleado {
             JOptionPane.showMessageDialog(null, "Empleado Modificado con exito");
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -351,6 +347,7 @@ public class Empleado {
             JOptionPane.showMessageDialog(null, "Empleado Inactivo");
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }
 
     }
@@ -359,6 +356,35 @@ public class Empleado {
         Random aleatorio = new Random();
         int numeros = (int) (aleatorio.nextDouble() * 99 + 1000);
         return numeros;
+    }
+
+    public void ChangePass(EmpleadoBean userb) {
+        try {
+            sqlC="update empleados set password_emp = SHA2(?,256) where id_empleado = ?";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, userb.getContraseña());
+            ps.setObject(2, userb.getId_empleado());
+            ps.executeUpdate();            
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);            
+        }
+    }
+
+    public boolean SamePass(EmpleadoBean userb) {
+        try {
+            sqlC = "select count(*) from empleados where id_empleado = ? and password_emp = SHA2(?,256)";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, userb.getId_empleado());
+            ps.setObject(2, userb.getContraseña());
+            empleados = ps.executeQuery();
+            empleados.next();
+            if (empleados.getInt(1) == 1) 
+                return true;
+            else return false;            
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        }
     }
 
 }
