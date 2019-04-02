@@ -483,17 +483,17 @@ public class LoginW extends javax.swing.JFrame {
                     new Menu(empB).setVisible(true);
                     this.dispose();
                 } else {
-                    lblErrorLogin.setText("USUARIO/CONTRASEÑA INCORRECTO");
+                    lblErrorLogin.setText("Usuario/contraseña incorrectos");
                     lblErrorLogin.setVisible(true);
                 }
             }
             else{
-                lblErrorLogin.setText("CAMPOS VACIOS ");
+                lblErrorLogin.setText("Campos vacíos");
                 lblErrorLogin.setVisible(true);
             }
         } catch (SQLException e) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null, "ERROR INICIO SESION");
+            JOptionPane.showMessageDialog(null, "Error inicio de sesión");
         }
     }//GEN-LAST:event_pnlLogin2MouseClicked
 
