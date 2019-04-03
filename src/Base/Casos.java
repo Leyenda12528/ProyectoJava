@@ -7,6 +7,7 @@ package Base;
 
 import Beans.BitacoraBean;
 import Beans.CasoBean;
+import Help.Help;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,6 +30,7 @@ public class Casos {
     private CasoBean casoB = new CasoBean();
     private ResultSet casos = null;
     private PreparedStatement ps = null;
+    private Help h = new Help();
     private String sqlC;
 
     public Casos() throws SQLException {
@@ -347,6 +349,33 @@ public class Casos {
             while (casos.next()) 
                 modelo.addElement(casos.getString(1));            
             listUtilidad.setModel(modelo);
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    boolean noFin(String id_caso) {
+        try {
+            sqlC = "select fecha_limite from caso where id_caso = '" + id_caso + "'";
+            casos = Conexion.Buscar(sqlC);
+            casos.next();
+            if (!h.dateMaxNow(casos.getString(1))) {
+                VencidoCaso(id_caso);
+                return false;
+            }
+            else return true;    
+        } catch (Exception e) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        }
+    }
+
+    private void VencidoCaso(String id_caso) {
+        try {
+            sqlC = "update caso set id_estado = 5 where id_caso = ?";
+            ps = con.Obtener().prepareStatement(sqlC);
+            ps.setObject(1, id_caso);
+            ps.executeUpdate();
         } catch (Exception e) {
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
         }

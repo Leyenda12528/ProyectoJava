@@ -68,14 +68,19 @@ public class Bitacora {
             ps.setObject(1, idProgramador);
             bitacora = ps.executeQuery();
             BitacoraBean bitaB = null;
+            Casos CasoFechaFin = new Casos();
             while (bitacora.next()) {
-                bitaB = new BitacoraBean();
-                bitaB.setId_caso(bitacora.getString(1));
-                bitaB.setNombre_caso(bitacora.getString(2));
-                bitaB.setDescripActiv(bitacora.getString(3));
-                bitaB.setPorcentaje(bitacora.getInt(4));
-                bitaB.setObservaciones(bitacora.getString(5));
-                listbitaB.add(bitaB);
+                if (CasoFechaFin.noFin(bitacora.getString(1))) {
+                    bitaB = new BitacoraBean();
+                    bitaB.setId_caso(bitacora.getString(1));
+                    bitaB.setNombre_caso(bitacora.getString(2));
+                    bitaB.setDescripActiv(bitacora.getString(3));
+                    bitaB.setPorcentaje(bitacora.getInt(4));
+                    bitaB.setObservaciones(bitacora.getString(5));
+                    listbitaB.add(bitaB);
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "El caso " + bitacora.getString(1) + " ha expirado su fecha Limite");
             }
         } catch (Exception e) {
             System.out.println(""+e);

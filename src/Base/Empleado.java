@@ -175,7 +175,8 @@ public class Empleado {
 
     public boolean existUSer(String correo, String Contra, EmpleadoBean empB) {
         try {
-            String sql = "select id_empleado from empleados where correo = ? and password_emp = SHA2(?,256) and id_estado_emp = 0";
+            String sql = "select count(*), id_empleado from empleados where correo = ? and password_emp = SHA2(?,256) and id_estado_emp = 0";
+            //String sql = "select id_empleado from empleados where correo = ? and password_emp = SHA2(?,256) and id_estado_emp = 0";
             ps = con.Obtener().prepareStatement(sql);
             ps.setObject(1, correo);
             ps.setObject(2, Contra);
