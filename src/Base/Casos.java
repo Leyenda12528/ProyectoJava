@@ -11,15 +11,13 @@ import Help.Help;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListModel;
 import javax.swing.table.DefaultTableModel;
-
+import org.apache.log4j.Logger;
 /**
  *
  * @author jorge
@@ -32,6 +30,7 @@ public class Casos {
     private PreparedStatement ps = null;
     private Help h = new Help();
     private String sqlC;
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Casos.class);
 
     public Casos() throws SQLException {
     }
@@ -42,7 +41,7 @@ public class Casos {
             PreparedStatement ps = new Conexion().Obtener().prepareStatement(sqlC);
             Conexion.InsertarP(sqlC, ps, casoB.getId_caso(), casoB.getNombre_caso(), casoB.getDescrip_req(), casoB.getDescrip_rechazo(), casoB.getDescripcion_jefedes(), casoB.getId_estado(), casoB.getPorcentaje(), casoB.getFecha_limite(), casoB.getFecha_produccion());
         } catch (SQLException e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, "ERROR Caso Ingreso JF " + e);
+            log.error(e);
         }
     }
 
@@ -59,7 +58,7 @@ public class Casos {
 
             listUtilidad.setModel(modelo);
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
         }
     }
 
@@ -79,7 +78,7 @@ public class Casos {
             }
             return casoB;
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
             return null;
         }
     }
@@ -95,7 +94,7 @@ public class Casos {
                 return "";
             }
         } catch (SQLException e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
             return null;
         }
     }
@@ -123,7 +122,8 @@ public class Casos {
             }
             casos.setModel(modelo);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
+            log.error(e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar caso");
         }
     }
 
@@ -134,8 +134,8 @@ public class Casos {
             ps.setObject(1, bitaB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("" + e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "error al finalizar caso");
+            log.error(e);
         }
     }
 
@@ -147,8 +147,8 @@ public class Casos {
             ps.setObject(2, bitaB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("" + e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "error al actualizar el porcentaje del caso");
+            log.error(e);
         }
     }
 
@@ -160,8 +160,8 @@ public class Casos {
             ps.setObject(2, bitaB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("" + e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "error al update descripcion del caso");
+            log.error(e);
         }
     }
 
@@ -174,8 +174,8 @@ public class Casos {
             ps.setObject(3, bitaB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("" + e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
+            JOptionPane.showMessageDialog(null, "error al actualizar fecha del caso");
         }
     }
     public void UpdateDevolucion(CasoBean bitaB, String obser) {
@@ -187,8 +187,8 @@ public class Casos {
             ps.executeUpdate();
             updateObservacionesBitacora(bitaB, obser);
         } catch (Exception e) {
-            System.out.println("" + e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "error al actualizar caso ");
+            log.error(e);
         }
     }
     
@@ -201,8 +201,8 @@ public class Casos {
             ps.setObject(2, bitaB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("" + e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
+            JOptionPane.showMessageDialog(null, "error al update observaciones del caso");
         }
     }
     
@@ -221,6 +221,7 @@ public class Casos {
             casoB.setId_caso(newId);
             return casoB;
         } catch (Exception e) {
+            log.error(e);
             return null;
         }
     }
@@ -238,7 +239,7 @@ public class Casos {
             listUser.setModel(modelo);
 
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
         }
     }
 
@@ -250,7 +251,7 @@ public class Casos {
                 casoB.setId_estado(casos.getInt(1));
             }
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
         }
     }
 
@@ -277,8 +278,8 @@ public class Casos {
             }
             estadoCasos.setModel(modelo);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "error al listar casos");
+            log.error(e);
         }
           
     }
@@ -292,8 +293,8 @@ public class Casos {
             ps.setObject(3, casoB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("" + e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "error al finalizar caso");
+            log.error(e);
         }
     }
 
@@ -304,7 +305,7 @@ public class Casos {
             if (casos.next()) 
                 casoB.setFecha_limite(casos.getString(1));            
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
         }
     }
 
@@ -322,7 +323,7 @@ public class Casos {
             ps.executeUpdate();
 
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
         }
     }
 
@@ -335,7 +336,7 @@ public class Casos {
             ps.setObject(3, casoB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
         }
     }
 
@@ -350,7 +351,7 @@ public class Casos {
                 modelo.addElement(casos.getString(1));            
             listUtilidad.setModel(modelo);
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
         }
     }
 
@@ -365,7 +366,7 @@ public class Casos {
             }
             else return true;    
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
             return false;
         }
     }
@@ -377,7 +378,7 @@ public class Casos {
             ps.setObject(1, id_caso);
             ps.executeUpdate();
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
         }
     }
 

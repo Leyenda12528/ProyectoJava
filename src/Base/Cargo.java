@@ -7,10 +7,9 @@ package Base;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,6 +19,7 @@ public class Cargo {
     private int id_cargo;
     private String nombre_cargo;
      private Conexion con = new Conexion();
+     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Cargo.class);
 
     public Cargo(int id_cargo, String nombre_cargo)throws SQLException {
         this.id_cargo = id_cargo;
@@ -61,7 +61,7 @@ public class Cargo {
                 );
             }
         } catch (Exception ex) {
-            Logger.getLogger(Cargo.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex);
             JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS EXISTENTES");
         }
     }

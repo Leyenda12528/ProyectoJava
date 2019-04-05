@@ -8,8 +8,7 @@ package Base;
 import Beans.EmpleadoBean;
 import java.sql.*;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -40,6 +39,7 @@ public class Empleado {
     private int id_estado;
     Conexion_c c4 = new Conexion_c();
     private String sqlC;
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Empleado.class);
 
     public int getId_empleado() {
         return id_empleado;
@@ -148,7 +148,7 @@ public class Empleado {
             }
             listUtilidad.setModel(modelo);
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e.getMessage());
+            log.error(e);
         }
     }
 
@@ -169,7 +169,7 @@ public class Empleado {
             lista.setModel(modelo);
         } catch (SQLException e) {
             //System.out.println(""+e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e.getMessage());
+            log.error(e);
         }
     }
 
@@ -197,8 +197,7 @@ public class Empleado {
 // }
 // else return false;
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e.getMessage());
-            System.out.println("" + e);
+            log.error(e);
             return false;
         }
     }
@@ -225,7 +224,7 @@ public class Empleado {
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+            log.error(ex);
         }
     }
 
@@ -245,7 +244,7 @@ public class Empleado {
             }
             programadores.setModel(modelo);
         } catch (SQLException ex) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex);
             JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR");
         }
     }
@@ -268,7 +267,7 @@ public class Empleado {
             tester.setModel(modelo);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex);
             JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR" + ex);
         }
     }
@@ -309,8 +308,8 @@ public class Empleado {
 
             JOptionPane.showMessageDialog(null, "Empleado Ingresado con exito");
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Error al insertar");
+            log.error(e);
         }
 
     }
@@ -336,8 +335,8 @@ public class Empleado {
 
             JOptionPane.showMessageDialog(null, "Empleado Modificado con exito");
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "ERROR al actualizar empleado");
+            log.error(e);
         }
     }
 
@@ -352,8 +351,8 @@ public class Empleado {
 
             JOptionPane.showMessageDialog(null, "Empleado Inactivo");
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Error al deshabilitar empleado");
+            log.error(e);
         }
 
     }
@@ -372,7 +371,7 @@ public class Empleado {
             ps.setObject(2, userb.getId_empleado());
             ps.executeUpdate();            
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);            
+            log.error(e);
         }
     }
 
@@ -388,7 +387,7 @@ public class Empleado {
                 return true;
             else return false;            
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            log.error(e);
             return false;
         }
     }

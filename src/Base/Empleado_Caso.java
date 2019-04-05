@@ -6,6 +6,7 @@
 package Base;
 
 import java.sql.*;
+import org.apache.log4j.Logger;
 import javax.swing.JOptionPane;
 /**
  *
@@ -16,7 +17,8 @@ public class Empleado_Caso {
     private ResultSet empleadoCaso;
     private String id_caso;
     private int id_emp;
-
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Empleado_Caso.class);
+    
     public String getId_caso() {
         return id_caso;
     }
@@ -67,7 +69,7 @@ public class Empleado_Caso {
 
             JOptionPane.showMessageDialog(null, "La asignación se realizó con exito");
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
+            log.error(e);
         }
     }
 
@@ -89,7 +91,7 @@ public class Empleado_Caso {
             psta2.execute();
             JOptionPane.showMessageDialog(null, "La modificación se realizó con exito");
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
+            log.error(e);
         }
     }
 

@@ -91,8 +91,7 @@ public class BitacoraC extends javax.swing.JFrame {
                     if (!isWaitAnswer()){ 
                         BtnsEmp(0);
                         txtObservaciones.setEditable(false);
-                    }
-                    
+                    }                    
                 }               
                 break;
         }

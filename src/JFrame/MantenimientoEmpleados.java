@@ -79,7 +79,6 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
     }
 
     public void iniciarValores() throws SQLException {
-
         Object[][] data = null;
         String[] columns = {
             "Codigo", "Nombre", "Apellido", "Edad", "Direccion", "Telefono", "Correo", "Cargo", "Departamento", "Estado"
@@ -87,9 +86,8 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
         modelo1 = new DefaultTableModel(data, columns);
         JtableResultado.setModel(modelo1);
         String sql = "SELECT id_empleado,nombre_emp,apellidos,edad,direccion,telefono,correo,nombre_cargo,nombre_depto,estado FROM empleados emp INNER JOIN departamentos dep ON dep.id_depto=emp.id_depto and emp.id_depto=dep.id_depto\n"
-                + "INNER JOIN  cargo c ON c.id_cargo=emp.id_cargo  INNER JOIN estado_empleados ee ON ee.id_estado=emp.id_estado_emp";
+                + "INNER JOIN  cargo c ON c.id_cargo=emp.id_cargo  INNER JOIN estado_empleados ee ON ee.id_estado=emp.id_estado_emp order by id_empleado";
         con3.setRs(sql);
-
         generarListado();
     }
     String id_Cargoemp;
@@ -649,8 +647,7 @@ public class MantenimientoEmpleados extends javax.swing.JFrame {
                 empB.setCargo(cmbCargo.getItemAt(cmbCargo.getSelectedIndex()).getId_cargo());
                 empB.setCorreo(txtCorreo.getText());
                 empB.setDepto(cmbDepto.getItemAt(cmbDepto.getSelectedIndex()).getId_depto());                
-                empB.setContraseña(txtPass.getText());
-                JOptionPane.showMessageDialog(null, ""+empB.getContraseña());
+                empB.setContraseña(txtPass.getText());                
                 empB.setTelefono(txtTel.getText());
                 empB.setId_estado(cmbEstados.getItemAt(cmbEstados.getSelectedIndex()).getCodigo());
                 empB.setDireccion(txtDireccion.getText());

@@ -7,8 +7,7 @@ package Base;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -20,6 +19,7 @@ public class Estados {
     private int id_estado;
     private String nombre_estado;
     private Conexion con = new Conexion();
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Estados.class);
 
     public int getId_estado() {
         return id_estado;
@@ -60,7 +60,7 @@ public class Estados {
                 );
             }
         } catch (Exception ex) {
-            Logger.getLogger(Estados.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex);
             JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS ESTADOS EXISTENTES");
         }
     }

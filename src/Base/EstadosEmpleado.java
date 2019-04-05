@@ -7,8 +7,7 @@ package Base;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -18,7 +17,9 @@ import javax.swing.JOptionPane;
  * @author less_
  */
 public class EstadosEmpleado {
- private Conexion con = new Conexion();
+
+    private Conexion con = new Conexion();
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EstadosEmpleado.class);
 
     public EstadosEmpleado(int codigo, String estado) throws SQLException {
         this.codigo = codigo;
@@ -64,7 +65,7 @@ public class EstadosEmpleado {
                 );
             }
         } catch (Exception ex) {
-            Logger.getLogger(EstadosEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex);
             JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR ESTADOS");
         }
     }

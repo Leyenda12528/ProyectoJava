@@ -1,0 +1,277 @@
+
+
+
+************************************************************************************************************************************************************************
+************************************************************************************************************************************************************************
+
+Importante:   
+	
+          Todos los correos son del tipo :  ....@gmail.com
+	      Todas las contraseñas son: 1234
+              Excepto la de admin que es: 123456
+
+
+
+Si no lo deja ingresar con la contraseña: 1234--> ingrese como admin para cambiar la contraseña del Usuario que no lo deja entrar
+
+
+
+
+
+
+************************************************************************************************************************************************************************
+************************************************************************************************************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE cargo (
+  id_cargo int(5) primary key NOT NULL,
+  nombre_cargo varchar(80) NOT NULL
+);
+
+CREATE TABLE departamentos (
+  id_depto int(5) primary key NOT NULL,
+  nombre_depto varchar(80) NOT NULL
+);
+
+CREATE TABLE estado_empleados (
+  id_estado int(5) primary key NOT NULL,
+  estado varchar(80) NOT NULL
+);
+
+CREATE TABLE empleados ( 
+    id_empleado int(5) primary key NOT NULL, 
+    nombre_emp varchar(80) NOT NULL, 
+    apellidos varchar(80) NOT NULL, 
+    id_cargo int(5) NOT NULL,
+    id_depto int(5) NOT NULL, 
+    edad int(2) NOT NULL, 
+    direccion varchar(1000) NOT NULL,
+    telefono varchar(10) NOT NULL, 
+    correo varchar(100) NOT NULL, 
+    password_emp varchar(8) NOT NULL, 
+    id_estado_emp int(5) NOT NULL, 
+    CONSTRAINT FOREIGN KEY(id_cargo) REFERENCES cargo(id_cargo), 
+    CONSTRAINT FOREIGN KEY(id_depto) REFERENCES departamentos(id_depto), 
+    CONSTRAINT FOREIGN KEY(id_estado_emp) REFERENCES estado_empleados(id_estado) 
+);
+
+
+CREATE TABLE estados (
+  id_estado int(5) primary key NOT NULL,
+  nombre_estado varchar(80) NOT NULL
+);
+
+CREATE TABLE caso (
+  id_caso varchar(8) primary key NOT NULL,
+  nombre_caso varchar(80) NOT NULL,
+  descrip_req varchar(10000) NOT NULL,
+  descrip_rechazo varchar(10000) NOT NULL,
+  descripcion_jefedes varchar(1000) NOT NULL,
+  id_estado int(5)NOT NULL,
+  porcentaje_avance mediumint(100) NOT NULL,
+  fecha_limite varchar(10),
+  fecha_produccion varchar(10),
+  contraint foreign key (id_estado) references estados(id_estado) 
+);
+
+CREATE TABLE bitacoras (
+  id_bitacora int(5) primary key NOT NULL,
+  id_caso varchar(8) NOT NULL,
+  observaciones varchar(100),
+  descripcion_actividad varchar(100) NOT NULL,
+  contraint foreign key(id_caso) references caso(id_caso)
+);
+CREATE TABLE empleados_caso ( 
+  id_empleado int(5) NOT NULL, 
+  id_caso varchar(8) NOT NULL, 
+  CONSTRAINT foreign key (id_empleado) references empleados(id_empleado), 
+  CONSTRAINT foreign key (id_caso) references caso(id_caso) 
+);
+
+
+INSERT INTO estados VALUES
+(1, 'En espera de respuesta'),
+(2, 'Solicitud rechazada'),
+(3, 'En desarrollo'),
+(4, 'Esperando aprobación de área solicitante'),
+(5, 'Vencido'),
+(6, 'Devuelto con observaciones'),
+(7, 'Finalizado');
+
+insert into estado_empleados values
+(0, 'Activo'),
+(1, 'Inactivo');
+
+insert into cargo values
+(0, 'Administrador'),
+(1, 'Jefe Desarrollo'),
+(2, 'Jefe Funcional'),
+(3, 'Programador'),
+(4, 'Probador');
+
+insert into departamentos values
+(0,'Logistica'),
+(1,'Ambiental'),
+(2,'Desarrollo'),
+(3,'Contabalidad'),
+(4,'Servicios');
+
+insert into empleados values
+(0,'lucas','apel1',1,0,25,'direccion 1','1234-1200','mycorreo','1234',0);
+insert into empleados values
+(1,'jose','apel2',1,1,26,'direccion 2','1234-1201','mycorreo1','1234',0),
+(2,'jaun','apel3',2,0,27,'direccion 3','1234-1202','mycorreo2','1234',0),
+(3,'isma','apel4',2,1,28,'direccion 4','1234-1203','mycorreo3','1234',0),
+(4,'pro','apel1',3,0,29,'direccion 5','1234-1204','mycorreo4','1234',0),
+(5,'emp','apel1',4,0,25,'direccion 6','1234-1205','mycorreo5','1234',0),
+(6,'pro1','apel2',3,1,29,'direccion 7','1234-1206','mycorreo6','1234',0),
+(7,'emp1','apel3',4,1,25,'direccion 8','1234-1207','mycorreo7','1234',0);
+
+insert into empleados
+values
+(8,'UserPrincipal','Apellido',0,0,25,'direccion 9'
+,'1234-1208','admin@gmail
+','123456',0);
+
+NUEVOS con IDE
+(9,'newUser','Apel de Des',1,2,25,'direccion 10','1212-2121',
+'correoRR','1234',0);
+
+
+
+
+
+
+****************
+
+select * from estados;
+select * from caso;
+
+select * from departamentos;
+select * from cargo;
+insert into caso values('id1','caso 1','solicitando','aceptado','iniciar',3,1,'25/02/2010','');
+insert into caso values('id2','caso 2','solicitando','aceptado2','iniciar2',3,2,'25/02/2022','');
+insert into caso values('id3','caso 3','solicitando','aceptado3','iniciar3',3,3,'25/02/2033','');
+insert into caso values('id4','caso 4','solicitando','aceptado4','iniciar4',3,4,'25/02/2044','');
+
+insert into caso values('id5','caso 5','solicitando','aceptado5','iniciar5',3,4,'25/02/2055','');
+insert into caso values('id6','caso 6','solicitando','aceptado6','iniciar6',3,4,'25/02/2066','');
+
+select * from empleados where id_cargo=4;
+
+insert into bitacoras values(0,'id1','','iniciando caso # 1');
+insert into bitacoras values(1,'id4','','mejorando caso # 4');
+insert into bitacoras values(2,'id2','','iniciando caso # 2');
+insert into bitacoras values(3,'id3','','iniciando caso # 3');
+
+insert into bitacoras values(4,'id5','','iniciando caso # 5');
+insert into bitacoras values(5,'id6','','iniciando caso # 6');
+
+select * from bitacoras;
+
+insert into empleados_caso values (5,'id1'),(5,'id2');
+insert into empleados_caso values (7,'id3'),(7,'id4');
+insert into empleados_caso values (9,'id5'),(9,'id6');
+
+insert into empleados_caso values (6,'id3'),(6,'id4');
+insert into empleados_caso values (4,'id1'),(4,'id2');
+insert into empleados_caso values (4,'id5'),(4,'id6');
+
+select * from empleados_caso;
+select * from empleados;
+select * from estado_empleados;
+update empleados set id_cargo=0 where id_cargo=4;
+update empleados set id_cargo=4 where id_cargo=3;
+update empleados set id_cargo=3 where id_cargo=0;
+update empleados set id_cargo=0 where id_empleado=8;
+
+insert into empleados values
+(9,'test','apel de test',4,0,26,'direccion rn','1234-1201','mycorreo123','1234',0);
+
+
+SELECT        id_caso, nombre_caso , id_estado
+FROM            dbo.caso
+WHERE        (id_caso LIKE '%1%')
+
+SELECT        dbo.bitacoras.id_bitacora, dbo.bitacoras.id_caso, dbo.caso.nombre_caso, dbo.bitacoras.descripcion_actividad, dbo.caso.porcentaje_avance, dbo.bitacoras.observaciones
+FROM            dbo.caso INNER JOIN
+                         dbo.bitacoras ON dbo.caso.id_caso = dbo.bitacoras.id_caso
+WHERE        dbo.caso.id_caso='id1'
+
+select * from bitacoras where id_caso='id1';
+
+--JF 3 --> dep 1
+insert into caso values('id7','caso 7','solicitando abrir','','',1,0,'','');
+insert into caso values('id8','caso 8','solicitando abrir','','',1,0,'','');
+update caso set id_caso='idDEP11' where id_caso='idDEP1'
+update caso set id_caso='idDEP12' where id_caso='id8'
+--contestar JD 1--> dep1
+
+
+select * from estados;
+select * from caso;
+
+
+
+*********Id y nombre de empleados Activos y trabajando con el id departamento******************PROGRAMADORES
+SELECT DISTINCT dbo.empleados.id_empleado, dbo.empleados.nombre_emp
+FROM            dbo.empleados INNER JOIN
+                         dbo.empleados_caso ON dbo.empleados.id_empleado = dbo.empleados_caso.id_empleado
+WHERE        (dbo.empleados.id_estado_emp = 0) AND (dbo.empleados.id_depto = 0) AND (dbo.empleados.id_cargo = 3)
+
+
+*********Ver Bitacora con el id del empleado
+
+SELECT        dbo.bitacoras.id_bitacora, dbo.bitacoras.id_caso, dbo.caso.nombre_caso, dbo.bitacoras.descripcion_actividad, dbo.caso.porcentaje_avance, dbo.bitacoras.observaciones
+FROM            dbo.bitacoras INNER JOIN
+                         dbo.caso ON dbo.bitacoras.id_caso = dbo.caso.id_caso INNER JOIN
+                         dbo.empleados_caso ON dbo.caso.id_caso = dbo.empleados_caso.id_caso
+WHERE        (dbo.empleados_caso.id_empleado = 9) AND (dbo.caso.id_estado <> 1) AND (dbo.caso.id_estado <> 2) AND (dbo.caso.id_estado <> 7)
+
+
+
+*************Ver bitacora ******ID Casos ***
+SELECT        id_caso, nombre_caso , id_estado
+FROM            dbo.caso
+WHERE        (id_caso LIKE '%1%')
+
+SELECT        dbo.bitacoras.id_bitacora, dbo.bitacoras.id_caso, dbo.caso.nombre_caso, dbo.bitacoras.descripcion_actividad, dbo.caso.porcentaje_avance, dbo.bitacoras.observaciones
+FROM            dbo.caso INNER JOIN
+                         dbo.bitacoras ON dbo.caso.id_caso = dbo.bitacoras.id_caso
+WHERE        dbo.caso.id_caso=''
+
+
+
+*********Casos Solicitando Por Departamento
+SELECT        id_caso, nombre_caso, descrip_req, descrip_rechazo, descripcion_jefedes, id_estado, porcentaje_avance, fecha_limite, fecha_produccion
+FROM            dbo.caso
+WHERE        (id_estado = 1) AND (id_caso LIKE '%DEP1%')
+
+
+
+1
+2
+Calendar cal= Calendar.getInstance();
+int year= cal.get(Calendar.YEAR);
+
+
+
+
+
+
+

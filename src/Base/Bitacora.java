@@ -8,12 +8,11 @@ package Base;
 import Beans.BitacoraBean;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import org.apache.log4j.Logger;
 /**
  *
  * @author jorge
@@ -23,12 +22,9 @@ public class Bitacora {
     private ResultSet bitacora;
     private PreparedStatement ps = null;
     private String sql;
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Bitacora.class);
     
     public Bitacora() throws SQLException{
-    }
-    
-    public void IngresarBitacora() throws SQLException{
-        
     }
     
     public void getBitacorasProgramadorToEmp(int idProgramador, ArrayList<BitacoraBean> listbitaB) {
@@ -52,8 +48,8 @@ public class Bitacora {
                 listbitaB.add(bitaB);
             }
         } catch (Exception e) {
-            System.out.println(""+e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "No se pudo conseguir las bitacoras");
+            log.error(" no se pudo conseguir las bitcaors de programador para el empleado");
         }
     }
     
@@ -83,8 +79,8 @@ public class Bitacora {
                     JOptionPane.showMessageDialog(null, "El caso " + bitacora.getString(1) + " ha expirado su fecha Limite");
             }
         } catch (Exception e) {
-            System.out.println(""+e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "erro al conseguir bitacoras");
+            log.error("error al conseguir las bitacoras " + e);
         }
     }
     
@@ -109,8 +105,8 @@ public class Bitacora {
                 listbitaB.add(bitaB);
             }
         } catch (Exception e) {
-            System.out.println(""+e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "error al get bitacoras para el JD");
+            log.error(e);
         }
     }
     
@@ -131,8 +127,8 @@ public class Bitacora {
                 bitaBsend.setObservaciones(bitacora.getString(5));                
             }
         } catch (Exception e) {
-            //System.out.println(""+e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "error al get bitacoras del caso");
+            log.error(e);
         }
     }
         
@@ -146,14 +142,10 @@ public class Bitacora {
             ps.setObject(3, bitaB.getId_caso());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println(""+e);
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "error al actualizar bitacora");
+            log.error(e);
         }
-    }
-    
-    private void ByeBitcora() throws SQLException{
-        
-    }
+    }    
 
     public void loadCasosToList(ArrayList<BitacoraBean> listaBitaBean, JList<String> listUtilidad, JScrollPane ScrollList) {
         if (!listaBitaBean.isEmpty()) {

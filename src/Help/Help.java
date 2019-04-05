@@ -5,18 +5,22 @@
  */
 package Help;
 
+
 import Beans.CasoBean;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author jorge
  */
 public class Help {
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Help.class);
     private String valor ="'%;(-)º<>¿?*//\\ª!·$&=^¨¡`+´ç";
     private boolean var = false;
     public boolean validarCorreo(String text){
@@ -79,6 +83,7 @@ public class Help {
             if (fProd.compareTo(Fnow) < 0) return false;//si Produccion es menor que Ahora                
              else return true;            
         } catch (Exception e) {
+            log.error(e);
             return false;
         }
     }
@@ -96,7 +101,8 @@ public class Help {
             casoB.setFecha_limite(fecNew);
             return true;
         } catch (Exception e) {
-            System.out.println(""+e);
+            log.error(e);
+            JOptionPane.showMessageDialog(null, "Error al sumar 7 dias");
             return false;
         }
     }

@@ -469,21 +469,24 @@ public class Asignacion extends javax.swing.JFrame {
         casoFecha.setId_estado(3);//Cambiar a CASO en desarrollo
         casoFecha.setDescripcion_jefedes(DescripJD);
         if (h.verificarFecha(fecha) && h.verificarAnio(fecha) && !txtProbador.getText().equals("") && !txtProbador.getText().equals("")) {
-            try {
-                ec = new Empleado_Caso();
-                casos = new Casos();
-                ec.setId_caso(lblIdcaso.getText());
-                ec.Asignar(Integer.parseInt(id_p), Integer.parseInt(id_tes));
-                casos.UpdateCasoFechaLimite(casoFecha);
-                casos.firstBitacora(casoFecha);
-                casos.UpdateCasoDescrpDes(casoFecha);
-                this.dispose();
-            } catch (SQLException ex) {
-                Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
+            if (!h.dateMaxNow(fecha) || !h.exitsFecha(fecha)) //Verificar si es menor a al fecha actual y si existe
+                JOptionPane.showMessageDialog(null, "La fecha ingresada no es valida");
+            else {
+                try {
+                    ec = new Empleado_Caso();
+                    casos = new Casos();
+                    ec.setId_caso(lblIdcaso.getText());
+                    ec.Asignar(Integer.parseInt(id_p), Integer.parseInt(id_tes));
+                    casos.UpdateCasoFechaLimite(casoFecha);
+                    casos.firstBitacora(casoFecha);
+                    casos.UpdateCasoDescrpDes(casoFecha);
+                    this.dispose();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Asignacion.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-
         } else {
             JOptionPane.showMessageDialog(this, "Verifique que la información ingresada sea correcta");
         }

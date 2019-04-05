@@ -7,8 +7,7 @@ package Base;
 
 import Beans.DepartamentoBean;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 /**
@@ -23,6 +22,7 @@ public class Departamento {
     private String sql = "";
     private int id_depto;
     private String nombre_depto;
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Departamento.class);
 
     public Departamento(int id_depto, String nombre_depto)  throws SQLException {
         this.id_depto = id_depto;
@@ -61,7 +61,7 @@ public class Departamento {
             if (departamentos.next()) 
                 Departamento.setNombre_depto(departamentos.getString(1));                       
         } catch (Exception e) {
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, e);            
+            log.error(e);
         }
     }
         
@@ -81,7 +81,7 @@ public class Departamento {
                 );
             }
         } catch (Exception ex) {
-            Logger.getLogger(Departamento.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex);
             JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS DEPARTAMENTOS");
         }
     }
